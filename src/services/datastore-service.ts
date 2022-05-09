@@ -9,4 +9,4 @@ export class DataStoreService {
     }
   }
 }
-export const dataStoreService = new DataStoreService();
+export const dataStoreService: any = new DataStoreService();

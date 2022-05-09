@@ -23,7 +23,7 @@ export default class HelloWorld extends Vue {
     this.Fget();
   }
   Fget() {
-    dataStoreService.get(UntitledModel).then((result) => {
+    dataStoreService.get(UntitledModel).then((result: any) => {
       this.listData = result;
     });
   }

@@ -12,12 +12,13 @@ export class DataStoreService {
   async edit(model: any, data: any) {
     try {
       const original = await DataStore.query(model, data.id);
-      console.log(original);
       await DataStore.save(
-        model.copyOf(original, (update: any) => {
-          console.log(update);
-          update.name = data.name;
-          update.Description = data.Description;
+        model.copyOf(original, (object: any) => {
+          for (const key in object) {
+            if (Object.prototype.hasOwnProperty.call(object, key)) {
+              object[key] = data[key];
+            }
+          }
         })
       );
     } catch (error) {
@@ -25,9 +26,14 @@ export class DataStoreService {
     }
   }
 
-  get(model: any) {
+  async delete(model: any, data: any) {
+    const original = await DataStore.query(model, data.id);
+    return await DataStore.delete(original!);
+  }
+
+  async get(model: any) {
     try {
-      return DataStore.query(model);
+      return await DataStore.query(model);
     } catch (error) {
       console.log(error);
     }

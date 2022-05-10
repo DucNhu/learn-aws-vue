@@ -74,8 +74,8 @@
                 <v-btn color="blue darken-1" text @click="closeDialog"
                   >Cancel</v-btn
                 >
-                <!-- <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                  >OK</v-btn -->
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                  >OK</v-btn
                 >
                 <v-spacer></v-spacer>
               </v-card-actions>
@@ -142,11 +142,7 @@ export default class HelloWorld extends Vue {
     },
     { text: "Actions", value: "actions", sortable: false },
   ];
-  untitledModel: UntitledModel = {
-    id: "",
-    name: "",
-    Description: "",
-  };
+  untitledModel: any = {};
 
   mounted() {
     this.Fget();
@@ -169,10 +165,10 @@ export default class HelloWorld extends Vue {
         Description: this.untitledModel.Description,
       });
       dataStoreService.create(data);
-      this.dialog = false;
+      this.closeDialog();
     } else {
       dataStoreService.edit(UntitledModel, this.untitledModel);
-      this.dialog = false;
+      this.closeDialog();
     }
   }
 
@@ -180,15 +176,24 @@ export default class HelloWorld extends Vue {
   get formTitle() {
     return this.editedID == "" ? "Create new" : "Edit '" + this.editedID + "'";
   }
+
   editItem(item: UntitledModel) {
     this.editedID = item.name;
-    this.untitledModel = item;
-    console.log(this.untitledModel);
+    this.untitledModel = Object.assign({}, item);
+
     this.dialog = true;
   }
+
   deleteItem(item: UntitledModel) {
     this.editedID = item.name;
+    this.untitledModel = Object.assign({}, item);
+
     this.dialogDelete = true;
+  }
+
+  deleteItemConfirm() {
+    dataStoreService.delete(UntitledModel, this.untitledModel);
+    this.closeDialog();
   }
 
   closeDialog() {

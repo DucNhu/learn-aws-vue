@@ -1,5 +1,21 @@
+type TagModel @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+}
+
+type PhotoModel @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  desciption: String
+  tagId: String
+  view: Int
+  userId: String
+  status: Boolean
+}
+
 type UntitledModel @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   Description: String
 }
+ 

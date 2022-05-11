@@ -1,12 +1,10 @@
 import {
+  ObserveQueryOptions,
   PersistentModel,
   PersistentModelConstructor,
   ProducerModelPredicate,
-  ProducerPaginationInput,
-  SubscriptionMessage,
 } from "@aws-amplify/datastore";
 import { DataStore } from "aws-amplify";
-import Observable from "zen-observable-ts";
 
 export class DataStoreService {
   async create(data: any) {
@@ -17,11 +15,14 @@ export class DataStoreService {
     }
   }
 
-  async edit(model: any, data: any) {
+  async edit<T extends PersistentModel>(
+    modelConstructor: PersistentModelConstructor<T>,
+    data: any
+  ) {
     try {
-      const original = await DataStore.query(model, data.id);
+      const original = await DataStore.query(modelConstructor, data.id);
       await DataStore.save(
-        model.copyOf(original, (object: any) => {
+        modelConstructor.copyOf(original!, (object: any) => {
           for (const key in object) {
             if (Object.prototype.hasOwnProperty.call(object, key)) {
               object[key] = data[key];
@@ -34,14 +35,19 @@ export class DataStoreService {
     }
   }
 
-  async delete(model: any, data: any) {
-    const original = await DataStore.query(model, data.id);
+  async delete<T extends PersistentModel>(
+    modelConstructor: PersistentModelConstructor<T>,
+    data: any
+  ) {
+    const original = await DataStore.query(modelConstructor, data.id);
     return await DataStore.delete(original!);
   }
 
-  async get(model: any) {
+  async get<T extends PersistentModel>(
+    modelConstructor: PersistentModelConstructor<T>
+  ) {
     try {
-      return await DataStore.query(model);
+      return await DataStore.query(modelConstructor);
     } catch (error) {
       console.log(error);
     }
@@ -50,10 +56,10 @@ export class DataStoreService {
   obserQuery<T extends PersistentModel>(
     modelConstructor: PersistentModelConstructor<T>,
     criteria?: ProducerModelPredicate<T>,
-    pagination?: ProducerPaginationInput<T>
-  ): Observable<SubscriptionMessage<T>> | undefined {
+    sort?: ObserveQueryOptions<T>
+  ) {
     try {
-      return DataStore.observeQuery(modelConstructor, criteria, pagination);
+      return DataStore.observeQuery(modelConstructor, criteria, sort);
     } catch (error) {
       //
     }

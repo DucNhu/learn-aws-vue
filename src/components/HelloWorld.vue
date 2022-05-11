@@ -93,7 +93,6 @@
 
 <script lang="ts">
 import { Component, Prop, Provide, Vue } from "vue-property-decorator";
-import { HelloViewModel } from "./HelloWorld-viewmodel";
 
 import { UntitledModel } from "@/aws/models";
 import { dataStoreService } from "@/services/datastore-service";
@@ -102,7 +101,6 @@ import { Predicates } from "aws-amplify";
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
-  @Provide() vm = new HelloViewModel();
   listData: UntitledModel[] = [];
 
   dialog = false;

@@ -10,6 +10,10 @@ const routes: Array<RouteConfig> = [
     component: HomeView,
   },
   {
+    path: "/admin",
+    component: () => import("../views/admin/dashboard-page.vue"),
+  },
+  {
     path: "/about",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

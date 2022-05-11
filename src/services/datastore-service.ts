@@ -1,4 +1,12 @@
+import {
+  PersistentModel,
+  PersistentModelConstructor,
+  ProducerModelPredicate,
+  ProducerPaginationInput,
+  SubscriptionMessage,
+} from "@aws-amplify/datastore";
 import { DataStore } from "aws-amplify";
+import Observable from "zen-observable-ts";
 
 export class DataStoreService {
   async create(data: any) {
@@ -39,11 +47,15 @@ export class DataStoreService {
     }
   }
 
-  obserQuery(model: any, predicates?: any, sort?: any) {
+  obserQuery<T extends PersistentModel>(
+    modelConstructor: PersistentModelConstructor<T>,
+    criteria?: ProducerModelPredicate<T>,
+    pagination?: ProducerPaginationInput<T>
+  ): Observable<SubscriptionMessage<T>> | undefined {
     try {
-      return DataStore.observeQuery(model, predicates, sort);
+      return DataStore.observeQuery(modelConstructor, criteria, pagination);
     } catch (error) {
-      console.log(error);
+      //
     }
   }
 }

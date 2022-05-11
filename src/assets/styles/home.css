@@ -187,7 +187,7 @@ a {
 }
 
 a:hover {
-    color: #009999;
+    color: #009999 !important;
 }
 
 .container-fluid {

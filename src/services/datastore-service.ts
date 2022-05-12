@@ -1,4 +1,3 @@
-import { UntitledModel } from "@/aws/models";
 import {
   ObserveQueryOptions,
   PersistentModel,
@@ -56,26 +55,9 @@ export class DataStoreService {
     }
   }
 
-  getGrapql() {
+  getGrapql(query: string) {
     try {
-      return API.graphql(
-        graphqlOperation(`query MyQuery {
-        listUntitledModels(filter: {id: {eq: "0d0eb338-0140-421a-b739-0e0332d467f8"}}) {
-          items {
-            name
-            id
-            Description
-            UntitledFkModels {
-              items {
-                content
-                createdAt
-                id
-              }
-            }
-          }
-        }
-      }`)
-      );
+      return API.graphql(graphqlOperation(query));
     } catch (error) {
       console.log(error);
     }

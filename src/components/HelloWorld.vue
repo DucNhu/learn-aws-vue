@@ -5,8 +5,9 @@
     <v-data-table
       :headers="headers"
       :items="listData"
-      sort-by="calories"
       class="elevation-1 container"
+      disable-pagination
+      hide-default-footer
     >
       <template v-slot:top>
         <v-toolbar flat>
@@ -91,9 +92,15 @@
         <v-icon small @click="getTest(item.id)"> mdi-eye </v-icon>
       </template>
     </v-data-table>
-    <pre>
-      {{ getGrapqlData }}
-    </pre>
+
+    <v-data-table
+      :headers="headerTableDetail"
+      :items="getGrapqlData"
+      v-if="getGrapqlData.length != 0"
+      class="elevation-1 container mt-5"
+      disable-pagination
+      hide-default-footer
+    ></v-data-table>
   </div>
 </template>
 
@@ -133,12 +140,6 @@ export default class HelloWorld extends Vue {
       value: "Description",
     },
     {
-      text: "updatedAt",
-      align: "start",
-      sortable: false,
-      value: "updatedAt",
-    },
-    {
       text: "_version",
       align: "center",
       sortable: false,
@@ -146,9 +147,38 @@ export default class HelloWorld extends Vue {
     },
     { text: "Actions", align: "center", value: "actions", sortable: false },
   ];
+
+  headerTableDetail = [
+    {
+      text: "id",
+      align: "start",
+      sortable: false,
+      value: "id",
+    },
+    {
+      text: "content",
+      align: "start",
+      sortable: false,
+      value: "content",
+    },
+    {
+      text: "_version",
+      align: "center",
+      sortable: false,
+      value: "_version",
+    },
+    {
+      text: "untitledmodelID",
+      align: "center",
+      sortable: false,
+      value: "untitledmodelID",
+    },
+  ];
+
   untitledModel: any = {};
 
   getGrapqlData: any = [];
+  subscribes: any = [];
   mounted() {
     this.getData();
   }
@@ -159,13 +189,35 @@ export default class HelloWorld extends Vue {
     //   .then((result: any) => {
     //     console.log(result);
     //   });
-    dataStoreService.getGrapql().then((result: any) => {
-      this.getGrapqlData = result;
-    });
+    dataStoreService
+      .getGrapql(
+        `query MyQuery {
+        listUntitledModels(filter: {id: {eq: "0d0eb338-0140-421a-b739-0e0332d467f8"}}) {
+          items {
+            name
+            id
+            Description
+            UntitledFkModels {
+              items {
+                content
+                id
+                untitledmodelID
+                _version
+              }
+            }
+          }
+        }
+      }`
+      )
+      .then((result: any) => {
+        this.getGrapqlData =
+          result.data.listUntitledModels.items[0].UntitledFkModels.items;
+      })
+      .catch();
   }
 
   getData() {
-    dataStoreService
+    this.subscribes = dataStoreService
       .obserQuery(UntitledModel, Predicates.ALL, {
         sort: (s: any) => s.createdAt("DESCENDING"),
       })
@@ -215,6 +267,13 @@ export default class HelloWorld extends Vue {
   closeDialog() {
     this.dialog = false;
     this.dialogDelete = false;
+  }
+
+  beforeDestroy() {
+    if (!this.subscribes.length)
+      this.subscribes.forEach((e: any) => {
+        e.unsubscribe();
+      });
   }
 }
 </script>

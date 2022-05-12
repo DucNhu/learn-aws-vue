@@ -1,10 +1,12 @@
+import { UntitledModel } from "@/aws/models";
 import {
   ObserveQueryOptions,
   PersistentModel,
   PersistentModelConstructor,
   ProducerModelPredicate,
 } from "@aws-amplify/datastore";
-import { DataStore } from "aws-amplify";
+
+import { API, DataStore, graphqlOperation } from "aws-amplify";
 
 export class DataStoreService {
   async create(data: any) {
@@ -44,10 +46,36 @@ export class DataStoreService {
   }
 
   async get<T extends PersistentModel>(
-    modelConstructor: PersistentModelConstructor<T>
+    modelConstructor: PersistentModelConstructor<T>,
+    criteria?: ProducerModelPredicate<T>
   ) {
     try {
-      return await DataStore.query(modelConstructor);
+      return await DataStore.query(modelConstructor, criteria);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  getGrapql() {
+    try {
+      return API.graphql(
+        graphqlOperation(`query MyQuery {
+        listUntitledModels(filter: {id: {eq: "0d0eb338-0140-421a-b739-0e0332d467f8"}}) {
+          items {
+            name
+            id
+            Description
+            UntitledFkModels {
+              items {
+                content
+                createdAt
+                id
+              }
+            }
+          }
+        }
+      }`)
+      );
     } catch (error) {
       console.log(error);
     }

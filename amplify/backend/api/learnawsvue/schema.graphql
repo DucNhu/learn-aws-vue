@@ -17,5 +17,12 @@ type UntitledModel @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   Description: String
+  UntitledFkModels: [UntitledFkModel] @hasMany(indexName: "byUntitledModel", fields: ["id"])
+}
+
+type UntitledFkModel @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  content: String!
+  untitledmodelID: ID! @index(name: "byUntitledModel")
 }
  

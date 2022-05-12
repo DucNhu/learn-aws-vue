@@ -84,17 +84,23 @@
         </v-toolbar>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon small @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon small class="mx-2" @click="deleteItem(item)">
+          mdi-delete
+        </v-icon>
+        <v-icon small @click="getTest(item.id)"> mdi-eye </v-icon>
       </template>
     </v-data-table>
+    <pre>
+      {{ getGrapqlData }}
+    </pre>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Provide, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
-import { UntitledModel } from "@/aws/models";
+import { UntitledFkModel, UntitledModel } from "@/aws/models";
 import { dataStoreService } from "@/services/datastore-service";
 import { Predicates } from "aws-amplify";
 
@@ -138,15 +144,27 @@ export default class HelloWorld extends Vue {
       sortable: false,
       value: "_version",
     },
-    { text: "Actions", value: "actions", sortable: false },
+    { text: "Actions", align: "center", value: "actions", sortable: false },
   ];
   untitledModel: any = {};
 
+  getGrapqlData: any = [];
   mounted() {
-    this.Fget();
+    this.getData();
   }
 
-  Fget() {
+  getTest(id: string) {
+    // dataStoreService
+    //   .get(UntitledFkModel, (c: any) => c.untitledmodelID("eq", id))
+    //   .then((result: any) => {
+    //     console.log(result);
+    //   });
+    dataStoreService.getGrapql().then((result: any) => {
+      this.getGrapqlData = result;
+    });
+  }
+
+  getData() {
     dataStoreService
       .obserQuery(UntitledModel, Predicates.ALL, {
         sort: (s: any) => s.createdAt("DESCENDING"),

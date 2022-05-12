@@ -4,10 +4,11 @@ import { schema } from './schema';
 
 
 
-const { TagModel, PhotoModel, UntitledModel } = initSchema(schema);
+const { TagModel, PhotoModel, UntitledModel, UntitledFkModel } = initSchema(schema);
 
 export {
   TagModel,
   PhotoModel,
-  UntitledModel
+  UntitledModel,
+  UntitledFkModel
 };

@@ -5,7 +5,7 @@
     <v-data-table
       :headers="headers"
       :items="listData"
-      class="elevation-1 container"
+      class="elevation-1 container my-5"
       disable-pagination
       hide-default-footer
     >
@@ -97,7 +97,7 @@
       :headers="headerTableDetail"
       :items="getGrapqlData"
       v-if="getGrapqlData.length != 0"
-      class="elevation-1 container mt-5"
+      class="elevation-1 container my-5"
       disable-pagination
       hide-default-footer
     ></v-data-table>
@@ -107,9 +107,10 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import { UntitledFkModel, UntitledModel } from "@/aws/models";
+import { UntitledModel } from "@/aws/models";
 import { dataStoreService } from "@/services/datastore-service";
 import { Predicates } from "aws-amplify";
+import { UntitledFkModelsQuery } from "@/grapqls/UntitledFkModelsQuery";
 
 @Component
 export default class HelloWorld extends Vue {
@@ -184,36 +185,15 @@ export default class HelloWorld extends Vue {
   }
 
   getTest(id: string) {
-    // dataStoreService
-    //   .get(UntitledFkModel, (c: any) => c.untitledmodelID("eq", id))
-    //   .then((result: any) => {
-    //     console.log(result);
-    //   });
     dataStoreService
-      .getGrapql(
-        `query MyQuery {
-        listUntitledModels(filter: {id: {eq: "0d0eb338-0140-421a-b739-0e0332d467f8"}}) {
-          items {
-            name
-            id
-            Description
-            UntitledFkModels {
-              items {
-                content
-                id
-                untitledmodelID
-                _version
-              }
-            }
-          }
-        }
-      }`
-      )
+      .getGrapql(UntitledFkModelsQuery, { id: id })
       .then((result: any) => {
-        this.getGrapqlData =
-          result.data.listUntitledModels.items[0].UntitledFkModels.items;
-      })
-      .catch();
+        const untitledFkModels =
+          result.data.listUntitledModels.items[0].UntitledFkModels;
+        if (!untitledFkModels.length)
+          this.getGrapqlData = untitledFkModels.items;
+        else this.getGrapqlData = [];
+      });
   }
 
   getData() {
@@ -270,10 +250,10 @@ export default class HelloWorld extends Vue {
   }
 
   beforeDestroy() {
-    if (!this.subscribes.length)
-      this.subscribes.forEach((e: any) => {
-        e.unsubscribe();
-      });
+    // if (!this.subscribes.length)
+    //   this.subscribes.forEach((e: any) => {
+    //     e.unsubscribe();
+    //   });
   }
 }
 </script>

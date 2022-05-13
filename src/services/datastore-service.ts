@@ -55,9 +55,9 @@ export class DataStoreService {
     }
   }
 
-  getGrapql(query: string) {
+  getGrapql(query: string, variable?: object) {
     try {
-      return API.graphql(graphqlOperation(query));
+      return API.graphql(graphqlOperation(query, variable));
     } catch (error) {
       console.log(error);
     }

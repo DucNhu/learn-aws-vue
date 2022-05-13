@@ -25,6 +25,10 @@ const routes: Array<RouteConfig> = [
     ],
   },
   {
+    path: "/login",
+    component: () => import("../views/Authentication.vue"),
+  },
+  {
     path: "/admin",
     component: () => import("../views/admin/dashboard-page.vue"),
   },

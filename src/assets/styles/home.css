@@ -6,6 +6,11 @@ https://templatemo.com/tm-556-catalog-z
 
 */
 
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
 #loader-wrapper {
     position: fixed;
     top: 0;

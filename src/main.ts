@@ -6,10 +6,15 @@ import router from "./router";
 import "@mdi/font/css/materialdesignicons.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import "@/plugins/font-awesome-icons";
+
 import {
   applyPolyfills,
   defineCustomElements,
 } from "@aws-amplify/ui-components/loader";
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.config.ignoredElements = [/amplify-\w*/];
 applyPolyfills().then(() => {

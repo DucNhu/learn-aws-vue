@@ -23,20 +23,20 @@
         <v-tab-item>
           <v-card class="px-4">
             <v-card-text>
-              <!-- <v-form ref="loginForm" v-model="valid" lazy-validation>
+              <v-form ref="loginForm" v-model="valid" lazy-validation>
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
-                      v-model="loginEmail"
-                      :rules="loginEmailRules"
-                      label="E-mail"
+                      v-model="user.username"
+                      label="User Name"
+                      maxlength="20"
                       required
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      v-model="loginPassword"
-                      :append-icon="show1 ? 'eye' : 'eye-off'"
+                      v-model="user.password"
+                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                       :rules="[rules.required, rules.min]"
                       :type="show1 ? 'text' : 'password'"
                       name="input-10-1"
@@ -54,20 +54,25 @@
                       block
                       :disabled="!valid"
                       color="success"
-                      @click="signUp"
+                      @click="signIn"
                     >
                       Login
                     </v-btn>
                   </v-col>
                 </v-row>
-              </v-form> -->
+              </v-form>
             </v-card-text>
           </v-card>
         </v-tab-item>
         <v-tab-item>
           <v-card class="px-4">
             <v-card-text>
-              <v-form ref="registerForm" v-model="valid" lazy-validation>
+              <v-form
+                ref="registerForm"
+                v-model="valid"
+                lazy-validation
+                v-if="!confirm_account"
+              >
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
@@ -123,6 +128,27 @@
                   </v-col>
                 </v-row>
               </v-form>
+              <v-from v-else>
+                <v-col class="d-flex ml-auto" cols="12">
+                  <v-text-field
+                    v-model="confirm_code"
+                    label="Your verification code is "
+                    maxlength="6"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col class="d-flex ml-auto" cols="12">
+                  <v-btn
+                    x-large
+                    block
+                    :disabled="!valid"
+                    color="success"
+                    @click="confirmAccount"
+                  >
+                    Register
+                  </v-btn>
+                </v-col>
+              </v-from>
             </v-card-text>
           </v-card>
         </v-tab-item>
@@ -132,21 +158,27 @@
 </template>
 
 <script lang="ts">
+import router from "@/router";
 import Auth from "@aws-amplify/auth";
 import { Component, Ref, Vue } from "vue-property-decorator";
 
 @Component
 export default class Authentication extends Vue {
+  confirm_account = false;
   user = {
     username: "",
     password: "",
     attributes: {
       email: "",
+      avatar: "",
+      fullName: "",
     },
   };
 
+  confirm_code = "";
+
   dialog = true;
-  tab = 1;
+  tab = 0;
   tabs = [
     { name: "Login", icon: "mdi-account" },
     { name: "Register", icon: "mdi-account-outline" },
@@ -195,12 +227,42 @@ export default class Authentication extends Vue {
 
   async signUp() {
     try {
-      const { user } = await Auth.signUp({
+      this.user.attributes.fullName = this.user.username;
+      await Auth.signUp({
         ...this.user,
       });
-      console.log(user);
+      this.confirm_account = true;
     } catch (error) {
       console.log("error signing up:", error);
+    }
+  }
+
+  async confirmAccount() {
+    try {
+      await Auth.confirmSignUp(this.user.username, this.confirm_code);
+      this.signIn();
+    } catch (error) {
+      console.log("error signing up:", error);
+    }
+  }
+
+  async signIn() {
+    try {
+      const user = await Auth.signIn(this.user.username, this.user.password);
+      if (user.signInUserSession.accessToken) {
+        router.push("/photos");
+      }
+    } catch (error) {
+      console.log("error signing in", error);
+    }
+  }
+
+  async deleteUser() {
+    try {
+      const result = await Auth.deleteUser();
+      console.log(result);
+    } catch (error) {
+      console.log("Error deleting user", error);
     }
   }
 }

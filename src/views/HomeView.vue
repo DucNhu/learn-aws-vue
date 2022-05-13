@@ -1,92 +1,96 @@
 <template>
-  <div class="home">
-    <!-- Page Loader -->
-    <!-- <div id="loader-wrapper">
-      <div id="loader"></div>
+  <v-app>
+    <v-app-bar app color="white" flat>
+      <router-link
+        to="/photos"
+        class="navbar-brand"
+        custom
+        v-if="!$vuetify.breakpoint.smAndDown"
+      >
+        <img
+          src="../assets/images/logo.png"
+          alt="logo"
+          width="100"
+          height="100%"
+        />Origin
+      </router-link>
 
-      <div class="loader-section section-left"></div>
-      <div class="loader-section section-right"></div>
-    </div> -->
-    <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid">
-        <router-link to="/photos" class="navbar-brand" custom>
-          <img src="../assets/images/logo.png" alt="logo" width="100" />
-          Origin
-        </router-link>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <router-link
-                to="/photos"
-                class="nav-link nav-link-1"
-                active-class="active"
-                custom
-              >
-                Photos
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link
-                to="/test"
-                class="nav-link nav-link-2"
-                active-class="active"
-                custom
-              >
-                Test
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link
-                to="/about"
-                class="nav-link nav-link-3"
-                active-class="active"
-                custom
-              >
-                About
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-link-4">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+      <router-link to="/photos" custom v-if="$vuetify.breakpoint.smAndDown">
+        <v-avatar height="30px" width="35px">
+          <img alt="Logo" src="../assets/images/logo.png" width="100" />
+        </v-avatar>
+      </router-link>
 
-    <div
-      class="tm-hero d-flex justify-content-center align-items-center bg-navigation"
-    >
-      <form class="d-flex tm-search-form">
-        <input
-          class="form-control tm-search-input"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <i class="fas fa-bars"></i>
-        <button
-          class="btn btn-outline-success tm-search-btn rounded-0"
-          type="submit"
-        >
-          <v-icon class="white--text">mdi-magnify</v-icon>
-        </button>
-      </form>
-    </div>
+      <v-tabs
+        centered
+        class="col-10 pa-0 mx-auto my-0"
+        color="grey darken-1"
+        show-arrows
+      >
+        <v-tab v-for="(item, index) in navigations" :key="index">
+          <router-link
+            :to="item.link"
+            class="nav-link"
+            active-class="active"
+            custom
+          >
+            <font-awesome-icon :icon="item.icon" />
+          </router-link>
+        </v-tab>
+      </v-tabs>
 
-    <router-view />
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-avatar class="col-1 ma-0 pa-0" size="32" v-bind="attrs" v-on="on">
+            <img
+              alt="Avatar"
+              src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
+            />
+          </v-avatar>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="(item, index) in dropdown_list"
+            :key="index"
+            :to="item.link"
+          >
+            <v-list-item-title>{{ item.content }}</v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title @click="signOut" class="cursor-pointer">
+              Log Out
+              <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
 
-    <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
+    <v-main class="grey lighten-3 pb-5">
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="2">
+            <v-sheet rounded="lg" min-height="268">
+              <!--  -->
+            </v-sheet>
+          </v-col>
+
+          <v-col cols="12" sm="8">
+            <v-sheet min-height="70vh" rounded="lg">
+              <router-view />
+            </v-sheet>
+          </v-col>
+
+          <v-col cols="12" sm="2">
+            <v-sheet rounded="lg" min-height="268">
+              <!--  -->
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+
+    <v-footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
       <div class="container-fluid tm-container-small">
         <div class="row">
           <div class="col-lg-6 col-md-12 col-12 px-5 mb-5">
@@ -157,20 +161,67 @@
           </div>
         </div>
       </div>
-    </footer>
-  </div>
+    </v-footer>
+  </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { Auth } from "aws-amplify";
+import router from "@/router";
 
 @Component({
   components: {
     HelloWorld,
   },
 })
-export default class HomeView extends Vue {}
+export default class HomeView extends Vue {
+  navigations = [
+    {
+      icon: "fa-solid fa-house",
+      link: "/photos",
+    },
+    {
+      icon: "fa-solid fa-compass",
+      link: "/about",
+    },
+    {
+      icon: "fa-solid fa-microscope",
+      link: "/Test",
+    },
+    {
+      icon: "fa-solid fa-microscope",
+      link: "/Test",
+    },
+    {
+      icon: "fa-solid fa-microscope",
+      link: "/Test",
+    },
+  ];
+
+  dropdown_list = [
+    {
+      icon: "fa-solid fa-user",
+      link: "/profile",
+      content: "Profile",
+    },
+    {
+      icon: "fa-solid fa-gear",
+      link: "/profile",
+      content: "Setting",
+    },
+  ];
+
+  async signOut() {
+    try {
+      await Auth.signOut();
+      router.push("/login");
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  }
+}
 </script>
 <style>
 .bg-navigation {

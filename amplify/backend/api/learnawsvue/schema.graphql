@@ -1,9 +1,9 @@
-type TagModel @model @auth(rules: [{ allow: public }]) {
+type TagModel @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
 }
 
-type PhotoModel @model @auth(rules: [{ allow: public }]) {
+type PhotoModel @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   desciption: String
@@ -12,36 +12,4 @@ type PhotoModel @model @auth(rules: [{ allow: public }]) {
   userId: String
   status: Boolean
 }
-
-type UntitledModel
-  @model
-  @auth(
-    rules: [
-      { allow: groups, groups: ["User"], operations: [read, create, update] }
-      { allow: private, operations: [create, read, update] }
-    ]
-  ) {
-  id: ID!
-  name: String
-  Description: String
-  UntitledFkModels: [UntitledFkModel]
-    @hasMany(indexName: "byUntitledModel", fields: ["id"])
-}
-
-type UntitledFkModel
-  @model
-  @auth(
-    rules: [
-      {
-        allow: groups
-        groups: ["Admin"]
-        operations: [read, create, update, delete]
-      }
-      { allow: groups, groups: ["User"], operations: [read] }
-      { allow: private, operations: [read] }
-    ]
-  ) {
-  id: ID!
-  content: String!
-  untitledmodelID: ID! @index(name: "byUntitledModel")
-}
+ 

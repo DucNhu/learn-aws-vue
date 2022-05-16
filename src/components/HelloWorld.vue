@@ -1,5 +1,6 @@
 <template>
-  <div class="hello">
+  <h1>dijfv</h1>
+  <!-- <div class="hello">
     <h1 id="h1">{{ msg }}</h1>
 
     <v-data-table
@@ -101,21 +102,19 @@
       disable-pagination
       hide-default-footer
     ></v-data-table>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-
-import { UntitledModel } from "@/aws/models";
 import { dataStoreService } from "@/services/datastore-service";
 import { Predicates } from "aws-amplify";
-import { UntitledFkModelsQuery } from "@/grapqls/UntitledFkModelsQuery";
+import { PhotoModel } from "@/aws/models";
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
-  listData: UntitledModel[] = [];
+  // listData: UntitledModel[] = [];
 
   dialog = false;
   dialogDelete = false;
@@ -184,70 +183,72 @@ export default class HelloWorld extends Vue {
     this.getData();
   }
 
-  getTest(id: string) {
-    dataStoreService
-      .getGrapql(UntitledFkModelsQuery, { id: id })
-      .then((result: any) => {
-        const untitledFkModels =
-          result.data.listUntitledModels.items[0].UntitledFkModels;
-        if (!untitledFkModels.length)
-          this.getGrapqlData = untitledFkModels.items;
-        else this.getGrapqlData = [];
-      });
-  }
+  // getTest(id: string) {
+  //   dataStoreService
+  //     .getGrapql(UntitledFkModelsQuery, { id: id })
+  //     .then((result: any) => {
+  //       const untitledFkModels =
+  //         result.data.listUntitledModels.items[0].UntitledFkModels;
+  //       if (!untitledFkModels.length)
+  //         this.getGrapqlData = untitledFkModels.items;
+  //       else this.getGrapqlData = [];
+  //     });
+  // }
 
   getData() {
     this.subscribes = dataStoreService
-      .obserQuery(UntitledModel, Predicates.ALL, {
+      .obserQuery(PhotoModel, Predicates.ALL, {
         sort: (s: any) => s.createdAt("DESCENDING"),
       })
       .subscribe((result: any) => {
-        this.listData = result.items;
+        console.log(result);
+
+        // this.listData = result.items;
       });
   }
 
-  save() {
-    if (this.editedID == "") {
-      const data = new UntitledModel({
-        name: this.untitledModel.name,
-        Description: this.untitledModel.Description,
-      });
-      dataStoreService.create(data);
-      this.closeDialog();
-    } else {
-      dataStoreService.edit(UntitledModel, this.untitledModel);
-      this.closeDialog();
-    }
-  }
+  // save() {
+  //   if (this.editedID == "") {
+  //     const data = new UntitledModel({
+  //       name: this.untitledModel.name,
+  //       Description: this.untitledModel.Description,
+  //     });
+  //     dataStoreService.create(data);
+  //     this.closeDialog();
+  //   } else {
+  //     dataStoreService.edit(UntitledModel, this.untitledModel);
+  //     this.closeDialog();
+  //   }
+  // }
 
   // Table
-  get formTitle() {
-    return this.editedID == "" ? "Create new" : "Edit '" + this.editedID + "'";
-  }
+  // get formTitle() {
+  //   return this.editedID == "" ? "Create new" : "Edit '" + this.editedID + "'";
+  // }
 
-  editItem(item: UntitledModel) {
-    this.editedID = item.name;
-    this.untitledModel = Object.assign({}, item);
+  // editItem(item: UntitledModel) {
+  //   this.editedID = item.name;
+  //   this.untitledModel = Object.assign({}, item);
 
-    this.dialog = true;
-  }
+  //   this.dialog = true;
+  // }
 
-  deleteItem(item: UntitledModel) {
-    this.editedID = item.name;
-    this.untitledModel = Object.assign({}, item);
+  // deleteItem(item: UntitledModel) {
+  //   this.editedID = item.name;
+  //   this.untitledModel = Object.assign({}, item);
 
-    this.dialogDelete = true;
-  }
+  //   this.dialogDelete = true;
+  // }
 
-  deleteItemConfirm() {
-    dataStoreService.delete(UntitledModel, this.untitledModel);
-    this.closeDialog();
-  }
+  // deleteItemConfirm() {
+  //   dataStoreService.delete(UntitledModel, this.untitledModel);
+  //   this.closeDialog();
+  // }
 
-  closeDialog() {
-    this.dialog = false;
-    this.dialogDelete = false;
-  }
+  // closeDialog() {
+  //   this.dialog = false;
+  //   this.dialogDelete = false;
+  // }
 
   beforeDestroy() {
     // if (!this.subscribes.length)

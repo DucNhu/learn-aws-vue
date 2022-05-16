@@ -12,14 +12,6 @@ type PhotoModelMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type UntitledModelMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
-type UntitledFkModelMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
 export declare class TagModel {
   readonly id: string;
   readonly name?: string | null;
@@ -41,25 +33,4 @@ export declare class PhotoModel {
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<PhotoModel, PhotoModelMetaData>);
   static copyOf(source: PhotoModel, mutator: (draft: MutableModel<PhotoModel, PhotoModelMetaData>) => MutableModel<PhotoModel, PhotoModelMetaData> | void): PhotoModel;
-}
-
-export declare class UntitledModel {
-  readonly id: string;
-  readonly name?: string | null;
-  readonly Description?: string | null;
-  readonly UntitledFkModels?: (UntitledFkModel | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  constructor(init: ModelInit<UntitledModel, UntitledModelMetaData>);
-  static copyOf(source: UntitledModel, mutator: (draft: MutableModel<UntitledModel, UntitledModelMetaData>) => MutableModel<UntitledModel, UntitledModelMetaData> | void): UntitledModel;
-}
-
-export declare class UntitledFkModel {
-  readonly id: string;
-  readonly content: string;
-  readonly untitledmodelID: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  constructor(init: ModelInit<UntitledFkModel, UntitledFkModelMetaData>);
-  static copyOf(source: UntitledFkModel, mutator: (draft: MutableModel<UntitledFkModel, UntitledFkModelMetaData>) => MutableModel<UntitledFkModel, UntitledFkModelMetaData> | void): UntitledFkModel;
 }

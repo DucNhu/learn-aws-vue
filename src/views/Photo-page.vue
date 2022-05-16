@@ -19,7 +19,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -36,7 +36,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -53,7 +53,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -70,7 +70,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -88,7 +88,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -105,7 +105,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -122,7 +122,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -139,7 +139,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -156,7 +156,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -173,7 +173,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -190,7 +190,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -207,7 +207,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -224,7 +224,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -241,7 +241,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -258,7 +258,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />
@@ -275,7 +275,7 @@
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
         <figure class="effect-ming tm-video-item">
           <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/279052318_1893670577470162_2617446865354879923_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=dbeb18&_nc_ohc=p7ag89a5cfgAX-baquF&_nc_ht=scontent.fhan2-4.fna&oh=00_AT-u9Cxa94pp_xbxzyln5-LVHN9LrSCpy3IMoGb554vwNA&oe=62831634"
+            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
             alt="Image"
             class="img-fluid"
           />

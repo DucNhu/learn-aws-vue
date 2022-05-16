@@ -4,14 +4,11 @@ import { schema } from './schema';
 
 
 
-const { CommentModel, PostModel, TagModel, PhotoModel, UntitledModel, UntitledFkModel, PostModelTagModel } = initSchema(schema);
+const { TagModel, PhotoModel, UntitledModel, UntitledFkModel } = initSchema(schema);
 
 export {
-  CommentModel,
-  PostModel,
   TagModel,
   PhotoModel,
   UntitledModel,
-  UntitledFkModel,
-  PostModelTagModel
+  UntitledFkModel
 };

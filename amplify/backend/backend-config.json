@@ -14,7 +14,7 @@
           "EMAIL"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
+          "passwordPolicyMinLength": 6,
           "passwordPolicyCharacters": []
         },
         "mfaConfiguration": "OFF",
@@ -31,7 +31,15 @@
     "learnawsvue": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "learnawsvue71ada016",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
       "output": {
         "authConfig": {
           "defaultAuthentication": {
@@ -44,6 +52,12 @@
           "additionalAuthenticationProviders": [
             {
               "authenticationType": "AWS_IAM"
+            },
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authlearnawsvue71ada016"
+              }
             }
           ]
         }

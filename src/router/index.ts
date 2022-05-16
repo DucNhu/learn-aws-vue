@@ -1,3 +1,4 @@
+import { Auth } from "aws-amplify";
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import HomeView from "../views/HomeView.vue";
@@ -9,6 +10,17 @@ const routes: Array<RouteConfig> = [
     path: "/",
     redirect: "/photos",
     component: HomeView,
+    // beforeEnter: async (to, _, next) => {
+    //   const isAuthenticated = await Auth.currentUserInfo();
+
+    //   if (!isAuthenticated) {
+    //     console.log(1);
+
+    //     next("/login");
+    //   } else {
+    //     next();
+    //   }
+    // },
     children: [
       {
         path: "/photos",

@@ -2,5 +2,11 @@
   "AppSyncApiName": "learnawsvue",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2022-05-16T02:21:36.788Z"
+  "AuthModeLastUpdated": "2022-05-16T07:52:32.023Z",
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authlearnawsvue71ada016",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

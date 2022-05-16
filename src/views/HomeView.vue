@@ -188,15 +188,15 @@ export default class HomeView extends Vue {
     },
     {
       icon: "fa-solid fa-microscope",
-      link: "/Test",
+      link: "/test",
     },
     {
       icon: "fa-solid fa-microscope",
-      link: "/Test",
+      link: "/test",
     },
     {
       icon: "fa-solid fa-microscope",
-      link: "/Test",
+      link: "/test",
     },
   ];
 

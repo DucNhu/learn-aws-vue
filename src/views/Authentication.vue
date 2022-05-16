@@ -28,6 +28,7 @@
                   <v-col cols="12">
                     <v-text-field
                       v-model="user.username"
+                      :rules="emailRules"
                       label="User Name"
                       maxlength="20"
                       required
@@ -77,6 +78,7 @@
                   <v-col cols="12">
                     <v-text-field
                       v-model="user.username"
+                      :rules="emailRules"
                       label="User Name"
                       maxlength="20"
                       required
@@ -104,17 +106,6 @@
                       @click:append="show1 = !show1"
                     ></v-text-field>
                   </v-col>
-                  <!-- <v-col cols="2">
-                    <v-select v-model="code" :items="[84]" color="blue">
-                    </v-select>
-                  </v-col>
-                  <v-col cols="10">
-                    <v-text-field
-                      block
-                      v-model="user.attributes.phone_number"
-                      label="Phone Number"
-                    ></v-text-field>
-                  </v-col> -->
                   <v-spacer></v-spacer>
                   <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
                     <v-btn
@@ -160,7 +151,7 @@
 <script lang="ts">
 import router from "@/router";
 import Auth from "@aws-amplify/auth";
-import { Component, Ref, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Authentication extends Vue {
@@ -170,8 +161,6 @@ export default class Authentication extends Vue {
     password: "",
     attributes: {
       email: "",
-      avatar: "",
-      fullName: "",
     },
   };
 
@@ -227,7 +216,6 @@ export default class Authentication extends Vue {
 
   async signUp() {
     try {
-      this.user.attributes.fullName = this.user.username;
       await Auth.signUp({
         ...this.user,
       });
@@ -239,7 +227,7 @@ export default class Authentication extends Vue {
 
   async confirmAccount() {
     try {
-      await Auth.confirmSignUp(this.user.username, this.confirm_code);
+      await Auth.confirmSignUp(this.user.attributes.email, this.confirm_code);
       this.signIn();
     } catch (error) {
       console.log("error signing up:", error);

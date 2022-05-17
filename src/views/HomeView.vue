@@ -168,7 +168,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
-import { Auth } from "aws-amplify";
+import { Auth, DataStore } from "aws-amplify";
 import router from "@/router";
 
 @Component({
@@ -216,6 +216,7 @@ export default class HomeView extends Vue {
   async signOut() {
     try {
       await Auth.signOut();
+      DataStore.clear();
       router.push("/login");
     } catch (error) {
       console.log("error signing out: ", error);

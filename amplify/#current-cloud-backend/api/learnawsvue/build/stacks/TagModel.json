@@ -1,0 +1,1801 @@
+{
+  "Parameters": {
+    "DynamoDBModelTableReadIOPS": {
+      "Type": "Number",
+      "Default": 5,
+      "Description": "The number of read IOPS the table should support."
+    },
+    "DynamoDBModelTableWriteIOPS": {
+      "Type": "Number",
+      "Default": 5,
+      "Description": "The number of write IOPS the table should support."
+    },
+    "DynamoDBBillingMode": {
+      "Type": "String",
+      "Default": "PAY_PER_REQUEST",
+      "AllowedValues": [
+        "PAY_PER_REQUEST",
+        "PROVISIONED"
+      ],
+      "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+    },
+    "DynamoDBEnablePointInTimeRecovery": {
+      "Type": "String",
+      "Default": "false",
+      "AllowedValues": [
+        "true",
+        "false"
+      ],
+      "Description": "Whether to enable Point in Time Recovery on the table."
+    },
+    "DynamoDBEnableServerSideEncryption": {
+      "Type": "String",
+      "Default": "true",
+      "AllowedValues": [
+        "true",
+        "false"
+      ],
+      "Description": "Enable server side encryption powered by KMS."
+    },
+    "referencetotransformerrootstackenv10C5A902Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+      "Type": "String"
+    }
+  },
+  "Conditions": {
+    "HasEnvironmentParameter": {
+      "Fn::Not": [
+        {
+          "Fn::Equals": [
+            {
+              "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+            },
+            "NONE"
+          ]
+        }
+      ]
+    },
+    "ShouldUseServerSideEncryption": {
+      "Fn::Equals": [
+        {
+          "Ref": "DynamoDBEnableServerSideEncryption"
+        },
+        "true"
+      ]
+    },
+    "ShouldUsePayPerRequestBilling": {
+      "Fn::Equals": [
+        {
+          "Ref": "DynamoDBBillingMode"
+        },
+        "PAY_PER_REQUEST"
+      ]
+    },
+    "ShouldUsePointInTimeRecovery": {
+      "Fn::Equals": [
+        {
+          "Ref": "DynamoDBEnablePointInTimeRecovery"
+        },
+        "true"
+      ]
+    }
+  },
+  "Resources": {
+    "TagModelTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "KeySchema": [
+          {
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }
+        ],
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "id",
+            "AttributeType": "S"
+          }
+        ],
+        "BillingMode": {
+          "Fn::If": [
+            "ShouldUsePayPerRequestBilling",
+            "PAY_PER_REQUEST",
+            {
+              "Ref": "AWS::NoValue"
+            }
+          ]
+        },
+        "PointInTimeRecoverySpecification": {
+          "Fn::If": [
+            "ShouldUsePointInTimeRecovery",
+            {
+              "PointInTimeRecoveryEnabled": true
+            },
+            {
+              "Ref": "AWS::NoValue"
+            }
+          ]
+        },
+        "ProvisionedThroughput": {
+          "Fn::If": [
+            "ShouldUsePayPerRequestBilling",
+            {
+              "Ref": "AWS::NoValue"
+            },
+            {
+              "ReadCapacityUnits": {
+                "Ref": "DynamoDBModelTableReadIOPS"
+              },
+              "WriteCapacityUnits": {
+                "Ref": "DynamoDBModelTableWriteIOPS"
+              }
+            }
+          ]
+        },
+        "SSESpecification": {
+          "SSEEnabled": {
+            "Fn::If": [
+              "ShouldUseServerSideEncryption",
+              true,
+              false
+            ]
+          }
+        },
+        "StreamSpecification": {
+          "StreamViewType": "NEW_AND_OLD_IMAGES"
+        },
+        "TableName": {
+          "Fn::Join": [
+            "",
+            [
+              "TagModel-",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "-",
+              {
+                "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+              }
+            ]
+          ]
+        },
+        "TimeToLiveSpecification": {
+          "AttributeName": "_ttl",
+          "Enabled": true
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete"
+    },
+    "TagModelIAMRole46CE89C0": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "appsync.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              "TagModelIAMRole3d13d2-",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "-",
+              {
+                "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "TagModelIAMRoleDefaultPolicyDE411671": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "TagModelTable",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Ref": "AWS::NoValue"
+                }
+              ]
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "TagModelIAMRoleDefaultPolicyDE411671",
+        "Roles": [
+          {
+            "Ref": "TagModelIAMRole46CE89C0"
+          }
+        ]
+      }
+    },
+    "DynamoDBAccess71ABE5AE": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:UpdateItem"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "TagModel-",
+                            {
+                              "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+                            },
+                            "-",
+                            {
+                              "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "TagModel-",
+                            {
+                              "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+                            },
+                            "-",
+                            {
+                              "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "AmplifyDataStore-",
+                            {
+                              "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+                            },
+                            "-",
+                            {
+                              "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "Fn::Sub": [
+                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+                    {
+                      "tablename": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "AmplifyDataStore-",
+                            {
+                              "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+                            },
+                            "-",
+                            {
+                              "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "DynamoDBAccess71ABE5AE",
+        "Roles": [
+          {
+            "Ref": "TagModelIAMRole46CE89C0"
+          }
+        ]
+      }
+    },
+    "TagModelDataSource": {
+      "Type": "AWS::AppSync::DataSource",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "Name": "TagModelTable",
+        "Type": "AMAZON_DYNAMODB",
+        "DynamoDBConfig": {
+          "AwsRegion": {
+            "Ref": "AWS::Region"
+          },
+          "DeltaSyncConfig": {
+            "BaseTableTTL": "43200",
+            "DeltaSyncTableName": {
+              "Fn::Join": [
+                "",
+                [
+                  "AmplifyDataStore-",
+                  {
+                    "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+                  },
+                  "-",
+                  {
+                    "Ref": "referencetotransformerrootstackenv10C5A902Ref"
+                  }
+                ]
+              ]
+            },
+            "DeltaSyncTableTTL": "30"
+          },
+          "TableName": {
+            "Ref": "TagModelTable"
+          },
+          "Versioned": true
+        },
+        "ServiceRoleArn": {
+          "Fn::GetAtt": [
+            "TagModelIAMRole46CE89C0",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "TagModelIAMRole46CE89C0"
+      ]
+    },
+    "QuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionBB24FF14": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerygetTagModelauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.getTagModel.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerygetTagModelpostAuth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.getTagModel.postAuth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "QueryGetTagModelDataResolverFnQueryGetTagModelDataResolverFnAppSyncFunction50D91CDF": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "TagModelDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QueryGetTagModelDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.getTagModel.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.getTagModel.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      },
+      "DependsOn": [
+        "TagModelDataSource"
+      ]
+    },
+    "GetTagModelResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "getTagModel",
+        "TypeName": "Query",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionBB24FF14",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QueryGetTagModelDataResolverFnQueryGetTagModelDataResolverFnAppSyncFunction50D91CDF",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getTagModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+              {
+                "Ref": "TagModelTable"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "QueryListTagModelsDataResolverFnQueryListTagModelsDataResolverFnAppSyncFunction58A19FDF": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "TagModelDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QueryListTagModelsDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.listTagModels.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.listTagModels.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      },
+      "DependsOn": [
+        "TagModelDataSource"
+      ]
+    },
+    "ListTagModelResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "listTagModels",
+        "TypeName": "Query",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionBB24FF14",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QueryListTagModelsDataResolverFnQueryListTagModelsDataResolverFnAppSyncFunction58A19FDF",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listTagModels\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+              {
+                "Ref": "TagModelTable"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "QuerySyncTagModelsDataResolverFnQuerySyncTagModelsDataResolverFnAppSyncFunction252248A1": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "TagModelDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerySyncTagModelsDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.syncTagModels.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.syncTagModels.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      },
+      "DependsOn": [
+        "TagModelDataSource"
+      ]
+    },
+    "SyncTagModelResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "syncTagModels",
+        "TypeName": "Query",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionBB24FF14",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerySyncTagModelsDataResolverFnQuerySyncTagModelsDataResolverFnAppSyncFunction252248A1",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"syncTagModels\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+              {
+                "Ref": "TagModelTable"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "MutationcreateTagModelinit0FunctionMutationcreateTagModelinit0FunctionAppSyncFunction82500DE1": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "MutationcreateTagModelinit0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.createTagModel.init.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "MutationcreateTagModelauth0FunctionMutationcreateTagModelauth0FunctionAppSyncFunctionFD52EA61": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "MutationcreateTagModelauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.createTagModel.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "MutationCreateTagModelDataResolverFnMutationCreateTagModelDataResolverFnAppSyncFunction925FA994": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "TagModelDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "MutationCreateTagModelDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.createTagModel.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.createTagModel.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      },
+      "DependsOn": [
+        "TagModelDataSource"
+      ]
+    },
+    "CreateTagModelResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "createTagModel",
+        "TypeName": "Mutation",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "MutationcreateTagModelinit0FunctionMutationcreateTagModelinit0FunctionAppSyncFunction82500DE1",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "MutationcreateTagModelauth0FunctionMutationcreateTagModelauth0FunctionAppSyncFunctionFD52EA61",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "MutationCreateTagModelDataResolverFnMutationCreateTagModelDataResolverFnAppSyncFunction925FA994",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createTagModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+              {
+                "Ref": "TagModelTable"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "MutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunctionC7CFCFA2": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "MutationupdateTagModelinit0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.updateTagModel.init.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "MutationupdateTagModelauth0FunctionMutationupdateTagModelauth0FunctionAppSyncFunction74227A83": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "TagModelDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "MutationupdateTagModelauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.updateTagModel.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.updateTagModel.auth.1.res.vtl"
+            ]
+          ]
+        }
+      },
+      "DependsOn": [
+        "TagModelDataSource"
+      ]
+    },
+    "MutationUpdateTagModelDataResolverFnMutationUpdateTagModelDataResolverFnAppSyncFunction7E5A4F25": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "TagModelDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "MutationUpdateTagModelDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.updateTagModel.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.updateTagModel.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      },
+      "DependsOn": [
+        "TagModelDataSource"
+      ]
+    },
+    "UpdateTagModelResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "updateTagModel",
+        "TypeName": "Mutation",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "MutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunctionC7CFCFA2",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "MutationupdateTagModelauth0FunctionMutationupdateTagModelauth0FunctionAppSyncFunction74227A83",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "MutationUpdateTagModelDataResolverFnMutationUpdateTagModelDataResolverFnAppSyncFunction7E5A4F25",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updateTagModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+              {
+                "Ref": "TagModelTable"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "MutationdeleteTagModelauth0FunctionMutationdeleteTagModelauth0FunctionAppSyncFunction0ED78D85": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "TagModelDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "MutationdeleteTagModelauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.deleteTagModel.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.deleteTagModel.auth.1.res.vtl"
+            ]
+          ]
+        }
+      },
+      "DependsOn": [
+        "TagModelDataSource"
+      ]
+    },
+    "MutationDeleteTagModelDataResolverFnMutationDeleteTagModelDataResolverFnAppSyncFunction0D620915": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "TagModelDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "MutationDeleteTagModelDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.deleteTagModel.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.deleteTagModel.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      },
+      "DependsOn": [
+        "TagModelDataSource"
+      ]
+    },
+    "DeleteTagModelResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "deleteTagModel",
+        "TypeName": "Mutation",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "MutationdeleteTagModelauth0FunctionMutationdeleteTagModelauth0FunctionAppSyncFunction0ED78D85",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "MutationDeleteTagModelDataResolverFnMutationDeleteTagModelDataResolverFnAppSyncFunction0D620915",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deleteTagModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+              {
+                "Ref": "TagModelTable"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "SubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DBE8880": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "SubscriptiononCreateTagModelauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Subscription.onCreateTagModel.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "SubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction76F529D2": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "SubscriptionOnCreateTagModelDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Subscription.onCreateTagModel.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Subscription.onCreateTagModel.res.vtl"
+            ]
+          ]
+        }
+      }
+    },
+    "SubscriptiononCreateTagModelResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "onCreateTagModel",
+        "TypeName": "Subscription",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "SubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DBE8880",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "SubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction76F529D2",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreateTagModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "SubscriptiononUpdateTagModelResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "onUpdateTagModel",
+        "TypeName": "Subscription",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "SubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DBE8880",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "SubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction76F529D2",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdateTagModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "SubscriptiononDeleteTagModelResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "onDeleteTagModel",
+        "TypeName": "Subscription",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "SubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DBE8880",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "SubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction76F529D2",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteTagModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    }
+  },
+  "Outputs": {
+    "GetAttTagModelTableStreamArn": {
+      "Description": "Your DynamoDB table StreamArn.",
+      "Value": {
+        "Fn::GetAtt": [
+          "TagModelTable",
+          "StreamArn"
+        ]
+      },
+      "Export": {
+        "Name": {
+          "Fn::Join": [
+            ":",
+            [
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "GetAtt:TagModelTable:StreamArn"
+            ]
+          ]
+        }
+      }
+    },
+    "GetAttTagModelTableName": {
+      "Description": "Your DynamoDB table name.",
+      "Value": {
+        "Ref": "TagModelTable"
+      },
+      "Export": {
+        "Name": {
+          "Fn::Join": [
+            ":",
+            [
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "GetAtt:TagModelTable:Name"
+            ]
+          ]
+        }
+      }
+    },
+    "GetAttTagModelDataSourceName": {
+      "Description": "Your model DataSource name.",
+      "Value": {
+        "Fn::GetAtt": [
+          "TagModelDataSource",
+          "Name"
+        ]
+      },
+      "Export": {
+        "Name": {
+          "Fn::Join": [
+            ":",
+            [
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "GetAtt:TagModelDataSource:Name"
+            ]
+          ]
+        }
+      }
+    },
+    "transformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "QuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction6C31D970",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackTagModelMutationcreateTagModelinit0FunctionMutationcreateTagModelinit0FunctionAppSyncFunction5EDE70BEFunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MutationcreateTagModelinit0FunctionMutationcreateTagModelinit0FunctionAppSyncFunction82500DE1",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackTagModelMutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunction822C74CDFunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunctionC7CFCFA2",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackTagModelSubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction86AB6A8DFunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "SubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction76F529D2",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "QuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionBB24FF14",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackTagModelMutationcreateTagModelauth0FunctionMutationcreateTagModelauth0FunctionAppSyncFunction47FFD561FunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MutationcreateTagModelauth0FunctionMutationcreateTagModelauth0FunctionAppSyncFunctionFD52EA61",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackTagModelSubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DC94BF7FunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "SubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DBE8880",
+          "FunctionId"
+        ]
+      }
+    }
+  }
+}

@@ -10,17 +10,17 @@ const routes: Array<RouteConfig> = [
     path: "/",
     redirect: "/photos",
     component: HomeView,
-    // beforeEnter: async (to, _, next) => {
-    //   const isAuthenticated = await Auth.currentUserInfo();
+    beforeEnter: async (to, _, next) => {
+      const isAuthenticated = await Auth.currentUserInfo();
 
-    //   if (!isAuthenticated) {
-    //     console.log(1);
+      if (!isAuthenticated) {
+        console.log(1);
 
-    //     next("/login");
-    //   } else {
-    //     next();
-    //   }
-    // },
+        next("/login");
+      } else {
+        next();
+      }
+    },
     children: [
       {
         path: "/photos",

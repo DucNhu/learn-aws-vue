@@ -1,0 +1,365 @@
+
+type TagModel @aws_iam @aws_api_key {
+  id: ID!
+  name: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type TestModel @aws_iam @aws_cognito_user_pools @aws_api_key {
+  id: ID!
+  name: String
+  description: String
+  Test1nModels(filter: ModelTest1nModelFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelTest1nModelConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Test1nModel @aws_iam @aws_api_key {
+  id: ID!
+  content: String
+  testmodelID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type PhotoModel @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  name: String
+  desciption: String
+  tagId: String
+  view: Int
+  userId: String
+  status: Boolean
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelTagModelConnection @aws_api_key @aws_iam {
+  items: [TagModel]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelTagModelFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  and: [ModelTagModelFilterInput]
+  or: [ModelTagModelFilterInput]
+  not: ModelTagModelFilterInput
+}
+
+type Query {
+  getTagModel(id: ID!): TagModel @aws_api_key @aws_iam
+  listTagModels(filter: ModelTagModelFilterInput, limit: Int, nextToken: String): ModelTagModelConnection @aws_api_key @aws_iam
+  syncTagModels(filter: ModelTagModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelTagModelConnection @aws_api_key @aws_iam
+  getTestModel(id: ID!): TestModel @aws_iam @aws_cognito_user_pools
+  listTestModels(filter: ModelTestModelFilterInput, limit: Int, nextToken: String): ModelTestModelConnection @aws_iam @aws_cognito_user_pools
+  syncTestModels(filter: ModelTestModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelTestModelConnection @aws_iam @aws_cognito_user_pools
+  getTest1nModel(id: ID!): Test1nModel @aws_api_key @aws_iam
+  listTest1nModels(filter: ModelTest1nModelFilterInput, limit: Int, nextToken: String): ModelTest1nModelConnection @aws_api_key @aws_iam
+  syncTest1nModels(filter: ModelTest1nModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelTest1nModelConnection @aws_api_key @aws_iam
+  getPhotoModel(id: ID!): PhotoModel @aws_iam @aws_cognito_user_pools
+  listPhotoModels(filter: ModelPhotoModelFilterInput, limit: Int, nextToken: String): ModelPhotoModelConnection @aws_iam @aws_cognito_user_pools
+  syncPhotoModels(filter: ModelPhotoModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPhotoModelConnection @aws_iam @aws_cognito_user_pools
+}
+
+input ModelTagModelConditionInput {
+  name: ModelStringInput
+  and: [ModelTagModelConditionInput]
+  or: [ModelTagModelConditionInput]
+  not: ModelTagModelConditionInput
+}
+
+input CreateTagModelInput {
+  id: ID
+  name: String
+  _version: Int
+}
+
+input UpdateTagModelInput {
+  id: ID!
+  name: String
+  _version: Int
+}
+
+input DeleteTagModelInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createTagModel(input: CreateTagModelInput!, condition: ModelTagModelConditionInput): TagModel @aws_api_key @aws_iam
+  updateTagModel(input: UpdateTagModelInput!, condition: ModelTagModelConditionInput): TagModel @aws_api_key @aws_iam
+  deleteTagModel(input: DeleteTagModelInput!, condition: ModelTagModelConditionInput): TagModel @aws_api_key @aws_iam
+  createTestModel(input: CreateTestModelInput!, condition: ModelTestModelConditionInput): TestModel @aws_api_key @aws_iam
+  updateTestModel(input: UpdateTestModelInput!, condition: ModelTestModelConditionInput): TestModel @aws_api_key @aws_iam
+  deleteTestModel(input: DeleteTestModelInput!, condition: ModelTestModelConditionInput): TestModel @aws_api_key @aws_iam
+  createTest1nModel(input: CreateTest1nModelInput!, condition: ModelTest1nModelConditionInput): Test1nModel @aws_api_key @aws_iam
+  updateTest1nModel(input: UpdateTest1nModelInput!, condition: ModelTest1nModelConditionInput): Test1nModel @aws_api_key @aws_iam
+  deleteTest1nModel(input: DeleteTest1nModelInput!, condition: ModelTest1nModelConditionInput): Test1nModel @aws_api_key @aws_iam
+  createPhotoModel(input: CreatePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_iam @aws_cognito_user_pools
+  updatePhotoModel(input: UpdatePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_iam @aws_cognito_user_pools
+  deletePhotoModel(input: DeletePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_iam @aws_cognito_user_pools
+}
+
+type Subscription {
+  onCreateTagModel: TagModel @aws_subscribe(mutations: ["createTagModel"]) @aws_api_key @aws_iam
+  onUpdateTagModel: TagModel @aws_subscribe(mutations: ["updateTagModel"]) @aws_api_key @aws_iam
+  onDeleteTagModel: TagModel @aws_subscribe(mutations: ["deleteTagModel"]) @aws_api_key @aws_iam
+  onCreateTestModel: TestModel @aws_subscribe(mutations: ["createTestModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdateTestModel: TestModel @aws_subscribe(mutations: ["updateTestModel"]) @aws_iam @aws_cognito_user_pools
+  onDeleteTestModel: TestModel @aws_subscribe(mutations: ["deleteTestModel"]) @aws_iam @aws_cognito_user_pools
+  onCreateTest1nModel: Test1nModel @aws_subscribe(mutations: ["createTest1nModel"]) @aws_api_key @aws_iam
+  onUpdateTest1nModel: Test1nModel @aws_subscribe(mutations: ["updateTest1nModel"]) @aws_api_key @aws_iam
+  onDeleteTest1nModel: Test1nModel @aws_subscribe(mutations: ["deleteTest1nModel"]) @aws_api_key @aws_iam
+  onCreatePhotoModel: PhotoModel @aws_subscribe(mutations: ["createPhotoModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdatePhotoModel: PhotoModel @aws_subscribe(mutations: ["updatePhotoModel"]) @aws_iam @aws_cognito_user_pools
+  onDeletePhotoModel: PhotoModel @aws_subscribe(mutations: ["deletePhotoModel"]) @aws_iam @aws_cognito_user_pools
+}
+
+type ModelTestModelConnection @aws_iam @aws_cognito_user_pools {
+  items: [TestModel]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelTestModelFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  description: ModelStringInput
+  and: [ModelTestModelFilterInput]
+  or: [ModelTestModelFilterInput]
+  not: ModelTestModelFilterInput
+}
+
+input ModelTestModelConditionInput {
+  name: ModelStringInput
+  description: ModelStringInput
+  and: [ModelTestModelConditionInput]
+  or: [ModelTestModelConditionInput]
+  not: ModelTestModelConditionInput
+}
+
+input CreateTestModelInput {
+  id: ID
+  name: String
+  description: String
+  _version: Int
+}
+
+input UpdateTestModelInput {
+  id: ID!
+  name: String
+  description: String
+  _version: Int
+}
+
+input DeleteTestModelInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelTest1nModelConnection @aws_iam @aws_cognito_user_pools @aws_api_key {
+  items: [Test1nModel]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelTest1nModelFilterInput {
+  id: ModelIDInput
+  content: ModelStringInput
+  testmodelID: ModelIDInput
+  and: [ModelTest1nModelFilterInput]
+  or: [ModelTest1nModelFilterInput]
+  not: ModelTest1nModelFilterInput
+}
+
+input ModelTest1nModelConditionInput {
+  content: ModelStringInput
+  testmodelID: ModelIDInput
+  and: [ModelTest1nModelConditionInput]
+  or: [ModelTest1nModelConditionInput]
+  not: ModelTest1nModelConditionInput
+}
+
+input CreateTest1nModelInput {
+  id: ID
+  content: String
+  testmodelID: ID!
+  _version: Int
+}
+
+input UpdateTest1nModelInput {
+  id: ID!
+  content: String
+  testmodelID: ID
+  _version: Int
+}
+
+input DeleteTest1nModelInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelPhotoModelConnection @aws_iam @aws_cognito_user_pools {
+  items: [PhotoModel]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelPhotoModelFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  desciption: ModelStringInput
+  tagId: ModelStringInput
+  view: ModelIntInput
+  userId: ModelStringInput
+  status: ModelBooleanInput
+  and: [ModelPhotoModelFilterInput]
+  or: [ModelPhotoModelFilterInput]
+  not: ModelPhotoModelFilterInput
+}
+
+input ModelPhotoModelConditionInput {
+  name: ModelStringInput
+  desciption: ModelStringInput
+  tagId: ModelStringInput
+  view: ModelIntInput
+  userId: ModelStringInput
+  status: ModelBooleanInput
+  and: [ModelPhotoModelConditionInput]
+  or: [ModelPhotoModelConditionInput]
+  not: ModelPhotoModelConditionInput
+}
+
+input CreatePhotoModelInput {
+  id: ID
+  name: String
+  desciption: String
+  tagId: String
+  view: Int
+  userId: String
+  status: Boolean
+  _version: Int
+}
+
+input UpdatePhotoModelInput {
+  id: ID!
+  name: String
+  desciption: String
+  tagId: String
+  view: Int
+  userId: String
+  status: Boolean
+  _version: Int
+}
+
+input DeletePhotoModelInput {
+  id: ID!
+  _version: Int
+}
+

@@ -1,0 +1,169 @@
+{
+  "Resources": {
+    "TestModelTest1nModelsauth0FunctionTestModelTest1nModelsauth0FunctionAppSyncFunction9553C52F": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "TestModelTest1nModelsauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/TestModel.Test1nModels.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "TestModelTest1nModelsDataResolverFnTestModelTest1nModelsDataResolverFnAppSyncFunction29591FAC": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackTest1nModelNestedStackTest1nModelNestedStackResource007F951DOutputstransformerrootstackTest1nModelTest1nModelDataSource94F6F667Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "TestModelTest1nModelsDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/TestModel.Test1nModels.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/TestModel.Test1nModels.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      }
+    },
+    "TestModelTest1nModelsResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "Test1nModels",
+        "TypeName": "TestModel",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "TestModelTest1nModelsauth0FunctionTestModelTest1nModelsauth0FunctionAppSyncFunction9553C52F",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "TestModelTest1nModelsDataResolverFnTestModelTest1nModelsDataResolverFnAppSyncFunction29591FAC",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"TestModel\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"Test1nModels\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+              {
+                "Ref": "referencetotransformerrootstackTest1nModelNestedStackTest1nModelNestedStackResource007F951DOutputstransformerrootstackTest1nModelTest1nModelTableFDDA0F82Ref"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    }
+  },
+  "Parameters": {
+    "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackTest1nModelNestedStackTest1nModelNestedStackResource007F951DOutputstransformerrootstackTest1nModelTest1nModelDataSource94F6F667Name": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackTest1nModelNestedStackTest1nModelNestedStackResource007F951DOutputstransformerrootstackTest1nModelTest1nModelTableFDDA0F82Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+      "Type": "String"
+    }
+  }
+}

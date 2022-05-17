@@ -109,7 +109,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { dataStoreService } from "@/services/datastore-service";
 import { Predicates } from "aws-amplify";
 import { PhotoModel, TestModel } from "@/aws/models";
-import { PhotoModelsQuery as photoModelsQuery } from "@/grapqls/PhotoModelsQuery";
+import { UntitledModelsQuery as UntitledModelsQuery } from "@/grapqls/UntitledModelsQuery";
 
 @Component
 export default class HelloWorld extends Vue {
@@ -206,7 +206,7 @@ export default class HelloWorld extends Vue {
         }),
     ];
 
-    dataStoreService.getGrapql(photoModelsQuery).then((result: any) => {
+    dataStoreService.getGrapql(UntitledModelsQuery).then((result: any) => {
       console.log(result);
     });
   }

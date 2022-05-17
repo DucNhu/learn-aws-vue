@@ -3,6 +3,7 @@ type UserModel @aws_api_key @aws_iam {
   id: ID!
   full_name: String
   avatar: String
+  age: Int
   email: String
   gender: String
   birthday: String
@@ -239,6 +240,7 @@ input ModelUserModelFilterInput {
   id: ModelIDInput
   full_name: ModelStringInput
   avatar: ModelStringInput
+  age: ModelIntInput
   email: ModelStringInput
   gender: ModelStringInput
   birthday: ModelStringInput
@@ -284,6 +286,7 @@ type Query {
 input ModelUserModelConditionInput {
   full_name: ModelStringInput
   avatar: ModelStringInput
+  age: ModelIntInput
   email: ModelStringInput
   gender: ModelStringInput
   birthday: ModelStringInput
@@ -297,6 +300,7 @@ input CreateUserModelInput {
   id: ID
   full_name: String
   avatar: String
+  age: Int
   email: String
   gender: String
   birthday: String
@@ -308,6 +312,7 @@ input UpdateUserModelInput {
   id: ID!
   full_name: String
   avatar: String
+  age: Int
   email: String
   gender: String
   birthday: String

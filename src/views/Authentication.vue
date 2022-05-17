@@ -179,11 +179,11 @@ export default class Authentication extends Vue {
   loginEmail = "";
   loginEmailRules = [
     (v: any) => !!v || "Required",
-    (v: any) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+    (v: any) => /.+@+/.test(v) || "E-mail must be valid",
   ];
   emailRules = [
     (v: any) => !!v || "Required",
-    (v: any) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+    (v: any) => /.+@+/.test(v) || "E-mail must be valid",
   ];
 
   show1 = false;

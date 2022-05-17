@@ -261,11 +261,9 @@
       "Properties": {
         "TemplateURL": "https://s3.amazonaws.com/amplify-amplify15d09f3333fb4-staging-14540-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "Parameters": {
-          "CreateAPIKey": 1,
           "AppSyncApiName": "learnawsvue",
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
           "DynamoDBEnableServerSideEncryption": false,
-          "AuthModeLastUpdated": "2022-05-17T07:06:14.001Z",
           "AuthCognitoUserPoolId": {
             "Fn::GetAtt": [
               "authlearnawsvue71ada016",

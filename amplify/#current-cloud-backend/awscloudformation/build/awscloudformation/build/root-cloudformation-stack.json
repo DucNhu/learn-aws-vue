@@ -277,7 +277,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/0a5c2e28b3e0110fa26a9981ef2ef9b7261ad802",
+          "S3DeploymentRootKey": "amplify-appsync-files/98769e9538c7c26b42b304899cfcca9e29641ba3",
           "env": "staging"
         }
       }
@@ -357,7 +357,7 @@
           }
         },
         "Handler": "index.handler",
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 300,
         "Role": {
           "Fn::GetAtt": [

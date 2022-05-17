@@ -1,28 +1,165 @@
-type TagModel @model @auth(rules: [{allow: public}]) {
+type UserModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
-  name: String
+  full_name: String
+  avatar: String
+  email: String
+  gender: String
+  birthday: String
+  phone_number: String
+  BlogModels: [BlogModel] @hasMany(indexName: "byUserModel", fields: ["id"])
+  UntitledModels: [UntitledModel]
+    @hasMany(indexName: "byUserModel", fields: ["id"])
 }
 
-type TestModel @model @auth(rules: [{allow: public}]) {
+type BlogModel
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public }
+    ]
+  ) {
   id: ID!
-  name: String
-  description: String
-  Test1nModels: [Test1nModel] @hasMany(indexName: "byTestModel", fields: ["id"])
+  title: String
+  share: String
+  status: Boolean
+  usermodelID: ID! @index(name: "byUserModel")
+  TagModels: [TagModel] @manyToMany(relationName: "BlogModelTagModel")
+  LikeModels: [LikeModel] @hasMany(indexName: "byBlogModel", fields: ["id"])
+  PhotoModels: [PhotoModel] @hasMany(indexName: "byBlogModel", fields: ["id"])
+  ReplyCommentModels: [ReplyCommentModel]
+    @hasMany(indexName: "byBlogModel", fields: ["id"])
 }
 
-type Test1nModel @model @auth(rules: [{allow: public}]) {
+type CommentModel
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public }
+    ]
+  ) {
   id: ID!
   content: String
-  testmodelID: ID! @index(name: "byTestModel")
+  like: Int
+  blogmodelID: ID! @index(name: "byBlogModel")
+  ReplyCommentModels: [ReplyCommentModel]
+    @hasMany(indexName: "byCommentModel", fields: ["id"])
+  UserModel: UserModel @hasOne
 }
 
-type PhotoModel @model @auth(rules: [{allow: groups, groups: ["Admin"], operations: [read, create, update, delete]}, {allow: groups, groups: ["User"], operations: [read]}]) {
+type ReplyCommentModel
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public }
+    ]
+  ) {
+  id: ID!
+  content: String
+  blogmodelID: ID! @index(name: "byBlogModel")
+  commentmodelID: ID! @index(name: "byCommentModel")
+  like: Int
+  UserModel: UserModel @hasOne
+}
+
+type LikeModel
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["Admin"], operations: [read, create, delete] }
+      { allow: public, operations: [create, read, delete] }
+    ]
+  ) {
+  id: ID!
+  blogmodelID: ID! @index(name: "byBlogModel")
+  UserModel: UserModel @hasOne
+}
+
+type TagModel
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [create] }
+    ]
+  ) {
+  id: ID!
+  name: String
+  blogmodels: [BlogModel] @manyToMany(relationName: "BlogModelTagModel")
+}
+
+type PhotoModel
+  @model
+  @auth(
+    rules: [
+      { allow: public }
+      {
+        allow: groups
+        groups: ["Admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   name: String
   desciption: String
   tagId: String
   view: Int
-  userId: String
   status: Boolean
+  blogmodelID: ID! @index(name: "byBlogModel")
 }
- 
+
+type UntitledModel
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [create, read, update] }
+    ]
+  ) {
+  id: ID!
+  name: String
+  description: String
+  UntitledFkModels: [UntitledFkModel]
+    @hasMany(indexName: "byUntitledModel", fields: ["id"])
+  usermodelID: ID! @index(name: "byUserModel")
+}
+
+type UntitledFkModel
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  content: String!
+  untitledmodelID: ID! @index(name: "byUntitledModel")
+}

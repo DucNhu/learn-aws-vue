@@ -43,16 +43,16 @@
     "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-      "Type": "String"
-    },
     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
       "Type": "String"
     },
     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
       "Type": "String"
     },
-    "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId": {
+    "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId": {
       "Type": "String"
     },
     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -61,13 +61,19 @@
     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
       "Type": "String"
     },
-    "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationcreateTagModelinit0FunctionMutationcreateTagModelinit0FunctionAppSyncFunction5EDE70BEFunctionId": {
+    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
       "Type": "String"
     },
-    "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunction822C74CDFunctionId": {
+    "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction86AB6A8DFunctionId": {
+    "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId": {
       "Type": "String"
     }
   },
@@ -123,6 +129,10 @@
           {
             "AttributeName": "id",
             "AttributeType": "S"
+          },
+          {
+            "AttributeName": "blogmodelID",
+            "AttributeType": "S"
           }
         ],
         "BillingMode": {
@@ -134,6 +144,36 @@
             }
           ]
         },
+        "GlobalSecondaryIndexes": [
+          {
+            "IndexName": "byBlogModel",
+            "KeySchema": [
+              {
+                "AttributeName": "blogmodelID",
+                "KeyType": "HASH"
+              }
+            ],
+            "Projection": {
+              "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+              "Fn::If": [
+                "ShouldUsePayPerRequestBilling",
+                {
+                  "Ref": "AWS::NoValue"
+                },
+                {
+                  "ReadCapacityUnits": {
+                    "Ref": "DynamoDBModelTableReadIOPS"
+                  },
+                  "WriteCapacityUnits": {
+                    "Ref": "DynamoDBModelTableWriteIOPS"
+                  }
+                }
+              ]
+            }
+          }
+        ],
         "PointInTimeRecoverySpecification": {
           "Fn::If": [
             "ShouldUsePointInTimeRecovery",
@@ -256,7 +296,18 @@
                   ]
                 },
                 {
-                  "Ref": "AWS::NoValue"
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "PhotoModelTable",
+                          "Arn"
+                        ]
+                      },
+                      "/index/*"
+                    ]
+                  ]
                 }
               ]
             }
@@ -437,36 +488,6 @@
         "PhotoModelIAMRole48BF5421"
       ]
     },
-    "QuerygetPhotoModelauth0FunctionQuerygetPhotoModelauth0FunctionAppSyncFunction47946C5C": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerygetPhotoModelauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.getPhotoModel.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
     "QueryGetPhotoModelDataResolverFnQueryGetPhotoModelDataResolverFnAppSyncFunction0DCBB228": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -534,13 +555,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerygetPhotoModelauth0FunctionQuerygetPhotoModelauth0FunctionAppSyncFunction47946C5C",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -652,13 +670,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerygetPhotoModelauth0FunctionQuerygetPhotoModelauth0FunctionAppSyncFunction47946C5C",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -702,6 +717,42 @@
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
+    },
+    "QuerysyncPhotoModelspreAuth0FunctionQuerysyncPhotoModelspreAuth0FunctionAppSyncFunction6FFDBC02": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "PhotoModelDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerysyncPhotoModelspreAuth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.syncPhotoModels.preAuth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      },
+      "DependsOn": [
+        "PhotoModelDataSource"
+      ]
     },
     "QuerySyncPhotoModelsDataResolverFnQuerySyncPhotoModelsDataResolverFnAppSyncFunction888D1A41": {
       "Type": "AWS::AppSync::FunctionConfiguration",
@@ -771,12 +822,15 @@
           "Functions": [
             {
               "Fn::GetAtt": [
-                "QuerygetPhotoModelauth0FunctionQuerygetPhotoModelauth0FunctionAppSyncFunction47946C5C",
+                "QuerysyncPhotoModelspreAuth0FunctionQuerysyncPhotoModelspreAuth0FunctionAppSyncFunction6FFDBC02",
                 "FunctionId"
               ]
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
+              "Ref": "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
+            },
+            {
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -918,7 +972,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationcreateTagModelinit0FunctionMutationcreateTagModelinit0FunctionAppSyncFunction5EDE70BEFunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -927,7 +981,7 @@
               ]
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1090,7 +1144,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunction822C74CDFunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1099,7 +1153,7 @@
               ]
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1268,7 +1322,7 @@
               ]
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1313,36 +1367,6 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "SubscriptiononCreatePhotoModelauth0FunctionSubscriptiononCreatePhotoModelauth0FunctionAppSyncFunction5BCB2F0B": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononCreatePhotoModelauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreatePhotoModel.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
     "SubscriptiononCreatePhotoModelResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
@@ -1355,16 +1379,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreatePhotoModelauth0FunctionSubscriptiononCreatePhotoModelauth0FunctionAppSyncFunction5BCB2F0B",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction86AB6A8DFunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
             }
           ]
         },
@@ -1411,16 +1432,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreatePhotoModelauth0FunctionSubscriptiononCreatePhotoModelauth0FunctionAppSyncFunction5BCB2F0B",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction86AB6A8DFunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
             }
           ]
         },
@@ -1467,16 +1485,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreatePhotoModelauth0FunctionSubscriptiononCreatePhotoModelauth0FunctionAppSyncFunction5BCB2F0B",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction86AB6A8DFunctionId"
+              "Ref": "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
             }
           ]
         },
@@ -1574,6 +1589,19 @@
             ]
           ]
         }
+      }
+    },
+    "transformerrootstackPhotoModelPhotoModelDataSourceFF1C6701Name": {
+      "Value": {
+        "Fn::GetAtt": [
+          "PhotoModelDataSource",
+          "Name"
+        ]
+      }
+    },
+    "transformerrootstackPhotoModelPhotoModelTable3F7CC610Ref": {
+      "Value": {
+        "Ref": "PhotoModelTable"
       }
     }
   }

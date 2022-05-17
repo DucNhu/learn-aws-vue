@@ -4,9 +4,11 @@ import { schema } from './schema';
 
 
 
-const { TagModel, PhotoModel } = initSchema(schema);
+const { TagModel, TestModel, Test1nModel, PhotoModel } = initSchema(schema);
 
 export {
   TagModel,
+  TestModel,
+  Test1nModel,
   PhotoModel
 };

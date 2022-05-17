@@ -41,6 +41,132 @@ export const onDeleteTagModel = /* GraphQL */ `
     }
   }
 `;
+export const onCreateTestModel = /* GraphQL */ `
+  subscription OnCreateTestModel {
+    onCreateTestModel {
+      id
+      name
+      description
+      Test1nModels {
+        items {
+          id
+          content
+          testmodelID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateTestModel = /* GraphQL */ `
+  subscription OnUpdateTestModel {
+    onUpdateTestModel {
+      id
+      name
+      description
+      Test1nModels {
+        items {
+          id
+          content
+          testmodelID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteTestModel = /* GraphQL */ `
+  subscription OnDeleteTestModel {
+    onDeleteTestModel {
+      id
+      name
+      description
+      Test1nModels {
+        items {
+          id
+          content
+          testmodelID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateTest1nModel = /* GraphQL */ `
+  subscription OnCreateTest1nModel {
+    onCreateTest1nModel {
+      id
+      content
+      testmodelID
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateTest1nModel = /* GraphQL */ `
+  subscription OnUpdateTest1nModel {
+    onUpdateTest1nModel {
+      id
+      content
+      testmodelID
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteTest1nModel = /* GraphQL */ `
+  subscription OnDeleteTest1nModel {
+    onDeleteTest1nModel {
+      id
+      content
+      testmodelID
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreatePhotoModel = /* GraphQL */ `
   subscription OnCreatePhotoModel {
     onCreatePhotoModel {

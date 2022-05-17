@@ -1,6 +1,5 @@
 <template>
-  <h1>dijfv</h1>
-  <!-- <div class="hello">
+  <div class="hello">
     <h1 id="h1">{{ msg }}</h1>
 
     <v-data-table
@@ -12,7 +11,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>UntitledModel</v-toolbar-title>
+          <v-toolbar-title>TestModel</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
@@ -40,7 +39,7 @@
                   <v-row class="justify-center">
                     <v-col cols="12" md="4">
                       <v-text-field
-                        v-model="untitledModel.name"
+                        v-model="TestModel.name"
                         label="Name"
                         required
                       ></v-text-field>
@@ -48,8 +47,8 @@
 
                     <v-col cols="12" md="4">
                       <v-text-field
-                        v-model="untitledModel.Description"
-                        label="Description"
+                        v-model="TestModel.description"
+                        label="description"
                         required
                       ></v-text-field>
                     </v-col>
@@ -102,19 +101,19 @@
       disable-pagination
       hide-default-footer
     ></v-data-table>
-  </div> -->
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { dataStoreService } from "@/services/datastore-service";
 import { Predicates } from "aws-amplify";
-import { PhotoModel } from "@/aws/models";
+import { TestModel } from "@/aws/models";
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
-  // listData: UntitledModel[] = [];
+  // listData: TestModel[] = [];
 
   dialog = false;
   dialogDelete = false;
@@ -134,10 +133,10 @@ export default class HelloWorld extends Vue {
       value: "name",
     },
     {
-      text: "Description",
+      text: "description",
       align: "start",
       sortable: false,
-      value: "Description",
+      value: "description",
     },
     {
       text: "_version",
@@ -168,14 +167,14 @@ export default class HelloWorld extends Vue {
       value: "_version",
     },
     {
-      text: "untitledmodelID",
+      text: "TestModelID",
       align: "center",
       sortable: false,
-      value: "untitledmodelID",
+      value: "TestModelID",
     },
   ];
 
-  untitledModel: any = {};
+  TestModel: any = {};
 
   getGrapqlData: any = [];
   subscribes: any = [];
@@ -188,7 +187,7 @@ export default class HelloWorld extends Vue {
   //     .getGrapql(UntitledFkModelsQuery, { id: id })
   //     .then((result: any) => {
   //       const untitledFkModels =
-  //         result.data.listUntitledModels.items[0].UntitledFkModels;
+  //         result.data.listTestModels.items[0].UntitledFkModels;
   //       if (!untitledFkModels.length)
   //         this.getGrapqlData = untitledFkModels.items;
   //       else this.getGrapqlData = [];
@@ -197,7 +196,7 @@ export default class HelloWorld extends Vue {
 
   getData() {
     this.subscribes = dataStoreService
-      .obserQuery(PhotoModel, Predicates.ALL, {
+      .obserQuery(TestModel, Predicates.ALL, {
         sort: (s: any) => s.createdAt("DESCENDING"),
       })
       .subscribe((result: any) => {
@@ -207,48 +206,52 @@ export default class HelloWorld extends Vue {
       });
   }
 
-  // save() {
-  //   if (this.editedID == "") {
-  //     const data = new UntitledModel({
-  //       name: this.untitledModel.name,
-  //       Description: this.untitledModel.Description,
-  //     });
-  //     dataStoreService.create(data);
-  //     this.closeDialog();
-  //   } else {
-  //     dataStoreService.edit(UntitledModel, this.untitledModel);
-  //     this.closeDialog();
-  //   }
-  // }
+  save() {
+    if (this.editedID.trim()) {
+      console.log(this.TestModel);
 
-  // Table
-  // get formTitle() {
-  //   return this.editedID == "" ? "Create new" : "Edit '" + this.editedID + "'";
-  // }
+      const data = new TestModel({
+        name: this.TestModel.name,
+        description: this.TestModel.description,
+      });
+      dataStoreService.create(data);
+      this.closeDialog();
+    } else {
+      dataStoreService.edit(TestModel, this.TestModel);
+      this.closeDialog();
+    }
+  }
 
-  // editItem(item: UntitledModel) {
-  //   this.editedID = item.name;
-  //   this.untitledModel = Object.assign({}, item);
+  Table;
+  get formTitle() {
+    return this.editedID == "" ? "Create new" : "Edit '" + this.editedID + "'";
+  }
 
-  //   this.dialog = true;
-  // }
+  editItem(item: TestModel) {
+    console.log("edit");
 
-  // deleteItem(item: UntitledModel) {
-  //   this.editedID = item.name;
-  //   this.untitledModel = Object.assign({}, item);
+    this.editedID = item.name;
+    this.TestModel = Object.assign({}, item);
 
-  //   this.dialogDelete = true;
-  // }
+    this.dialog = true;
+  }
 
-  // deleteItemConfirm() {
-  //   dataStoreService.delete(UntitledModel, this.untitledModel);
-  //   this.closeDialog();
-  // }
+  deleteItem(item: TestModel) {
+    this.editedID = item.name;
+    this.TestModel = Object.assign({}, item);
 
-  // closeDialog() {
-  //   this.dialog = false;
-  //   this.dialogDelete = false;
-  // }
+    this.dialogDelete = true;
+  }
+
+  deleteItemConfirm() {
+    dataStoreService.delete(TestModel, this.TestModel);
+    this.closeDialog();
+  }
+
+  closeDialog() {
+    this.dialog = false;
+    this.dialogDelete = false;
+  }
 
   beforeDestroy() {
     // if (!this.subscribes.length)

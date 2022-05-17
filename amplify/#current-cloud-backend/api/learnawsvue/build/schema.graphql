@@ -1,5 +1,5 @@
 
-type TagModel @aws_iam @aws_api_key {
+type TagModel @aws_api_key @aws_iam {
   id: ID!
   name: String
   createdAt: AWSDateTime!
@@ -9,7 +9,7 @@ type TagModel @aws_iam @aws_api_key {
   _lastChangedAt: AWSTimestamp!
 }
 
-type TestModel @aws_iam @aws_cognito_user_pools @aws_api_key {
+type TestModel @aws_api_key @aws_iam {
   id: ID!
   name: String
   description: String
@@ -21,7 +21,7 @@ type TestModel @aws_iam @aws_cognito_user_pools @aws_api_key {
   _lastChangedAt: AWSTimestamp!
 }
 
-type Test1nModel @aws_iam @aws_api_key {
+type Test1nModel @aws_api_key @aws_iam {
   id: ID!
   content: String
   testmodelID: ID!
@@ -156,9 +156,9 @@ type Query {
   getTagModel(id: ID!): TagModel @aws_api_key @aws_iam
   listTagModels(filter: ModelTagModelFilterInput, limit: Int, nextToken: String): ModelTagModelConnection @aws_api_key @aws_iam
   syncTagModels(filter: ModelTagModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelTagModelConnection @aws_api_key @aws_iam
-  getTestModel(id: ID!): TestModel @aws_iam @aws_cognito_user_pools
-  listTestModels(filter: ModelTestModelFilterInput, limit: Int, nextToken: String): ModelTestModelConnection @aws_iam @aws_cognito_user_pools
-  syncTestModels(filter: ModelTestModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelTestModelConnection @aws_iam @aws_cognito_user_pools
+  getTestModel(id: ID!): TestModel @aws_api_key @aws_iam
+  listTestModels(filter: ModelTestModelFilterInput, limit: Int, nextToken: String): ModelTestModelConnection @aws_api_key @aws_iam
+  syncTestModels(filter: ModelTestModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelTestModelConnection @aws_api_key @aws_iam
   getTest1nModel(id: ID!): Test1nModel @aws_api_key @aws_iam
   listTest1nModels(filter: ModelTest1nModelFilterInput, limit: Int, nextToken: String): ModelTest1nModelConnection @aws_api_key @aws_iam
   syncTest1nModels(filter: ModelTest1nModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelTest1nModelConnection @aws_api_key @aws_iam
@@ -210,9 +210,9 @@ type Subscription {
   onCreateTagModel: TagModel @aws_subscribe(mutations: ["createTagModel"]) @aws_api_key @aws_iam
   onUpdateTagModel: TagModel @aws_subscribe(mutations: ["updateTagModel"]) @aws_api_key @aws_iam
   onDeleteTagModel: TagModel @aws_subscribe(mutations: ["deleteTagModel"]) @aws_api_key @aws_iam
-  onCreateTestModel: TestModel @aws_subscribe(mutations: ["createTestModel"]) @aws_iam @aws_cognito_user_pools
-  onUpdateTestModel: TestModel @aws_subscribe(mutations: ["updateTestModel"]) @aws_iam @aws_cognito_user_pools
-  onDeleteTestModel: TestModel @aws_subscribe(mutations: ["deleteTestModel"]) @aws_iam @aws_cognito_user_pools
+  onCreateTestModel: TestModel @aws_subscribe(mutations: ["createTestModel"]) @aws_api_key @aws_iam
+  onUpdateTestModel: TestModel @aws_subscribe(mutations: ["updateTestModel"]) @aws_api_key @aws_iam
+  onDeleteTestModel: TestModel @aws_subscribe(mutations: ["deleteTestModel"]) @aws_api_key @aws_iam
   onCreateTest1nModel: Test1nModel @aws_subscribe(mutations: ["createTest1nModel"]) @aws_api_key @aws_iam
   onUpdateTest1nModel: Test1nModel @aws_subscribe(mutations: ["updateTest1nModel"]) @aws_api_key @aws_iam
   onDeleteTest1nModel: Test1nModel @aws_subscribe(mutations: ["deleteTest1nModel"]) @aws_api_key @aws_iam
@@ -221,7 +221,7 @@ type Subscription {
   onDeletePhotoModel: PhotoModel @aws_subscribe(mutations: ["deletePhotoModel"]) @aws_iam @aws_cognito_user_pools
 }
 
-type ModelTestModelConnection @aws_iam @aws_cognito_user_pools {
+type ModelTestModelConnection @aws_api_key @aws_iam {
   items: [TestModel]!
   nextToken: String
   startedAt: AWSTimestamp
@@ -263,7 +263,7 @@ input DeleteTestModelInput {
   _version: Int
 }
 
-type ModelTest1nModelConnection @aws_iam @aws_cognito_user_pools @aws_api_key {
+type ModelTest1nModelConnection @aws_api_key @aws_iam {
   items: [Test1nModel]!
   nextToken: String
   startedAt: AWSTimestamp

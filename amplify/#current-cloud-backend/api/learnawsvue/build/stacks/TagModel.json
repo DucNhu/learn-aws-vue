@@ -1741,6 +1741,14 @@
         }
       }
     },
+    "transformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "QuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionBB24FF14",
+          "FunctionId"
+        ]
+      }
+    },
     "transformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId": {
       "Value": {
         "Fn::GetAtt": [
@@ -1757,30 +1765,6 @@
         ]
       }
     },
-    "transformerrootstackTagModelMutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunction822C74CDFunctionId": {
-      "Value": {
-        "Fn::GetAtt": [
-          "MutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunctionC7CFCFA2",
-          "FunctionId"
-        ]
-      }
-    },
-    "transformerrootstackTagModelSubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction86AB6A8DFunctionId": {
-      "Value": {
-        "Fn::GetAtt": [
-          "SubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction76F529D2",
-          "FunctionId"
-        ]
-      }
-    },
-    "transformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId": {
-      "Value": {
-        "Fn::GetAtt": [
-          "QuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionBB24FF14",
-          "FunctionId"
-        ]
-      }
-    },
     "transformerrootstackTagModelMutationcreateTagModelauth0FunctionMutationcreateTagModelauth0FunctionAppSyncFunction47FFD561FunctionId": {
       "Value": {
         "Fn::GetAtt": [
@@ -1789,10 +1773,26 @@
         ]
       }
     },
+    "transformerrootstackTagModelMutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunction822C74CDFunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunctionC7CFCFA2",
+          "FunctionId"
+        ]
+      }
+    },
     "transformerrootstackTagModelSubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DC94BF7FunctionId": {
       "Value": {
         "Fn::GetAtt": [
           "SubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DBE8880",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackTagModelSubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction86AB6A8DFunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "SubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction76F529D2",
           "FunctionId"
         ]
       }

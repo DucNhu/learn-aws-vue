@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "learnawsvue71ada016": {}
+        "learnawsvue71ada016": {},
+        "userPoolGroups": {}
       }
     }
   }

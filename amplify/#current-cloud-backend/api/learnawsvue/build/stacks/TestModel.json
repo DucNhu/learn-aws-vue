@@ -43,13 +43,13 @@
     "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-      "Type": "String"
-    },
     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
       "Type": "String"
     },
     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId": {
       "Type": "String"
     },
     "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId": {
@@ -64,7 +64,13 @@
     "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationcreateTagModelinit0FunctionMutationcreateTagModelinit0FunctionAppSyncFunction5EDE70BEFunctionId": {
       "Type": "String"
     },
+    "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationcreateTagModelauth0FunctionMutationcreateTagModelauth0FunctionAppSyncFunction47FFD561FunctionId": {
+      "Type": "String"
+    },
     "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunction822C74CDFunctionId": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DC94BF7FunctionId": {
       "Type": "String"
     },
     "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction86AB6A8DFunctionId": {
@@ -437,36 +443,6 @@
         "TestModelIAMRole12D182BF"
       ]
     },
-    "QuerygetTestModelauth0FunctionQuerygetTestModelauth0FunctionAppSyncFunction32F1F1B7": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerygetTestModelauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.getTestModel.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
     "QueryGetTestModelDataResolverFnQueryGetTestModelDataResolverFnAppSyncFunction665EFAF0": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -534,10 +510,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerygetTestModelauth0FunctionQuerygetTestModelauth0FunctionAppSyncFunction32F1F1B7",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId"
             },
             {
               "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
@@ -652,10 +625,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerygetTestModelauth0FunctionQuerygetTestModelauth0FunctionAppSyncFunction32F1F1B7",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId"
             },
             {
               "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
@@ -770,10 +740,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerygetTestModelauth0FunctionQuerygetTestModelauth0FunctionAppSyncFunction32F1F1B7",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId"
             },
             {
               "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
@@ -819,36 +786,6 @@
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "MutationcreateTestModelauth0FunctionMutationcreateTestModelauth0FunctionAppSyncFunction5B5B0A16": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationcreateTestModelauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Mutation.createTestModel.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "MutationCreateTestModelDataResolverFnMutationCreateTestModelDataResolverFnAppSyncFunction7F134722": {
@@ -921,10 +858,7 @@
               "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationcreateTagModelinit0FunctionMutationcreateTagModelinit0FunctionAppSyncFunction5EDE70BEFunctionId"
             },
             {
-              "Fn::GetAtt": [
-                "MutationcreateTestModelauth0FunctionMutationcreateTestModelauth0FunctionAppSyncFunction5B5B0A16",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationcreateTagModelauth0FunctionMutationcreateTagModelauth0FunctionAppSyncFunction47FFD561FunctionId"
             },
             {
               "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
@@ -1313,36 +1247,6 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "SubscriptiononCreateTestModelauth0FunctionSubscriptiononCreateTestModelauth0FunctionAppSyncFunction4BAB0117": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononCreateTestModelauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateTestModel.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
     "SubscriptiononCreateTestModelResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
@@ -1355,10 +1259,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreateTestModelauth0FunctionSubscriptiononCreateTestModelauth0FunctionAppSyncFunction4BAB0117",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DC94BF7FunctionId"
             },
             {
               "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
@@ -1411,10 +1312,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreateTestModelauth0FunctionSubscriptiononCreateTestModelauth0FunctionAppSyncFunction4BAB0117",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DC94BF7FunctionId"
             },
             {
               "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"
@@ -1467,10 +1365,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreateTestModelauth0FunctionSubscriptiononCreateTestModelauth0FunctionAppSyncFunction4BAB0117",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DC94BF7FunctionId"
             },
             {
               "Ref": "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId"

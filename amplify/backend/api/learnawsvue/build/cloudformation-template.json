@@ -67,7 +67,7 @@
         "GraphQLAPI": {
             "Type": "AWS::AppSync::GraphQLApi",
             "Properties": {
-                "AuthenticationType": "API_KEY",
+                "AuthenticationType": "AMAZON_COGNITO_USER_POOLS",
                 "Name": {
                     "Fn::Join": [
                         "",
@@ -84,20 +84,21 @@
                 },
                 "AdditionalAuthenticationProviders": [
                     {
-                        "AuthenticationType": "AWS_IAM"
+                        "AuthenticationType": "API_KEY"
                     },
                     {
-                        "AuthenticationType": "AMAZON_COGNITO_USER_POOLS",
-                        "UserPoolConfig": {
-                            "AwsRegion": {
-                                "Ref": "AWS::Region"
-                            },
-                            "UserPoolId": {
-                                "Ref": "AuthCognitoUserPoolId"
-                            }
-                        }
+                        "AuthenticationType": "AWS_IAM"
                     }
-                ]
+                ],
+                "UserPoolConfig": {
+                    "AwsRegion": {
+                        "Ref": "AWS::Region"
+                    },
+                    "DefaultAction": "ALLOW",
+                    "UserPoolId": {
+                        "Ref": "AuthCognitoUserPoolId"
+                    }
+                }
             }
         },
         "GraphQLAPITransformerSchema3CB2AE18": {
@@ -136,8 +137,8 @@
                         "ApiId"
                     ]
                 },
-                "Description": "api key description",
-                "Expires": 1655343602
+                "Description": "api",
+                "Expires": 1653376037
             }
         },
         "GraphQLAPINONEDS95A13CF0": {
@@ -451,17 +452,17 @@
                             "ApiId"
                         ]
                     },
-                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-                        "Fn::GetAtt": [
-                            "GraphQLAPINONEDS95A13CF0",
-                            "Name"
-                        ]
-                    },
                     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
                         "Ref": "S3DeploymentBucket"
                     },
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
+                    },
+                    "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId": {
+                        "Fn::GetAtt": [
+                            "TagModel",
+                            "Outputs.transformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId"
+                        ]
                     },
                     "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelpostAuth0FunctionQuerygetTagModelpostAuth0FunctionAppSyncFunction59280190FunctionId": {
                         "Fn::GetAtt": [
@@ -481,10 +482,22 @@
                             "Outputs.transformerrootstackTagModelMutationcreateTagModelinit0FunctionMutationcreateTagModelinit0FunctionAppSyncFunction5EDE70BEFunctionId"
                         ]
                     },
+                    "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationcreateTagModelauth0FunctionMutationcreateTagModelauth0FunctionAppSyncFunction47FFD561FunctionId": {
+                        "Fn::GetAtt": [
+                            "TagModel",
+                            "Outputs.transformerrootstackTagModelMutationcreateTagModelauth0FunctionMutationcreateTagModelauth0FunctionAppSyncFunction47FFD561FunctionId"
+                        ]
+                    },
                     "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelMutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunction822C74CDFunctionId": {
                         "Fn::GetAtt": [
                             "TagModel",
                             "Outputs.transformerrootstackTagModelMutationupdateTagModelinit0FunctionMutationupdateTagModelinit0FunctionAppSyncFunction822C74CDFunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DC94BF7FunctionId": {
+                        "Fn::GetAtt": [
+                            "TagModel",
+                            "Outputs.transformerrootstackTagModelSubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DC94BF7FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptionOnCreateTagModelDataResolverFnSubscriptionOnCreateTagModelDataResolverFnAppSyncFunction86AB6A8DFunctionId": {

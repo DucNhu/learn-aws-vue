@@ -1,11 +1,11 @@
 <template>
-  <!-- <amplify-authenticator>
+  <amplify-authenticator>
     <div>
       My App
       <amplify-sign-out></amplify-sign-out>
     </div>
-  </amplify-authenticator> -->
-  <v-dialog v-model="dialog" persistent max-width="600px" min-width="360px">
+  </amplify-authenticator>
+  <!-- <v-dialog v-model="dialog" persistent max-width="600px" min-width="360px">
     <div>
       <v-tabs
         v-model="tab"
@@ -145,7 +145,7 @@
         </v-tab-item>
       </v-tabs>
     </div>
-  </v-dialog>
+  </v-dialog> -->
 </template>
 
 <script lang="ts">
@@ -237,6 +237,10 @@ export default class Authentication extends Vue {
   async signIn() {
     try {
       const user = await Auth.signIn(this.user.username, this.user.password);
+      Auth.currentUserPoolUser().then((resul) => {
+        console.log(resul);
+      });
+
       if (user.signInUserSession.accessToken) {
         router.push("/photos");
       }

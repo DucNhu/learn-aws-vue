@@ -3,7 +3,7 @@ type TagModel @model @auth(rules: [{allow: public}]) {
   name: String
 }
 
-type TestModel @model @auth(rules: [{allow: private, operations: [read]}]) {
+type TestModel @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   description: String
@@ -16,7 +16,7 @@ type Test1nModel @model @auth(rules: [{allow: public}]) {
   testmodelID: ID! @index(name: "byTestModel")
 }
 
-type PhotoModel @model @auth(rules: [{allow: groups, groups: ["User"], operations: [read]}, {allow: groups, groups: ["Admin"], operations: [read, create, update, delete]}]) {
+type PhotoModel @model @auth(rules: [{allow: groups, groups: ["Admin"], operations: [read, create, update, delete]}, {allow: groups, groups: ["User"], operations: [read]}]) {
   id: ID!
   name: String
   desciption: String

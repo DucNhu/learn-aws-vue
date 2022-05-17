@@ -1,28 +1,94 @@
-type TagModel @model @auth(rules: [{allow: public}]) {
+type UserModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
-  name: String
+  full_name: String
+  avatar: String
+  email: String
+  age: String
+  gender: String
+  birthday: String
+  phone_number: String
 }
 
-type TestModel @model @auth(rules: [{allow: private, operations: [read]}]) {
-  id: ID!
-  name: String
-  description: String
-  Test1nModels: [Test1nModel] @hasMany(indexName: "byTestModel", fields: ["id"])
-}
-
-type Test1nModel @model @auth(rules: [{allow: public}]) {
+type ReplyCommentModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
   content: String
-  testmodelID: ID! @index(name: "byTestModel")
 }
 
-type PhotoModel @model @auth(rules: [{allow: groups, groups: ["User"], operations: [read]}, {allow: groups, groups: ["Admin"], operations: [read, create, update, delete]}]) {
+type CommentModel
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["User"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  content: String
+  like: Int
+}
+
+type LikeModel
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["User"], operations: [create, read, update] }
+    ]
+  ) {
+  id: ID!
+}
+
+type BlogModel @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  title: String
+  share: String
+  status: Boolean
+}
+
+type TagModel @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  name: String
+}
+
+type UntitledModel
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: groups, groups: ["User"], operations: [read] }
+    ]
+  ) {
+  id: ID!
+  name: String
+  Description: String
+  UntitledFkModels: [UntitledFkModel]
+    @hasMany(indexName: "byUntitledModel", fields: ["id"])
+}
+
+type PhotoModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String
   desciption: String
   tagId: String
   view: Int
-  userId: String
   status: Boolean
 }
- 
+
+type UntitledFkModel
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [create, read, update] }
+      { allow: groups, groups: ["User"], operations: [read, create, update] }
+    ]
+  ) {
+  id: ID!
+  content: String!
+  untitledmodelID: ID! @index(name: "byUntitledModel")
+}

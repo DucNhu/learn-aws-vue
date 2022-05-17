@@ -16,7 +16,7 @@ $util.unauthorized()
 #end
 #if( $util.authType() == "User Pool Authorization" )
   #if( !$isAuthorized )
-    #set( $staticGroupRoles = [{"claim":"cognito:groups","entity":"User"},{"claim":"cognito:groups","entity":"Admin"}] )
+    #set( $staticGroupRoles = [{"claim":"cognito:groups","entity":"Admin"},{"claim":"cognito:groups","entity":"User"}] )
     #foreach( $groupRole in $staticGroupRoles )
       #set( $groupsInToken = $util.defaultIfNull($ctx.identity.claims.get($groupRole.claim), []) )
       #if( $groupsInToken.contains($groupRole.entity) )

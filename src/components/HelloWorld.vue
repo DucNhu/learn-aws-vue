@@ -108,12 +108,13 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { dataStoreService } from "@/services/datastore-service";
 import { Predicates } from "aws-amplify";
-import { TestModel } from "@/aws/models";
+import { PhotoModel, TestModel } from "@/aws/models";
+import { PhotoModelsQuery as photoModelsQuery } from "@/grapqls/PhotoModelsQuery";
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
-  // listData: TestModel[] = [];
+  listData: TestModel[] = [];
 
   dialog = false;
   dialogDelete = false;
@@ -195,21 +196,23 @@ export default class HelloWorld extends Vue {
   // }
 
   getData() {
-    this.subscribes = dataStoreService
-      .obserQuery(TestModel, Predicates.ALL, {
-        sort: (s: any) => s.createdAt("DESCENDING"),
-      })
-      .subscribe((result: any) => {
-        console.log(result);
+    this.subscribes = [
+      dataStoreService
+        .obserQuery(TestModel, Predicates.ALL, {
+          sort: (s: any) => s.createdAt("DESCENDING"),
+        })
+        .subscribe((result: any) => {
+          this.listData = result.items;
+        }),
+    ];
 
-        // this.listData = result.items;
-      });
+    dataStoreService.getGrapql(photoModelsQuery).then((result: any) => {
+      console.log(result);
+    });
   }
 
   save() {
     if (this.editedID.trim()) {
-      console.log(this.TestModel);
-
       const data = new TestModel({
         name: this.TestModel.name,
         description: this.TestModel.description,
@@ -254,10 +257,10 @@ export default class HelloWorld extends Vue {
   }
 
   beforeDestroy() {
-    // if (!this.subscribes.length)
-    //   this.subscribes.forEach((e: any) => {
-    //     e.unsubscribe();
-    //   });
+    if (!this.subscribes.length)
+      this.subscribes.forEach((e: any) => {
+        e.unsubscribe();
+      });
   }
 }
 </script>

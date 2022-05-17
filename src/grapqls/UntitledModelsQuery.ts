@@ -1,8 +1,19 @@
 export const UntitledModelsQuery = `
-  mutation MyMutation {
-    createUntitledModel(input: {name: "Test create new"}) {
+
+query MyQuery {
+  listUntitledModels {
+    items {
+      updatedAt
+      name
       id
+      usermodelID
     }
   }
-  
+}
 `;
+// mutation MyMutation {
+//   createUntitledModel(input: {name: "Test create", usermodelID: "123456"}) {
+//     id
+//     usermodelID
+//   }
+// }

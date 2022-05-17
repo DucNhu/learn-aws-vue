@@ -11,7 +11,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>TestModel</v-toolbar-title>
+          <v-toolbar-title>UntitledModel</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
@@ -39,7 +39,7 @@
                   <v-row class="justify-center">
                     <v-col cols="12" md="4">
                       <v-text-field
-                        v-model="TestModel.name"
+                        v-model="UntitledModel.name"
                         label="Name"
                         required
                       ></v-text-field>
@@ -47,7 +47,7 @@
 
                     <v-col cols="12" md="4">
                       <v-text-field
-                        v-model="TestModel.description"
+                        v-model="UntitledModel.description"
                         label="description"
                         required
                       ></v-text-field>
@@ -108,13 +108,13 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { dataStoreService } from "@/services/datastore-service";
 import { Predicates } from "aws-amplify";
-import { PhotoModel, TestModel } from "@/aws/models";
+import { UntitledModel } from "@/aws/models";
 import { UntitledModelsQuery as UntitledModelsQuery } from "@/grapqls/UntitledModelsQuery";
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
-  listData: TestModel[] = [];
+  listData: UntitledModel[] = [];
 
   dialog = false;
   dialogDelete = false;
@@ -168,14 +168,14 @@ export default class HelloWorld extends Vue {
       value: "_version",
     },
     {
-      text: "TestModelID",
+      text: "UntitledModelID",
       align: "center",
       sortable: false,
-      value: "TestModelID",
+      value: "UntitledModelID",
     },
   ];
 
-  TestModel: any = {};
+  UntitledModel: any = {};
 
   getGrapqlData: any = [];
   subscribes: any = [];
@@ -188,7 +188,7 @@ export default class HelloWorld extends Vue {
   //     .getGrapql(UntitledFkModelsQuery, { id: id })
   //     .then((result: any) => {
   //       const untitledFkModels =
-  //         result.data.listTestModels.items[0].UntitledFkModels;
+  //         result.data.listUntitledModels.items[0].UntitledFkModels;
   //       if (!untitledFkModels.length)
   //         this.getGrapqlData = untitledFkModels.items;
   //       else this.getGrapqlData = [];
@@ -198,31 +198,31 @@ export default class HelloWorld extends Vue {
   getData() {
     this.subscribes = [
       dataStoreService
-        .obserQuery(TestModel, Predicates.ALL, {
+        .obserQuery(UntitledModel, Predicates.ALL, {
           sort: (s: any) => s.createdAt("DESCENDING"),
         })
         .subscribe((result: any) => {
+          console.log(result);
           this.listData = result.items;
         }),
     ];
-
     dataStoreService.getGrapql(UntitledModelsQuery).then((result: any) => {
       console.log(result);
     });
   }
 
   save() {
-    if (this.editedID.trim()) {
-      const data = new TestModel({
-        name: this.TestModel.name,
-        description: this.TestModel.description,
-      });
-      dataStoreService.create(data);
-      this.closeDialog();
-    } else {
-      dataStoreService.edit(TestModel, this.TestModel);
-      this.closeDialog();
-    }
+    // if (this.editedID.trim()) {
+    //   const data = new UntitledModel({
+    //     name: this.UntitledModel.name,
+    //     description: this.UntitledModel.description,
+    //   });
+    //   dataStoreService.create(data);
+    //   this.closeDialog();
+    // } else {
+    //   dataStoreService.edit(UntitledModel, this.UntitledModel);
+    //   this.closeDialog();
+    // }
   }
 
   Table;
@@ -230,24 +230,24 @@ export default class HelloWorld extends Vue {
     return this.editedID == "" ? "Create new" : "Edit '" + this.editedID + "'";
   }
 
-  editItem(item: TestModel) {
+  editItem(item: UntitledModel) {
     console.log("edit");
 
     this.editedID = item.name;
-    this.TestModel = Object.assign({}, item);
+    this.UntitledModel = Object.assign({}, item);
 
     this.dialog = true;
   }
 
-  deleteItem(item: TestModel) {
+  deleteItem(item: UntitledModel) {
     this.editedID = item.name;
-    this.TestModel = Object.assign({}, item);
+    this.UntitledModel = Object.assign({}, item);
 
     this.dialogDelete = true;
   }
 
   deleteItemConfirm() {
-    dataStoreService.delete(TestModel, this.TestModel);
+    dataStoreService.delete(UntitledModel, this.UntitledModel);
     this.closeDialog();
   }
 

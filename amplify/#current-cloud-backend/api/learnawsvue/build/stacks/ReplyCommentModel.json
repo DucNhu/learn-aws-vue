@@ -131,11 +131,11 @@
             "AttributeType": "S"
           },
           {
-            "AttributeName": "blogmodelID",
+            "AttributeName": "blogModelReplyCommentModelsId",
             "AttributeType": "S"
           },
           {
-            "AttributeName": "commentmodelID",
+            "AttributeName": "commentModelReplyCommentModelsId",
             "AttributeType": "S"
           }
         ],
@@ -150,10 +150,10 @@
         },
         "GlobalSecondaryIndexes": [
           {
-            "IndexName": "byBlogModel",
+            "IndexName": "gsi-BlogModel.ReplyCommentModels",
             "KeySchema": [
               {
-                "AttributeName": "blogmodelID",
+                "AttributeName": "blogModelReplyCommentModelsId",
                 "KeyType": "HASH"
               }
             ],
@@ -178,10 +178,10 @@
             }
           },
           {
-            "IndexName": "byCommentModel",
+            "IndexName": "gsi-CommentModel.ReplyCommentModels",
             "KeySchema": [
               {
-                "AttributeName": "commentmodelID",
+                "AttributeName": "commentModelReplyCommentModelsId",
                 "KeyType": "HASH"
               }
             ],
@@ -750,42 +750,6 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "QuerysyncReplyCommentModelspreAuth0FunctionQuerysyncReplyCommentModelspreAuth0FunctionAppSyncFunctionEBD36A7E": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Fn::GetAtt": [
-            "ReplyCommentModelDataSource",
-            "Name"
-          ]
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerysyncReplyCommentModelspreAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.syncReplyCommentModels.preAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      },
-      "DependsOn": [
-        "ReplyCommentModelDataSource"
-      ]
-    },
     "QuerySyncReplyCommentModelsDataResolverFnQuerySyncReplyCommentModelsDataResolverFnAppSyncFunction020147E7": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -852,12 +816,6 @@
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
-            {
-              "Fn::GetAtt": [
-                "QuerysyncReplyCommentModelspreAuth0FunctionQuerysyncReplyCommentModelspreAuth0FunctionAppSyncFunctionEBD36A7E",
-                "FunctionId"
-              ]
-            },
             {
               "Ref": "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             },

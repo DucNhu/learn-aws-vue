@@ -277,7 +277,30 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/43db90b45f8241438b0ffa2bf9ba1596f50e0053",
+          "S3DeploymentRootKey": "amplify-appsync-files/829589cd06c049a8b00fbce85b82731446adfb03",
+          "env": "staging"
+        }
+      }
+    },
+    "functionaddUser": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify15d09f3333fb4-staging-14540-deployment/amplify-cfn-templates/function/addUser-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
+          "s3Key": "amplify-builds/addUser-4f4c344d526d6b2f5948-build.zip",
+          "apilearnawsvueGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apilearnawsvue",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apilearnawsvueGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apilearnawsvue",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
           "env": "staging"
         }
       }

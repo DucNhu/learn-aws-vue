@@ -149,9 +149,12 @@
 </template>
 
 <script lang="ts">
+import { UserModel } from "@/aws/models";
 import router from "@/router";
+import { dataStoreService } from "@/services/datastore-service";
 import Auth from "@aws-amplify/auth";
 import { Component, Vue } from "vue-property-decorator";
+import { createUserModel } from "@/grapqls/creates/CreateUser";
 
 @Component
 export default class Authentication extends Vue {
@@ -196,6 +199,7 @@ export default class Authentication extends Vue {
     return () => this.user.password === this.verify || "Password must match";
   }
 
+  newUser: any;
   // @Ref("registerForm") $refForm: any;
 
   // validate() {
@@ -218,8 +222,10 @@ export default class Authentication extends Vue {
     try {
       await Auth.signUp({
         ...this.user,
+      }).then((newUser) => {
+        this.newUser = newUser;
+        this.confirm_account = true;
       });
-      this.confirm_account = true;
     } catch (error) {
       console.log("error signing up:", error);
     }
@@ -227,8 +233,12 @@ export default class Authentication extends Vue {
 
   async confirmAccount() {
     try {
-      await Auth.confirmSignUp(this.user.attributes.email, this.confirm_code);
-      this.signIn();
+      await Auth.confirmSignUp(
+        this.user.attributes.email,
+        this.confirm_code
+      ).then(() => {
+        this.signIn();
+      });
     } catch (error) {
       console.log("error signing up:", error);
     }
@@ -239,6 +249,14 @@ export default class Authentication extends Vue {
       const user = await Auth.signIn(this.user.username, this.user.password);
       Auth.currentUserPoolUser().then((resul) => {
         console.log(resul);
+        // const user = {
+        //   $id: this.newUser.userSub,
+        //   $email: this.user.attributes.email,
+        //   $full_name: this.user.username,
+        // };
+        //  dataStoreService.grapql(createUserModel, user).then((_) => {
+        //   console.log(_);
+        // });
       });
 
       if (user.signInUserSession.accessToken) {

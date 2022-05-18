@@ -25,7 +25,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Clocks</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -42,7 +42,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Plants</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -59,7 +59,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Morning</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -76,7 +76,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Pinky</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -94,7 +94,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Hangers</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -111,7 +111,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Perfumes</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -128,7 +128,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Bus</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -145,7 +145,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>New York</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -162,7 +162,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Abstract</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -179,7 +179,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Flowers</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -196,7 +196,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Rosy</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -213,7 +213,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Rocki</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -230,7 +230,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Purple</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -247,7 +247,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Sea</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -264,7 +264,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Turtle</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">
@@ -281,7 +281,7 @@
           />
           <figcaption class="d-flex align-items-center justify-content-center">
             <h2>Peace</h2>
-            <a href="photo-detail.html">View more</a>
+            <a href="">View more</a>
           </figcaption>
         </figure>
         <div class="d-flex justify-content-between tm-text-gray">

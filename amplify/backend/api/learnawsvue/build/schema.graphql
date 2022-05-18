@@ -22,7 +22,6 @@ type BlogModel @aws_api_key @aws_iam @aws_cognito_user_pools {
   title: String
   share: String
   status: Boolean
-  usermodelID: ID!
   TagModels(filter: ModelBlogModelTagModelFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBlogModelTagModelConnection
   LikeModels(filter: ModelLikeModelFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelLikeModelConnection
   PhotoModels(filter: ModelPhotoModelFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPhotoModelConnection
@@ -32,13 +31,13 @@ type BlogModel @aws_api_key @aws_iam @aws_cognito_user_pools {
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
+  userModelBlogModelsId: ID
 }
 
 type CommentModel @aws_api_key @aws_iam @aws_cognito_user_pools {
   id: ID!
   content: String
   like: Int
-  blogmodelID: ID!
   ReplyCommentModels(filter: ModelReplyCommentModelFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelReplyCommentModelConnection
   UserModel: UserModel
   createdAt: AWSDateTime!
@@ -52,8 +51,6 @@ type CommentModel @aws_api_key @aws_iam @aws_cognito_user_pools {
 type ReplyCommentModel @aws_api_key @aws_iam @aws_cognito_user_pools {
   id: ID!
   content: String
-  blogmodelID: ID!
-  commentmodelID: ID!
   like: Int
   UserModel: UserModel
   createdAt: AWSDateTime!
@@ -61,18 +58,20 @@ type ReplyCommentModel @aws_api_key @aws_iam @aws_cognito_user_pools {
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
+  blogModelReplyCommentModelsId: ID
+  commentModelReplyCommentModelsId: ID
   replyCommentModelUserModelId: ID
 }
 
 type LikeModel @aws_api_key @aws_iam @aws_cognito_user_pools {
   id: ID!
-  blogmodelID: ID!
   UserModel: UserModel
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
+  blogModelLikeModelsId: ID
   likeModelUserModelId: ID
 }
 
@@ -94,12 +93,12 @@ type PhotoModel @aws_api_key @aws_iam @aws_cognito_user_pools {
   tagId: String
   view: Int
   status: Boolean
-  blogmodelID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
+  blogModelPhotoModelsId: ID
 }
 
 type UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools {
@@ -107,23 +106,23 @@ type UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools {
   name: String
   description: String
   UntitledFkModels(filter: ModelUntitledFkModelFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelUntitledFkModelConnection
-  usermodelID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
+  userModelUntitledModelsId: ID
 }
 
 type UntitledFkModel @aws_api_key @aws_iam @aws_cognito_user_pools {
   id: ID!
   content: String!
-  untitledmodelID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
+  untitledModelUntitledFkModelsId: ID
 }
 
 type BlogModelTagModel @aws_api_key @aws_iam @aws_cognito_user_pools {
@@ -402,20 +401,20 @@ input ModelBlogModelFilterInput {
   title: ModelStringInput
   share: ModelStringInput
   status: ModelBooleanInput
-  usermodelID: ModelIDInput
   and: [ModelBlogModelFilterInput]
   or: [ModelBlogModelFilterInput]
   not: ModelBlogModelFilterInput
+  userModelBlogModelsId: ModelIDInput
 }
 
 input ModelBlogModelConditionInput {
   title: ModelStringInput
   share: ModelStringInput
   status: ModelBooleanInput
-  usermodelID: ModelIDInput
   and: [ModelBlogModelConditionInput]
   or: [ModelBlogModelConditionInput]
   not: ModelBlogModelConditionInput
+  userModelBlogModelsId: ModelIDInput
 }
 
 input CreateBlogModelInput {
@@ -423,8 +422,8 @@ input CreateBlogModelInput {
   title: String
   share: String
   status: Boolean
-  usermodelID: ID!
   _version: Int
+  userModelBlogModelsId: ID
 }
 
 input UpdateBlogModelInput {
@@ -432,8 +431,8 @@ input UpdateBlogModelInput {
   title: String
   share: String
   status: Boolean
-  usermodelID: ID
   _version: Int
+  userModelBlogModelsId: ID
 }
 
 input DeleteBlogModelInput {
@@ -451,7 +450,6 @@ input ModelCommentModelFilterInput {
   id: ModelIDInput
   content: ModelStringInput
   like: ModelIntInput
-  blogmodelID: ModelIDInput
   and: [ModelCommentModelFilterInput]
   or: [ModelCommentModelFilterInput]
   not: ModelCommentModelFilterInput
@@ -461,7 +459,6 @@ input ModelCommentModelFilterInput {
 input ModelCommentModelConditionInput {
   content: ModelStringInput
   like: ModelIntInput
-  blogmodelID: ModelIDInput
   and: [ModelCommentModelConditionInput]
   or: [ModelCommentModelConditionInput]
   not: ModelCommentModelConditionInput
@@ -472,7 +469,6 @@ input CreateCommentModelInput {
   id: ID
   content: String
   like: Int
-  blogmodelID: ID!
   _version: Int
   commentModelUserModelId: ID
 }
@@ -481,7 +477,6 @@ input UpdateCommentModelInput {
   id: ID!
   content: String
   like: Int
-  blogmodelID: ID
   _version: Int
   commentModelUserModelId: ID
 }
@@ -500,43 +495,43 @@ type ModelReplyCommentModelConnection @aws_api_key @aws_iam @aws_cognito_user_po
 input ModelReplyCommentModelFilterInput {
   id: ModelIDInput
   content: ModelStringInput
-  blogmodelID: ModelIDInput
-  commentmodelID: ModelIDInput
   like: ModelIntInput
   and: [ModelReplyCommentModelFilterInput]
   or: [ModelReplyCommentModelFilterInput]
   not: ModelReplyCommentModelFilterInput
+  blogModelReplyCommentModelsId: ModelIDInput
+  commentModelReplyCommentModelsId: ModelIDInput
   replyCommentModelUserModelId: ModelIDInput
 }
 
 input ModelReplyCommentModelConditionInput {
   content: ModelStringInput
-  blogmodelID: ModelIDInput
-  commentmodelID: ModelIDInput
   like: ModelIntInput
   and: [ModelReplyCommentModelConditionInput]
   or: [ModelReplyCommentModelConditionInput]
   not: ModelReplyCommentModelConditionInput
+  blogModelReplyCommentModelsId: ModelIDInput
+  commentModelReplyCommentModelsId: ModelIDInput
   replyCommentModelUserModelId: ModelIDInput
 }
 
 input CreateReplyCommentModelInput {
   id: ID
   content: String
-  blogmodelID: ID!
-  commentmodelID: ID!
   like: Int
   _version: Int
+  blogModelReplyCommentModelsId: ID
+  commentModelReplyCommentModelsId: ID
   replyCommentModelUserModelId: ID
 }
 
 input UpdateReplyCommentModelInput {
   id: ID!
   content: String
-  blogmodelID: ID
-  commentmodelID: ID
   like: Int
   _version: Int
+  blogModelReplyCommentModelsId: ID
+  commentModelReplyCommentModelsId: ID
   replyCommentModelUserModelId: ID
 }
 
@@ -553,32 +548,32 @@ type ModelLikeModelConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
 
 input ModelLikeModelFilterInput {
   id: ModelIDInput
-  blogmodelID: ModelIDInput
   and: [ModelLikeModelFilterInput]
   or: [ModelLikeModelFilterInput]
   not: ModelLikeModelFilterInput
+  blogModelLikeModelsId: ModelIDInput
   likeModelUserModelId: ModelIDInput
 }
 
 input ModelLikeModelConditionInput {
-  blogmodelID: ModelIDInput
   and: [ModelLikeModelConditionInput]
   or: [ModelLikeModelConditionInput]
   not: ModelLikeModelConditionInput
+  blogModelLikeModelsId: ModelIDInput
   likeModelUserModelId: ModelIDInput
 }
 
 input CreateLikeModelInput {
   id: ID
-  blogmodelID: ID!
   _version: Int
+  blogModelLikeModelsId: ID
   likeModelUserModelId: ID
 }
 
 input UpdateLikeModelInput {
   id: ID!
-  blogmodelID: ID
   _version: Int
+  blogModelLikeModelsId: ID
   likeModelUserModelId: ID
 }
 
@@ -638,10 +633,10 @@ input ModelPhotoModelFilterInput {
   tagId: ModelStringInput
   view: ModelIntInput
   status: ModelBooleanInput
-  blogmodelID: ModelIDInput
   and: [ModelPhotoModelFilterInput]
   or: [ModelPhotoModelFilterInput]
   not: ModelPhotoModelFilterInput
+  blogModelPhotoModelsId: ModelIDInput
 }
 
 input ModelPhotoModelConditionInput {
@@ -650,10 +645,10 @@ input ModelPhotoModelConditionInput {
   tagId: ModelStringInput
   view: ModelIntInput
   status: ModelBooleanInput
-  blogmodelID: ModelIDInput
   and: [ModelPhotoModelConditionInput]
   or: [ModelPhotoModelConditionInput]
   not: ModelPhotoModelConditionInput
+  blogModelPhotoModelsId: ModelIDInput
 }
 
 input CreatePhotoModelInput {
@@ -663,8 +658,8 @@ input CreatePhotoModelInput {
   tagId: String
   view: Int
   status: Boolean
-  blogmodelID: ID!
   _version: Int
+  blogModelPhotoModelsId: ID
 }
 
 input UpdatePhotoModelInput {
@@ -674,8 +669,8 @@ input UpdatePhotoModelInput {
   tagId: String
   view: Int
   status: Boolean
-  blogmodelID: ID
   _version: Int
+  blogModelPhotoModelsId: ID
 }
 
 input DeletePhotoModelInput {
@@ -693,35 +688,35 @@ input ModelUntitledModelFilterInput {
   id: ModelIDInput
   name: ModelStringInput
   description: ModelStringInput
-  usermodelID: ModelIDInput
   and: [ModelUntitledModelFilterInput]
   or: [ModelUntitledModelFilterInput]
   not: ModelUntitledModelFilterInput
+  userModelUntitledModelsId: ModelIDInput
 }
 
 input ModelUntitledModelConditionInput {
   name: ModelStringInput
   description: ModelStringInput
-  usermodelID: ModelIDInput
   and: [ModelUntitledModelConditionInput]
   or: [ModelUntitledModelConditionInput]
   not: ModelUntitledModelConditionInput
+  userModelUntitledModelsId: ModelIDInput
 }
 
 input CreateUntitledModelInput {
   id: ID
   name: String
   description: String
-  usermodelID: ID!
   _version: Int
+  userModelUntitledModelsId: ID
 }
 
 input UpdateUntitledModelInput {
   id: ID!
   name: String
   description: String
-  usermodelID: ID
   _version: Int
+  userModelUntitledModelsId: ID
 }
 
 input DeleteUntitledModelInput {
@@ -738,32 +733,32 @@ type ModelUntitledFkModelConnection @aws_api_key @aws_iam @aws_cognito_user_pool
 input ModelUntitledFkModelFilterInput {
   id: ModelIDInput
   content: ModelStringInput
-  untitledmodelID: ModelIDInput
   and: [ModelUntitledFkModelFilterInput]
   or: [ModelUntitledFkModelFilterInput]
   not: ModelUntitledFkModelFilterInput
+  untitledModelUntitledFkModelsId: ModelIDInput
 }
 
 input ModelUntitledFkModelConditionInput {
   content: ModelStringInput
-  untitledmodelID: ModelIDInput
   and: [ModelUntitledFkModelConditionInput]
   or: [ModelUntitledFkModelConditionInput]
   not: ModelUntitledFkModelConditionInput
+  untitledModelUntitledFkModelsId: ModelIDInput
 }
 
 input CreateUntitledFkModelInput {
   id: ID
   content: String!
-  untitledmodelID: ID!
   _version: Int
+  untitledModelUntitledFkModelsId: ID
 }
 
 input UpdateUntitledFkModelInput {
   id: ID!
   content: String
-  untitledmodelID: ID
   _version: Int
+  untitledModelUntitledFkModelsId: ID
 }
 
 input DeleteUntitledFkModelInput {

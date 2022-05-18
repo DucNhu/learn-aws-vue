@@ -129,10 +129,6 @@
           {
             "AttributeName": "id",
             "AttributeType": "S"
-          },
-          {
-            "AttributeName": "blogmodelID",
-            "AttributeType": "S"
           }
         ],
         "BillingMode": {
@@ -144,36 +140,6 @@
             }
           ]
         },
-        "GlobalSecondaryIndexes": [
-          {
-            "IndexName": "byBlogModel",
-            "KeySchema": [
-              {
-                "AttributeName": "blogmodelID",
-                "KeyType": "HASH"
-              }
-            ],
-            "Projection": {
-              "ProjectionType": "ALL"
-            },
-            "ProvisionedThroughput": {
-              "Fn::If": [
-                "ShouldUsePayPerRequestBilling",
-                {
-                  "Ref": "AWS::NoValue"
-                },
-                {
-                  "ReadCapacityUnits": {
-                    "Ref": "DynamoDBModelTableReadIOPS"
-                  },
-                  "WriteCapacityUnits": {
-                    "Ref": "DynamoDBModelTableWriteIOPS"
-                  }
-                }
-              ]
-            }
-          }
-        ],
         "PointInTimeRecoverySpecification": {
           "Fn::If": [
             "ShouldUsePointInTimeRecovery",
@@ -296,18 +262,7 @@
                   ]
                 },
                 {
-                  "Fn::Join": [
-                    "",
-                    [
-                      {
-                        "Fn::GetAtt": [
-                          "CommentModelTable",
-                          "Arn"
-                        ]
-                      },
-                      "/index/*"
-                    ]
-                  ]
+                  "Ref": "AWS::NoValue"
                 }
               ]
             }
@@ -718,42 +673,6 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "QuerysyncCommentModelspreAuth0FunctionQuerysyncCommentModelspreAuth0FunctionAppSyncFunctionC64B3EF5": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Fn::GetAtt": [
-            "CommentModelDataSource",
-            "Name"
-          ]
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerysyncCommentModelspreAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.syncCommentModels.preAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      },
-      "DependsOn": [
-        "CommentModelDataSource"
-      ]
-    },
     "QuerySyncCommentModelsDataResolverFnQuerySyncCommentModelsDataResolverFnAppSyncFunctionD72FA791": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -820,12 +739,6 @@
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
-            {
-              "Fn::GetAtt": [
-                "QuerysyncCommentModelspreAuth0FunctionQuerysyncCommentModelspreAuth0FunctionAppSyncFunctionC64B3EF5",
-                "FunctionId"
-              ]
-            },
             {
               "Ref": "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             },

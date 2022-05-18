@@ -7,6 +7,7 @@ query MyQuery {
       name
       id
       usermodelID
+      description
     }
   }
 }

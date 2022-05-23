@@ -125,7 +125,7 @@
             "AttributeType": "S"
           },
           {
-            "AttributeName": "usermodelID",
+            "AttributeName": "userModelBlogModelsId",
             "AttributeType": "S"
           }
         ],
@@ -140,10 +140,10 @@
         },
         "GlobalSecondaryIndexes": [
           {
-            "IndexName": "byUserModel",
+            "IndexName": "gsi-UserModel.BlogModels",
             "KeySchema": [
               {
-                "AttributeName": "usermodelID",
+                "AttributeName": "userModelBlogModelsId",
                 "KeyType": "HASH"
               }
             ],
@@ -748,42 +748,6 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "QuerysyncBlogModelspreAuth0FunctionQuerysyncBlogModelspreAuth0FunctionAppSyncFunctionD0C8E10D": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Fn::GetAtt": [
-            "BlogModelDataSource",
-            "Name"
-          ]
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerysyncBlogModelspreAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.syncBlogModels.preAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      },
-      "DependsOn": [
-        "BlogModelDataSource"
-      ]
-    },
     "QuerySyncBlogModelsDataResolverFnQuerySyncBlogModelsDataResolverFnAppSyncFunctionF9B47535": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -850,12 +814,6 @@
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
-            {
-              "Fn::GetAtt": [
-                "QuerysyncBlogModelspreAuth0FunctionQuerysyncBlogModelspreAuth0FunctionAppSyncFunctionD0C8E10D",
-                "FunctionId"
-              ]
-            },
             {
               "Fn::GetAtt": [
                 "QuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunction11CE3180",

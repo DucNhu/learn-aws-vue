@@ -15,6 +15,12 @@
       "auth": {
         "learnawsvue71ada016": {},
         "userPoolGroups": {}
+      },
+      "function": {
+        "addUser": {
+          "deploymentBucketName": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
+          "s3Key": "amplify-builds/addUser-4f4c344d526d6b2f5948-build.zip"
+        }
       }
     }
   }

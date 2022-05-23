@@ -131,7 +131,7 @@
             "AttributeType": "S"
           },
           {
-            "AttributeName": "blogmodelID",
+            "AttributeName": "blogModelLikeModelsId",
             "AttributeType": "S"
           }
         ],
@@ -146,10 +146,10 @@
         },
         "GlobalSecondaryIndexes": [
           {
-            "IndexName": "byBlogModel",
+            "IndexName": "gsi-BlogModel.LikeModels",
             "KeySchema": [
               {
-                "AttributeName": "blogmodelID",
+                "AttributeName": "blogModelLikeModelsId",
                 "KeyType": "HASH"
               }
             ],
@@ -718,42 +718,6 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "QuerysyncLikeModelspreAuth0FunctionQuerysyncLikeModelspreAuth0FunctionAppSyncFunction78DA0545": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Fn::GetAtt": [
-            "LikeModelDataSource",
-            "Name"
-          ]
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerysyncLikeModelspreAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.syncLikeModels.preAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      },
-      "DependsOn": [
-        "LikeModelDataSource"
-      ]
-    },
     "QuerySyncLikeModelsDataResolverFnQuerySyncLikeModelsDataResolverFnAppSyncFunctionE1A9BE14": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -820,12 +784,6 @@
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
-            {
-              "Fn::GetAtt": [
-                "QuerysyncLikeModelspreAuth0FunctionQuerysyncLikeModelspreAuth0FunctionAppSyncFunction78DA0545",
-                "FunctionId"
-              ]
-            },
             {
               "Ref": "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             },

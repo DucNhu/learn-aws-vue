@@ -12,10 +12,7 @@ const routes: Array<RouteConfig> = [
     component: HomeView,
     beforeEnter: async (to, _, next) => {
       const isAuthenticated = await Auth.currentUserInfo();
-
       if (!isAuthenticated) {
-        console.log(1);
-
         next("/login");
       } else {
         next();

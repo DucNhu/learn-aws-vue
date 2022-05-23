@@ -23,7 +23,7 @@
         <v-tab-item>
           <v-card class="px-4">
             <v-card-text>
-              <v-form ref="loginForm" v-model="valid" lazy-validation>
+              <form ref="loginForm" :v-model="valid" autocomplete="true">
                 <v-row>
                   <v-col cols="12">
                     <v-text-field
@@ -55,17 +55,17 @@
                       block
                       :disabled="!valid"
                       color="success"
-                      @click="signIn"
+                      @click="vm.signIn(user)"
                     >
                       Login
                     </v-btn>
                   </v-col>
                 </v-row>
-              </v-form>
+              </form>
             </v-card-text>
           </v-card>
         </v-tab-item>
-        <v-tab-item>
+        <!-- <v-tab-item>
           <v-card class="px-4">
             <v-card-text>
               <v-form
@@ -142,22 +142,19 @@
               </v-from>
             </v-card-text>
           </v-card>
-        </v-tab-item>
+        </v-tab-item> -->
       </v-tabs>
     </div>
   </v-dialog>
 </template>
 
 <script lang="ts">
-import { UserModel } from "@/aws/models";
-import router from "@/router";
-import { dataStoreService } from "@/services/datastore-service";
-import Auth from "@aws-amplify/auth";
-import { Component, Vue } from "vue-property-decorator";
-import { createUserModel } from "@/grapqls/creates/CreateUser";
+import { Component, Provide, Vue } from "vue-property-decorator";
+import { AuthenticationViewModel } from "./../viewmodels/authentication-viewmodel";
 
 @Component
 export default class Authentication extends Vue {
+  @Provide() vm = new AuthenticationViewModel();
   confirm_account = false;
   user = {
     username: "",
@@ -216,64 +213,6 @@ export default class Authentication extends Vue {
 
   mounted() {
     //
-  }
-
-  async signUp() {
-    try {
-      await Auth.signUp({
-        ...this.user,
-      }).then((newUser) => {
-        this.newUser = newUser;
-        this.confirm_account = true;
-      });
-    } catch (error) {
-      console.log("error signing up:", error);
-    }
-  }
-
-  async confirmAccount() {
-    try {
-      await Auth.confirmSignUp(
-        this.user.attributes.email,
-        this.confirm_code
-      ).then(() => {
-        this.signIn();
-      });
-    } catch (error) {
-      console.log("error signing up:", error);
-    }
-  }
-
-  async signIn() {
-    try {
-      const user = await Auth.signIn(this.user.username, this.user.password);
-      Auth.currentUserPoolUser().then((resul) => {
-        console.log(resul);
-        // const user = {
-        //   $id: this.newUser.userSub,
-        //   $email: this.user.attributes.email,
-        //   $full_name: this.user.username,
-        // };
-        //  dataStoreService.grapql(createUserModel, user).then((_) => {
-        //   console.log(_);
-        // });
-      });
-
-      if (user.signInUserSession.accessToken) {
-        router.push("/photos");
-      }
-    } catch (error) {
-      console.log("error signing in", error);
-    }
-  }
-
-  async deleteUser() {
-    try {
-      const result = await Auth.deleteUser();
-      console.log(result);
-    } catch (error) {
-      console.log("Error deleting user", error);
-    }
   }
 }
 </script>

@@ -20,7 +20,7 @@
           <v-icon large>{{ i.icon }}</v-icon>
           <div class="caption py-1">{{ i.name }}</div>
         </v-tab>
-        <!-- <v-tab-item>
+        <v-tab-item>
           <v-card class="px-4">
             <v-card-text>
               <form ref="loginForm" :v-model="valid" autocomplete="true">
@@ -64,8 +64,8 @@
               </form>
             </v-card-text>
           </v-card>
-        </v-tab-item> -->
-        <!-- <v-tab-item>
+        </v-tab-item>
+        <v-tab-item>
           <v-card class="px-4">
             <v-card-text>
               <v-form
@@ -113,7 +113,7 @@
                       block
                       :disabled="!valid"
                       color="success"
-                      @click="signUp"
+                      @click="vm.signUp(user)"
                       >Register</v-btn
                     >
                   </v-col>
@@ -142,7 +142,7 @@
               </v-from>
             </v-card-text>
           </v-card>
-        </v-tab-item> -->
+        </v-tab-item>
       </v-tabs>
     </div>
   </v-dialog>
@@ -150,11 +150,11 @@
 
 <script lang="ts">
 import { Component, Provide, Vue } from "vue-property-decorator";
-// import { AuthenticationViewModel } from "./../viewmodels/authentication-viewmodel";
+import { AuthenticationViewModel } from "./../viewmodels/authentication-viewmodel";
 
 @Component
 export default class Authentication extends Vue {
-  // @Provide() vm = new AuthenticationViewModel();
+  @Provide() vm = new AuthenticationViewModel();
   confirm_account = false;
   user = {
     username: "",

@@ -2,7 +2,7 @@
   <div class="hello">
     <h1 id="h1">{{ msg }}</h1>
 
-    <v-data-table
+    <!-- <v-data-table
       :headers="headers"
       :items="listData"
       class="elevation-1 container my-5"
@@ -100,168 +100,151 @@
       class="elevation-1 container my-5"
       disable-pagination
       hide-default-footer
-    ></v-data-table>
+    ></v-data-table> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { dataStoreService } from "@/services/datastore-service";
-import { Predicates } from "aws-amplify";
-import { UntitledModel } from "@/aws/models";
-import { UntitledModelsQuery as UntitledModelsQuery } from "@/grapqls/UntitledModelsQuery";
+// import { dataStoreService } from "@/services/datastore-service";
+// import { Predicates } from "aws-amplify";
+// import { UntitledModel } from "@/aws/models";
+// import { UntitledModelsQuery as UntitledModelsQuery } from "@/grapqls/UntitledModelsQuery";
 
 @Component
 export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
-  listData: UntitledModel[] = [];
-
-  dialog = false;
-  dialogDelete = false;
-  editedID: string | null | undefined = "";
-
-  headers = [
-    {
-      text: "id",
-      align: "start",
-      sortable: false,
-      value: "id",
-    },
-    {
-      text: "name",
-      align: "start",
-      sortable: false,
-      value: "name",
-    },
-    {
-      text: "description",
-      align: "start",
-      sortable: false,
-      value: "description",
-    },
-    {
-      text: "_version",
-      align: "center",
-      sortable: false,
-      value: "_version",
-    },
-    { text: "Actions", align: "center", value: "actions", sortable: false },
-  ];
-
-  headerTableDetail = [
-    {
-      text: "id",
-      align: "start",
-      sortable: false,
-      value: "id",
-    },
-    {
-      text: "content",
-      align: "start",
-      sortable: false,
-      value: "content",
-    },
-    {
-      text: "_version",
-      align: "center",
-      sortable: false,
-      value: "_version",
-    },
-    {
-      text: "UntitledModelID",
-      align: "center",
-      sortable: false,
-      value: "UntitledModelID",
-    },
-  ];
-
-  UntitledModel: any = {};
-
-  getGrapqlData: any = [];
-  subscribes: any = [];
-  mounted() {
-    this.getData();
-  }
-
-  // getTest(id: string) {
-  //   dataStoreService
-  //     .getGrapql(UntitledFkModelsQuery, { id: id })
-  //     .then((result: any) => {
-  //       const untitledFkModels =
-  //         result.data.listUntitledModels.items[0].UntitledFkModels;
-  //       if (!untitledFkModels.length)
-  //         this.getGrapqlData = untitledFkModels.items;
-  //       else this.getGrapqlData = [];
+  //   @Prop() private msg!: string;
+  //   listData: UntitledModel[] = [];
+  //   dialog = false;
+  //   dialogDelete = false;
+  //   editedID: string | null | undefined = "";
+  //   headers = [
+  //     {
+  //       text: "id",
+  //       align: "start",
+  //       sortable: false,
+  //       value: "id",
+  //     },
+  //     {
+  //       text: "name",
+  //       align: "start",
+  //       sortable: false,
+  //       value: "name",
+  //     },
+  //     {
+  //       text: "description",
+  //       align: "start",
+  //       sortable: false,
+  //       value: "description",
+  //     },
+  //     {
+  //       text: "_version",
+  //       align: "center",
+  //       sortable: false,
+  //       value: "_version",
+  //     },
+  //     { text: "Actions", align: "center", value: "actions", sortable: false },
+  //   ];
+  //   headerTableDetail = [
+  //     {
+  //       text: "id",
+  //       align: "start",
+  //       sortable: false,
+  //       value: "id",
+  //     },
+  //     {
+  //       text: "content",
+  //       align: "start",
+  //       sortable: false,
+  //       value: "content",
+  //     },
+  //     {
+  //       text: "_version",
+  //       align: "center",
+  //       sortable: false,
+  //       value: "_version",
+  //     },
+  //     {
+  //       text: "UntitledModelID",
+  //       align: "center",
+  //       sortable: false,
+  //       value: "UntitledModelID",
+  //     },
+  //   ];
+  //   UntitledModel: any = {};
+  //   getGrapqlData: any = [];
+  //   subscribes: any = [];
+  //   mounted() {
+  //     this.getData();
+  //   }
+  //   // getTest(id: string) {
+  //   //   dataStoreService
+  //   //     .getGrapql(UntitledFkModelsQuery, { id: id })
+  //   //     .then((result: any) => {
+  //   //       const untitledFkModels =
+  //   //         result.data.listUntitledModels.items[0].UntitledFkModels;
+  //   //       if (!untitledFkModels.length)
+  //   //         this.getGrapqlData = untitledFkModels.items;
+  //   //       else this.getGrapqlData = [];
+  //   //     });
+  //   // }
+  //   getData() {
+  //     this.subscribes = [
+  //       dataStoreService
+  //         .obserQuery(UntitledModel, Predicates.ALL, {
+  //           sort: (s: any) => s.createdAt("DESCENDING"),
+  //         })
+  //         .subscribe((result: any) => {
+  //           console.log(result);
+  //           this.listData = result.items;
+  //         }),
+  //     ];
+  //     dataStoreService.getGrapql(UntitledModelsQuery).then((result: any) => {
+  //       console.log(result);
   //     });
-  // }
-
-  getData() {
-    this.subscribes = [
-      dataStoreService
-        .obserQuery(UntitledModel, Predicates.ALL, {
-          sort: (s: any) => s.createdAt("DESCENDING"),
-        })
-        .subscribe((result: any) => {
-          console.log(result);
-          this.listData = result.items;
-        }),
-    ];
-    dataStoreService.getGrapql(UntitledModelsQuery).then((result: any) => {
-      console.log(result);
-    });
-  }
-
-  save() {
-    // if (this.editedID.trim()) {
-    //   const data = new UntitledModel({
-    //     name: this.UntitledModel.name,
-    //     description: this.UntitledModel.description,
-    //   });
-    //   dataStoreService.create(data);
-    //   this.closeDialog();
-    // } else {
-    //   dataStoreService.edit(UntitledModel, this.UntitledModel);
-    //   this.closeDialog();
-    // }
-  }
-
-  Table;
-  get formTitle() {
-    return this.editedID == "" ? "Create new" : "Edit '" + this.editedID + "'";
-  }
-
-  editItem(item: UntitledModel) {
-    console.log("edit");
-
-    this.editedID = item.name;
-    this.UntitledModel = Object.assign({}, item);
-
-    this.dialog = true;
-  }
-
-  deleteItem(item: UntitledModel) {
-    this.editedID = item.name;
-    this.UntitledModel = Object.assign({}, item);
-
-    this.dialogDelete = true;
-  }
-
-  deleteItemConfirm() {
-    dataStoreService.delete(UntitledModel, this.UntitledModel);
-    this.closeDialog();
-  }
-
-  closeDialog() {
-    this.dialog = false;
-    this.dialogDelete = false;
-  }
-
-  beforeDestroy() {
-    if (!this.subscribes.length)
-      this.subscribes.forEach((e: any) => {
-        e.unsubscribe();
-      });
-  }
+  //   }
+  //   save() {
+  //     // if (this.editedID.trim()) {
+  //     //   const data = new UntitledModel({
+  //     //     name: this.UntitledModel.name,
+  //     //     description: this.UntitledModel.description,
+  //     //   });
+  //     //   dataStoreService.create(data);
+  //     //   this.closeDialog();
+  //     // } else {
+  //     //   dataStoreService.edit(UntitledModel, this.UntitledModel);
+  //     //   this.closeDialog();
+  //     // }
+  //   }
+  //   Table;
+  //   get formTitle() {
+  //     return this.editedID == "" ? "Create new" : "Edit '" + this.editedID + "'";
+  //   }
+  //   editItem(item: UntitledModel) {
+  //     console.log("edit");
+  //     this.editedID = item.name;
+  //     this.UntitledModel = Object.assign({}, item);
+  //     this.dialog = true;
+  //   }
+  //   deleteItem(item: UntitledModel) {
+  //     this.editedID = item.name;
+  //     this.UntitledModel = Object.assign({}, item);
+  //     this.dialogDelete = true;
+  //   }
+  //   deleteItemConfirm() {
+  //     dataStoreService.delete(UntitledModel, this.UntitledModel);
+  //     this.closeDialog();
+  //   }
+  //   closeDialog() {
+  //     this.dialog = false;
+  //     this.dialogDelete = false;
+  //   }
+  //   beforeDestroy() {
+  //     if (!this.subscribes.length)
+  //       this.subscribes.forEach((e: any) => {
+  //         e.unsubscribe();
+  //       });
+  //   }
 }
 </script>
 

@@ -1,5 +1,78 @@
 export const schema = {
     "models": {
+        "LikeCommentModel": {
+            "name": "LikeCommentModel",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "comment_id": {
+                    "name": "comment_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "blog_id": {
+                    "name": "blog_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "LikeCommentModels",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "BlogModel": {
             "name": "BlogModel",
             "fields": {
@@ -28,6 +101,34 @@ export const schema = {
                     "name": "status",
                     "isArray": false,
                     "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "ratio": {
+                    "name": "ratio",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "zoom": {
+                    "name": "zoom",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "tag_id": {
+                    "name": "tag_id",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -90,10 +191,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "like": {
-                    "name": "like",
+                "user_id": {
+                    "name": "user_id",
                     "isArray": false,
-                    "type": "Int",
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "blog_id": {
+                    "name": "blog_id",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -163,6 +271,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "comment_id": {
+                    "name": "comment_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "blog_id": {
+                    "name": "blog_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -205,14 +327,28 @@ export const schema = {
                 }
             ]
         },
-        "LikeModel": {
-            "name": "LikeModel",
+        "LikeBlogModel": {
+            "name": "LikeBlogModel",
             "fields": {
                 "id": {
                     "name": "id",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
+                    "attributes": []
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "blog_id": {
+                    "name": "blog_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -233,7 +369,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "LikeModels",
+            "pluralName": "LikeBlogModels",
             "attributes": [
                 {
                     "type": "model",
@@ -340,24 +476,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "tagId": {
-                    "name": "tagId",
+                "blog_i": {
+                    "name": "blog_i",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "view": {
-                    "name": "view",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "status": {
-                    "name": "status",
-                    "isArray": false,
-                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -486,6 +608,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "untitle_id": {
+                    "name": "untitle_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -531,5 +660,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "05c74e66825ec8b72b3a9896589e0e65"
+    "version": "633643e6ef0bc4a24fa44c65e97e480d"
 };

@@ -115,11 +115,9 @@ import { UntitledModelsQuery as UntitledModelsQuery } from "@/grapqls/UntitledMo
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
   listData: UntitledModel[] = [];
-
   dialog = false;
   dialogDelete = false;
   editedID: string | null | undefined = "";
-
   headers = [
     {
       text: "id",
@@ -147,7 +145,6 @@ export default class HelloWorld extends Vue {
     },
     { text: "Actions", align: "center", value: "actions", sortable: false },
   ];
-
   headerTableDetail = [
     {
       text: "id",
@@ -174,9 +171,7 @@ export default class HelloWorld extends Vue {
       value: "UntitledModelID",
     },
   ];
-
   UntitledModel: any = {};
-
   getGrapqlData: any = [];
   subscribes: any = [];
   userId;
@@ -187,7 +182,6 @@ export default class HelloWorld extends Vue {
 
     this.getData();
   }
-
   // getTest(id: string) {
   //   dataStoreService
   //     .getGrapql(UntitledFkModelsQuery, { id: id })
@@ -199,7 +193,6 @@ export default class HelloWorld extends Vue {
   //       else this.getGrapqlData = [];
   //     });
   // }
-
   getData() {
     dataStoreService
       .get(UntitledModel, Predicates.ALL, {
@@ -210,7 +203,6 @@ export default class HelloWorld extends Vue {
         this.listData = result.items;
       });
   }
-
   save() {
     if (this.editedID.trim()) {
       const data = new UntitledModel({
@@ -224,38 +216,29 @@ export default class HelloWorld extends Vue {
       this.closeDialog();
     }
   }
-
   Table;
   get formTitle() {
     return this.editedID == "" ? "Create new" : "Edit '" + this.editedID + "'";
   }
-
   editItem(item: UntitledModel) {
     console.log("edit");
-
     this.editedID = item.name;
     this.UntitledModel = Object.assign({}, item);
-
     this.dialog = true;
   }
-
   deleteItem(item: UntitledModel) {
     this.editedID = item.name;
     this.UntitledModel = Object.assign({}, item);
-
     this.dialogDelete = true;
   }
-
   deleteItemConfirm() {
     dataStoreService.delete(UntitledModel, this.UntitledModel);
     this.closeDialog();
   }
-
   closeDialog() {
     this.dialog = false;
     this.dialogDelete = false;
   }
-
   beforeDestroy() {
     if (!this.subscribes.length)
       this.subscribes.forEach((e: any) => {

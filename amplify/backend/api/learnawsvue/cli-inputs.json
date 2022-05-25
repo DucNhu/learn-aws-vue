@@ -3,26 +3,21 @@
   "serviceConfiguration": {
     "apiName": "learnawsvue",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "C:\\Users\\ducnhm\\Documents\\learn-aws-vue\\amplify\\backend\\api\\learnawsvue\\schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-6fc8988f-1b32-45fe-9787-04f30777c337/amplify/backend/api/learnawsvue/schema.graphql",
     "defaultAuthType": {
-      "mode": "AMAZON_COGNITO_USER_POOLS",
-      "cognitoUserPoolId": "authlearnawsvue71ada016"
+      "mode": "API_KEY",
+      "keyDescription": "api key description",
+      "expirationTime": 30
     },
+    "additionalAuthTypes": [
+      {
+        "mode": "AWS_IAM"
+      }
+    ],
     "conflictResolution": {
       "defaultResolutionStrategy": {
         "type": "AUTOMERGE"
       }
-    },
-    "additionalAuthTypes": [
-      {
-        "mode": "API_KEY",
-        "expirationTime": 7,
-        "apiKeyExpirationDate": "2022-05-24T07:06:11.956Z",
-        "keyDescription": "api"
-      },
-      {
-        "mode": "AWS_IAM"
-      }
-    ]
+    }
   }
 }

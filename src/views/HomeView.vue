@@ -70,7 +70,7 @@
       <div class="container">
         <v-row justify="center">
           <v-col cols="12" sm="8">
-            <v-sheet min-height="70vh" rounded="lg">
+            <v-sheet class="grey lighten-3" rounded="lg">
               <global-load :load="load" />
               <router-view />
             </v-sheet>

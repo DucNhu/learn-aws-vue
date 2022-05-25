@@ -1,23 +1,25 @@
 <template>
-  <div class="container-fluid tm-container-content mt-3">
-    <div class="row mb-4 pt-3">
+  <div class="container-fluid tm-container-content">
+    <v-sheet light class="mx-auto mb-4" rounded="lg">
       <slide-story />
-      <h2 class="col-6 tm-text-primary">Latest Photos</h2>
-      <div class="col-6 d-flex justify-content-end align-items-center">
-        <form action="" class="tm-text-primary">
-          Page
-          <input
-            type="text"
-            value="1"
-            size="1"
-            class="tm-input-paging tm-text-primary"
-          />
-          of 200
-        </form>
-      </div>
-    </div>
-    <div class="row tm-mb-90 tm-gallery">
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+    </v-sheet>
+
+    <v-sheet light class="blog-box" rounded="lg" v-for="n in 25" :key="n">
+      <div class="col-12 mb-5 pt-0">
+        <v-list-item two-line class="pa-0">
+          <v-list-item-avatar size="45" class="my-0">
+            <img
+              src="https://scontent.fhan2-2.fna.fbcdn.net/v/t39.30808-6/274992361_1575731389451190_7616248300771954862_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=ptWdPrCqcKgAX_bJqmG&_nc_ht=scontent.fhan2-2.fna&oh=00_AT_SAtfS91pXOZmVA2OGMESx0vwdazTTGBoJYYd0jXuIFw&oe=629308C3"
+            />
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title class="subtitle-1 text-lg-h6"
+              >Jane Smith</v-list-item-title
+            >
+            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
         <figure class="effect-ming tm-video-item">
           <img
             src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
@@ -34,263 +36,7 @@
           <span>9,906 views</span>
         </div>
       </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Plants</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">14 Oct 2020</span>
-          <span>16,100 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Morning</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">12 Oct 2020</span>
-          <span>12,460 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Pinky</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">10 Oct 2020</span>
-          <span>11,402 views</span>
-        </div>
-      </div>
-
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Hangers</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">24 Sep 2020</span>
-          <span>16,008 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Perfumes</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">20 Sep 2020</span>
-          <span>12,860 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Bus</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">16 Sep 2020</span>
-          <span>10,900 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>New York</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">12 Sep 2020</span>
-          <span>11,300 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Abstract</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">10 Sep 2020</span>
-          <span>42,700 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Flowers</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">8 Sep 2020</span>
-          <span>11,402 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Rosy</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">4 Sep 2020</span>
-          <span>32,906 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Rocki</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">28 Aug 2020</span>
-          <span>50,700 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Purple</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">22 Aug 2020</span>
-          <span>107,510 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Sea</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">14 Aug 2020</span>
-          <span>118,006 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Turtle</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">9 Aug 2020</span>
-          <span>121,300 views</span>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-        <figure class="effect-ming tm-video-item">
-          <img
-            src="https://www.moviemaker.com/wp-content/uploads/2022/01/Andrew-Garfield.jpg?ezimgfmt=ng%3Awebp%2Fngcb1%2Frs%3Adevice%2Frscb1-1"
-            alt="Image"
-            class="img-fluid"
-          />
-          <figcaption class="d-flex align-items-center justify-content-center">
-            <h2>Peace</h2>
-            <a href="">View more</a>
-          </figcaption>
-        </figure>
-        <div class="d-flex justify-content-between tm-text-gray">
-          <span class="tm-text-gray-light">3 Aug 2020</span>
-          <span>21,204 views</span>
-        </div>
-      </div>
-    </div>
+    </v-sheet>
   </div>
   <!-- container-fluid, tm-container-content -->
 </template>
@@ -306,4 +52,8 @@ import { Component, Vue } from "vue-property-decorator";
 export default class PhotoPage extends Vue {}
 </script>
 
-<style scoped></style>
+<style scoped>
+.blog-box {
+  margin-bottom: 1rem;
+}
+</style>

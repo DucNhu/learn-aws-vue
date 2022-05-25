@@ -77,6 +77,7 @@
 
           <v-col cols="12" sm="8">
             <v-sheet min-height="70vh" rounded="lg">
+              <global-load :load="load" />
               <router-view />
             </v-sheet>
           </v-col>
@@ -177,6 +178,7 @@ import router from "@/router";
   },
 })
 export default class HomeView extends Vue {
+  load = false;
   navigations = [
     {
       icon: "fa-solid fa-house",
@@ -215,9 +217,12 @@ export default class HomeView extends Vue {
 
   async signOut() {
     try {
+      this.load = true;
+
       await Auth.signOut();
-      DataStore.clear();
-      router.push("/login");
+      await DataStore.clear().then(() => {
+        router.push("/login");
+      });
     } catch (error) {
       console.log("error signing out: ", error);
     }

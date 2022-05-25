@@ -476,8 +476,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "blog_i": {
-                    "name": "blog_i",
+                "blog_id": {
+                    "name": "blog_id",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -581,9 +581,22 @@ export const schema = {
                                 "allow": "public",
                                 "operations": [
                                     "create",
+                                    "read",
+                                    "update"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "admin"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
                                     "update",
-                                    "delete",
-                                    "read"
+                                    "delete"
                                 ]
                             }
                         ]
@@ -660,5 +673,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "633643e6ef0bc4a24fa44c65e97e480d"
+    "version": "a5d8cfe85e607deb54445e188ca105cf"
 };

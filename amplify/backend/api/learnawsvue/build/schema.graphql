@@ -1,9 +1,25 @@
 
-type BlogModel @aws_api_key @aws_iam {
+type LikeCommentModel @aws_iam @aws_api_key {
+  id: ID!
+  user_id: String
+  comment_id: String
+  blog_id: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type BlogModel @aws_iam @aws_api_key {
   id: ID!
   title: String
   share: String
   status: Boolean
+  ratio: String
+  zoom: Int
+  user_id: String
+  tag_id: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -11,10 +27,24 @@ type BlogModel @aws_api_key @aws_iam {
   _lastChangedAt: AWSTimestamp!
 }
 
-type CommentModel @aws_api_key @aws_iam {
+type CommentModel @aws_iam @aws_api_key {
+  id: ID!
+  content: String
+  user_id: String
+  blog_id: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type ReplyCommentModel @aws_iam @aws_api_key {
   id: ID!
   content: String
   like: Int
+  comment_id: String
+  blog_id: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -22,10 +52,10 @@ type CommentModel @aws_api_key @aws_iam {
   _lastChangedAt: AWSTimestamp!
 }
 
-type ReplyCommentModel @aws_api_key @aws_iam {
+type LikeBlogModel @aws_iam @aws_api_key {
   id: ID!
-  content: String
-  like: Int
+  user_id: String
+  blog_id: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -33,16 +63,7 @@ type ReplyCommentModel @aws_api_key @aws_iam {
   _lastChangedAt: AWSTimestamp!
 }
 
-type LikeModel @aws_api_key @aws_iam {
-  id: ID!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
-}
-
-type TagModel @aws_api_key @aws_iam {
+type TagModel @aws_iam @aws_api_key {
   id: ID!
   name: String
   createdAt: AWSDateTime!
@@ -52,13 +73,11 @@ type TagModel @aws_api_key @aws_iam {
   _lastChangedAt: AWSTimestamp!
 }
 
-type PhotoModel @aws_api_key @aws_iam {
+type PhotoModel @aws_iam @aws_api_key {
   id: ID!
   name: String
   desciption: String
-  tagId: String
-  view: Int
-  status: Boolean
+  blog_id: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -66,7 +85,7 @@ type PhotoModel @aws_api_key @aws_iam {
   _lastChangedAt: AWSTimestamp!
 }
 
-type UntitledModel @aws_api_key @aws_iam {
+type UntitledModel @aws_iam @aws_cognito_user_pools @aws_api_key {
   id: ID!
   name: String
   description: String
@@ -77,9 +96,10 @@ type UntitledModel @aws_api_key @aws_iam {
   _lastChangedAt: AWSTimestamp!
 }
 
-type UntitledFkModel @aws_api_key @aws_iam {
+type UntitledFkModel @aws_iam @aws_api_key {
   id: ID!
   content: String!
+  untitle_id: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -178,6 +198,142 @@ enum ModelSortDirection {
   DESC
 }
 
+type ModelLikeCommentModelConnection @aws_api_key @aws_iam {
+  items: [LikeCommentModel]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelLikeCommentModelFilterInput {
+  id: ModelIDInput
+  user_id: ModelStringInput
+  comment_id: ModelStringInput
+  blog_id: ModelStringInput
+  and: [ModelLikeCommentModelFilterInput]
+  or: [ModelLikeCommentModelFilterInput]
+  not: ModelLikeCommentModelFilterInput
+}
+
+type Query {
+  getLikeCommentModel(id: ID!): LikeCommentModel @aws_api_key @aws_iam
+  listLikeCommentModels(filter: ModelLikeCommentModelFilterInput, limit: Int, nextToken: String): ModelLikeCommentModelConnection @aws_api_key @aws_iam
+  syncLikeCommentModels(filter: ModelLikeCommentModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelLikeCommentModelConnection @aws_api_key @aws_iam
+  getBlogModel(id: ID!): BlogModel @aws_api_key @aws_iam
+  listBlogModels(filter: ModelBlogModelFilterInput, limit: Int, nextToken: String): ModelBlogModelConnection @aws_api_key @aws_iam
+  syncBlogModels(filter: ModelBlogModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelBlogModelConnection @aws_api_key @aws_iam
+  getCommentModel(id: ID!): CommentModel @aws_api_key @aws_iam
+  listCommentModels(filter: ModelCommentModelFilterInput, limit: Int, nextToken: String): ModelCommentModelConnection @aws_api_key @aws_iam
+  syncCommentModels(filter: ModelCommentModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCommentModelConnection @aws_api_key @aws_iam
+  getReplyCommentModel(id: ID!): ReplyCommentModel @aws_api_key @aws_iam
+  listReplyCommentModels(filter: ModelReplyCommentModelFilterInput, limit: Int, nextToken: String): ModelReplyCommentModelConnection @aws_api_key @aws_iam
+  syncReplyCommentModels(filter: ModelReplyCommentModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelReplyCommentModelConnection @aws_api_key @aws_iam
+  getLikeBlogModel(id: ID!): LikeBlogModel @aws_api_key @aws_iam
+  listLikeBlogModels(filter: ModelLikeBlogModelFilterInput, limit: Int, nextToken: String): ModelLikeBlogModelConnection @aws_api_key @aws_iam
+  syncLikeBlogModels(filter: ModelLikeBlogModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelLikeBlogModelConnection @aws_api_key @aws_iam
+  getTagModel(id: ID!): TagModel @aws_api_key @aws_iam
+  listTagModels(filter: ModelTagModelFilterInput, limit: Int, nextToken: String): ModelTagModelConnection @aws_api_key @aws_iam
+  syncTagModels(filter: ModelTagModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelTagModelConnection @aws_api_key @aws_iam
+  getPhotoModel(id: ID!): PhotoModel @aws_api_key @aws_iam
+  listPhotoModels(filter: ModelPhotoModelFilterInput, limit: Int, nextToken: String): ModelPhotoModelConnection @aws_api_key @aws_iam
+  syncPhotoModels(filter: ModelPhotoModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPhotoModelConnection @aws_api_key @aws_iam
+  getUntitledModel(id: ID!): UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools
+  listUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String): ModelUntitledModelConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  syncUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUntitledModelConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getUntitledFkModel(id: ID!): UntitledFkModel @aws_api_key @aws_iam
+  listUntitledFkModels(filter: ModelUntitledFkModelFilterInput, limit: Int, nextToken: String): ModelUntitledFkModelConnection @aws_api_key @aws_iam
+  syncUntitledFkModels(filter: ModelUntitledFkModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUntitledFkModelConnection @aws_api_key @aws_iam
+}
+
+input ModelLikeCommentModelConditionInput {
+  user_id: ModelStringInput
+  comment_id: ModelStringInput
+  blog_id: ModelStringInput
+  and: [ModelLikeCommentModelConditionInput]
+  or: [ModelLikeCommentModelConditionInput]
+  not: ModelLikeCommentModelConditionInput
+}
+
+input CreateLikeCommentModelInput {
+  id: ID
+  user_id: String
+  comment_id: String
+  blog_id: String
+  _version: Int
+}
+
+input UpdateLikeCommentModelInput {
+  id: ID!
+  user_id: String
+  comment_id: String
+  blog_id: String
+  _version: Int
+}
+
+input DeleteLikeCommentModelInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createLikeCommentModel(input: CreateLikeCommentModelInput!, condition: ModelLikeCommentModelConditionInput): LikeCommentModel @aws_api_key @aws_iam
+  updateLikeCommentModel(input: UpdateLikeCommentModelInput!, condition: ModelLikeCommentModelConditionInput): LikeCommentModel @aws_api_key @aws_iam
+  deleteLikeCommentModel(input: DeleteLikeCommentModelInput!, condition: ModelLikeCommentModelConditionInput): LikeCommentModel @aws_api_key @aws_iam
+  createBlogModel(input: CreateBlogModelInput!, condition: ModelBlogModelConditionInput): BlogModel @aws_api_key @aws_iam
+  updateBlogModel(input: UpdateBlogModelInput!, condition: ModelBlogModelConditionInput): BlogModel @aws_api_key @aws_iam
+  deleteBlogModel(input: DeleteBlogModelInput!, condition: ModelBlogModelConditionInput): BlogModel @aws_api_key @aws_iam
+  createCommentModel(input: CreateCommentModelInput!, condition: ModelCommentModelConditionInput): CommentModel @aws_api_key @aws_iam
+  updateCommentModel(input: UpdateCommentModelInput!, condition: ModelCommentModelConditionInput): CommentModel @aws_api_key @aws_iam
+  deleteCommentModel(input: DeleteCommentModelInput!, condition: ModelCommentModelConditionInput): CommentModel @aws_api_key @aws_iam
+  createReplyCommentModel(input: CreateReplyCommentModelInput!, condition: ModelReplyCommentModelConditionInput): ReplyCommentModel @aws_api_key @aws_iam
+  updateReplyCommentModel(input: UpdateReplyCommentModelInput!, condition: ModelReplyCommentModelConditionInput): ReplyCommentModel @aws_api_key @aws_iam
+  deleteReplyCommentModel(input: DeleteReplyCommentModelInput!, condition: ModelReplyCommentModelConditionInput): ReplyCommentModel @aws_api_key @aws_iam
+  createLikeBlogModel(input: CreateLikeBlogModelInput!, condition: ModelLikeBlogModelConditionInput): LikeBlogModel @aws_api_key @aws_iam
+  updateLikeBlogModel(input: UpdateLikeBlogModelInput!, condition: ModelLikeBlogModelConditionInput): LikeBlogModel @aws_api_key @aws_iam
+  deleteLikeBlogModel(input: DeleteLikeBlogModelInput!, condition: ModelLikeBlogModelConditionInput): LikeBlogModel @aws_api_key @aws_iam
+  createTagModel(input: CreateTagModelInput!, condition: ModelTagModelConditionInput): TagModel @aws_api_key @aws_iam
+  updateTagModel(input: UpdateTagModelInput!, condition: ModelTagModelConditionInput): TagModel @aws_api_key @aws_iam
+  deleteTagModel(input: DeleteTagModelInput!, condition: ModelTagModelConditionInput): TagModel @aws_api_key @aws_iam
+  createPhotoModel(input: CreatePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_api_key @aws_iam
+  updatePhotoModel(input: UpdatePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_api_key @aws_iam
+  deletePhotoModel(input: DeletePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_api_key @aws_iam
+  createUntitledModel(input: CreateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools
+  updateUntitledModel(input: UpdateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools
+  deleteUntitledModel(input: DeleteUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_iam @aws_cognito_user_pools
+  createUntitledFkModel(input: CreateUntitledFkModelInput!, condition: ModelUntitledFkModelConditionInput): UntitledFkModel @aws_api_key @aws_iam
+  updateUntitledFkModel(input: UpdateUntitledFkModelInput!, condition: ModelUntitledFkModelConditionInput): UntitledFkModel @aws_api_key @aws_iam
+  deleteUntitledFkModel(input: DeleteUntitledFkModelInput!, condition: ModelUntitledFkModelConditionInput): UntitledFkModel @aws_api_key @aws_iam
+}
+
+type Subscription {
+  onCreateLikeCommentModel: LikeCommentModel @aws_subscribe(mutations: ["createLikeCommentModel"]) @aws_api_key @aws_iam
+  onUpdateLikeCommentModel: LikeCommentModel @aws_subscribe(mutations: ["updateLikeCommentModel"]) @aws_api_key @aws_iam
+  onDeleteLikeCommentModel: LikeCommentModel @aws_subscribe(mutations: ["deleteLikeCommentModel"]) @aws_api_key @aws_iam
+  onCreateBlogModel: BlogModel @aws_subscribe(mutations: ["createBlogModel"]) @aws_api_key @aws_iam
+  onUpdateBlogModel: BlogModel @aws_subscribe(mutations: ["updateBlogModel"]) @aws_api_key @aws_iam
+  onDeleteBlogModel: BlogModel @aws_subscribe(mutations: ["deleteBlogModel"]) @aws_api_key @aws_iam
+  onCreateCommentModel: CommentModel @aws_subscribe(mutations: ["createCommentModel"]) @aws_api_key @aws_iam
+  onUpdateCommentModel: CommentModel @aws_subscribe(mutations: ["updateCommentModel"]) @aws_api_key @aws_iam
+  onDeleteCommentModel: CommentModel @aws_subscribe(mutations: ["deleteCommentModel"]) @aws_api_key @aws_iam
+  onCreateReplyCommentModel: ReplyCommentModel @aws_subscribe(mutations: ["createReplyCommentModel"]) @aws_api_key @aws_iam
+  onUpdateReplyCommentModel: ReplyCommentModel @aws_subscribe(mutations: ["updateReplyCommentModel"]) @aws_api_key @aws_iam
+  onDeleteReplyCommentModel: ReplyCommentModel @aws_subscribe(mutations: ["deleteReplyCommentModel"]) @aws_api_key @aws_iam
+  onCreateLikeBlogModel: LikeBlogModel @aws_subscribe(mutations: ["createLikeBlogModel"]) @aws_api_key @aws_iam
+  onUpdateLikeBlogModel: LikeBlogModel @aws_subscribe(mutations: ["updateLikeBlogModel"]) @aws_api_key @aws_iam
+  onDeleteLikeBlogModel: LikeBlogModel @aws_subscribe(mutations: ["deleteLikeBlogModel"]) @aws_api_key @aws_iam
+  onCreateTagModel: TagModel @aws_subscribe(mutations: ["createTagModel"]) @aws_api_key @aws_iam
+  onUpdateTagModel: TagModel @aws_subscribe(mutations: ["updateTagModel"]) @aws_api_key @aws_iam
+  onDeleteTagModel: TagModel @aws_subscribe(mutations: ["deleteTagModel"]) @aws_api_key @aws_iam
+  onCreatePhotoModel: PhotoModel @aws_subscribe(mutations: ["createPhotoModel"]) @aws_api_key @aws_iam
+  onUpdatePhotoModel: PhotoModel @aws_subscribe(mutations: ["updatePhotoModel"]) @aws_api_key @aws_iam
+  onDeletePhotoModel: PhotoModel @aws_subscribe(mutations: ["deletePhotoModel"]) @aws_api_key @aws_iam
+  onCreateUntitledModel: UntitledModel @aws_subscribe(mutations: ["createUntitledModel"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdateUntitledModel: UntitledModel @aws_subscribe(mutations: ["updateUntitledModel"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeleteUntitledModel: UntitledModel @aws_subscribe(mutations: ["deleteUntitledModel"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreateUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["createUntitledFkModel"]) @aws_api_key @aws_iam
+  onUpdateUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["updateUntitledFkModel"]) @aws_api_key @aws_iam
+  onDeleteUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["deleteUntitledFkModel"]) @aws_api_key @aws_iam
+}
+
 type ModelBlogModelConnection @aws_api_key @aws_iam {
   items: [BlogModel]!
   nextToken: String
@@ -189,42 +345,23 @@ input ModelBlogModelFilterInput {
   title: ModelStringInput
   share: ModelStringInput
   status: ModelBooleanInput
+  ratio: ModelStringInput
+  zoom: ModelIntInput
+  user_id: ModelStringInput
+  tag_id: ModelStringInput
   and: [ModelBlogModelFilterInput]
   or: [ModelBlogModelFilterInput]
   not: ModelBlogModelFilterInput
-}
-
-type Query {
-  getBlogModel(id: ID!): BlogModel @aws_api_key @aws_iam
-  listBlogModels(filter: ModelBlogModelFilterInput, limit: Int, nextToken: String): ModelBlogModelConnection @aws_api_key @aws_iam
-  syncBlogModels(filter: ModelBlogModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelBlogModelConnection @aws_api_key @aws_iam
-  getCommentModel(id: ID!): CommentModel @aws_api_key @aws_iam
-  listCommentModels(filter: ModelCommentModelFilterInput, limit: Int, nextToken: String): ModelCommentModelConnection @aws_api_key @aws_iam
-  syncCommentModels(filter: ModelCommentModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCommentModelConnection @aws_api_key @aws_iam
-  getReplyCommentModel(id: ID!): ReplyCommentModel @aws_api_key @aws_iam
-  listReplyCommentModels(filter: ModelReplyCommentModelFilterInput, limit: Int, nextToken: String): ModelReplyCommentModelConnection @aws_api_key @aws_iam
-  syncReplyCommentModels(filter: ModelReplyCommentModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelReplyCommentModelConnection @aws_api_key @aws_iam
-  getLikeModel(id: ID!): LikeModel @aws_api_key @aws_iam
-  listLikeModels(filter: ModelLikeModelFilterInput, limit: Int, nextToken: String): ModelLikeModelConnection @aws_api_key @aws_iam
-  syncLikeModels(filter: ModelLikeModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelLikeModelConnection @aws_api_key @aws_iam
-  getTagModel(id: ID!): TagModel @aws_api_key @aws_iam
-  listTagModels(filter: ModelTagModelFilterInput, limit: Int, nextToken: String): ModelTagModelConnection @aws_api_key @aws_iam
-  syncTagModels(filter: ModelTagModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelTagModelConnection @aws_api_key @aws_iam
-  getPhotoModel(id: ID!): PhotoModel @aws_api_key @aws_iam
-  listPhotoModels(filter: ModelPhotoModelFilterInput, limit: Int, nextToken: String): ModelPhotoModelConnection @aws_api_key @aws_iam
-  syncPhotoModels(filter: ModelPhotoModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPhotoModelConnection @aws_api_key @aws_iam
-  getUntitledModel(id: ID!): UntitledModel @aws_api_key @aws_iam
-  listUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String): ModelUntitledModelConnection @aws_api_key @aws_iam
-  syncUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUntitledModelConnection @aws_api_key @aws_iam
-  getUntitledFkModel(id: ID!): UntitledFkModel @aws_api_key @aws_iam
-  listUntitledFkModels(filter: ModelUntitledFkModelFilterInput, limit: Int, nextToken: String): ModelUntitledFkModelConnection @aws_api_key @aws_iam
-  syncUntitledFkModels(filter: ModelUntitledFkModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUntitledFkModelConnection @aws_api_key @aws_iam
 }
 
 input ModelBlogModelConditionInput {
   title: ModelStringInput
   share: ModelStringInput
   status: ModelBooleanInput
+  ratio: ModelStringInput
+  zoom: ModelIntInput
+  user_id: ModelStringInput
+  tag_id: ModelStringInput
   and: [ModelBlogModelConditionInput]
   or: [ModelBlogModelConditionInput]
   not: ModelBlogModelConditionInput
@@ -235,6 +372,10 @@ input CreateBlogModelInput {
   title: String
   share: String
   status: Boolean
+  ratio: String
+  zoom: Int
+  user_id: String
+  tag_id: String
   _version: Int
 }
 
@@ -243,66 +384,16 @@ input UpdateBlogModelInput {
   title: String
   share: String
   status: Boolean
+  ratio: String
+  zoom: Int
+  user_id: String
+  tag_id: String
   _version: Int
 }
 
 input DeleteBlogModelInput {
   id: ID!
   _version: Int
-}
-
-type Mutation {
-  createBlogModel(input: CreateBlogModelInput!, condition: ModelBlogModelConditionInput): BlogModel @aws_api_key @aws_iam
-  updateBlogModel(input: UpdateBlogModelInput!, condition: ModelBlogModelConditionInput): BlogModel @aws_api_key @aws_iam
-  deleteBlogModel(input: DeleteBlogModelInput!, condition: ModelBlogModelConditionInput): BlogModel @aws_api_key @aws_iam
-  createCommentModel(input: CreateCommentModelInput!, condition: ModelCommentModelConditionInput): CommentModel @aws_api_key @aws_iam
-  updateCommentModel(input: UpdateCommentModelInput!, condition: ModelCommentModelConditionInput): CommentModel @aws_api_key @aws_iam
-  deleteCommentModel(input: DeleteCommentModelInput!, condition: ModelCommentModelConditionInput): CommentModel @aws_api_key @aws_iam
-  createReplyCommentModel(input: CreateReplyCommentModelInput!, condition: ModelReplyCommentModelConditionInput): ReplyCommentModel @aws_api_key @aws_iam
-  updateReplyCommentModel(input: UpdateReplyCommentModelInput!, condition: ModelReplyCommentModelConditionInput): ReplyCommentModel @aws_api_key @aws_iam
-  deleteReplyCommentModel(input: DeleteReplyCommentModelInput!, condition: ModelReplyCommentModelConditionInput): ReplyCommentModel @aws_api_key @aws_iam
-  createLikeModel(input: CreateLikeModelInput!, condition: ModelLikeModelConditionInput): LikeModel @aws_api_key @aws_iam
-  updateLikeModel(input: UpdateLikeModelInput!, condition: ModelLikeModelConditionInput): LikeModel @aws_api_key @aws_iam
-  deleteLikeModel(input: DeleteLikeModelInput!, condition: ModelLikeModelConditionInput): LikeModel @aws_api_key @aws_iam
-  createTagModel(input: CreateTagModelInput!, condition: ModelTagModelConditionInput): TagModel @aws_api_key @aws_iam
-  updateTagModel(input: UpdateTagModelInput!, condition: ModelTagModelConditionInput): TagModel @aws_api_key @aws_iam
-  deleteTagModel(input: DeleteTagModelInput!, condition: ModelTagModelConditionInput): TagModel @aws_api_key @aws_iam
-  createPhotoModel(input: CreatePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_api_key @aws_iam
-  updatePhotoModel(input: UpdatePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_api_key @aws_iam
-  deletePhotoModel(input: DeletePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_api_key @aws_iam
-  createUntitledModel(input: CreateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_api_key @aws_iam
-  updateUntitledModel(input: UpdateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_api_key @aws_iam
-  deleteUntitledModel(input: DeleteUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_api_key @aws_iam
-  createUntitledFkModel(input: CreateUntitledFkModelInput!, condition: ModelUntitledFkModelConditionInput): UntitledFkModel @aws_api_key @aws_iam
-  updateUntitledFkModel(input: UpdateUntitledFkModelInput!, condition: ModelUntitledFkModelConditionInput): UntitledFkModel @aws_api_key @aws_iam
-  deleteUntitledFkModel(input: DeleteUntitledFkModelInput!, condition: ModelUntitledFkModelConditionInput): UntitledFkModel @aws_api_key @aws_iam
-}
-
-type Subscription {
-  onCreateBlogModel: BlogModel @aws_subscribe(mutations: ["createBlogModel"]) @aws_api_key @aws_iam
-  onUpdateBlogModel: BlogModel @aws_subscribe(mutations: ["updateBlogModel"]) @aws_api_key @aws_iam
-  onDeleteBlogModel: BlogModel @aws_subscribe(mutations: ["deleteBlogModel"]) @aws_api_key @aws_iam
-  onCreateCommentModel: CommentModel @aws_subscribe(mutations: ["createCommentModel"]) @aws_api_key @aws_iam
-  onUpdateCommentModel: CommentModel @aws_subscribe(mutations: ["updateCommentModel"]) @aws_api_key @aws_iam
-  onDeleteCommentModel: CommentModel @aws_subscribe(mutations: ["deleteCommentModel"]) @aws_api_key @aws_iam
-  onCreateReplyCommentModel: ReplyCommentModel @aws_subscribe(mutations: ["createReplyCommentModel"]) @aws_api_key @aws_iam
-  onUpdateReplyCommentModel: ReplyCommentModel @aws_subscribe(mutations: ["updateReplyCommentModel"]) @aws_api_key @aws_iam
-  onDeleteReplyCommentModel: ReplyCommentModel @aws_subscribe(mutations: ["deleteReplyCommentModel"]) @aws_api_key @aws_iam
-  onCreateLikeModel: LikeModel @aws_subscribe(mutations: ["createLikeModel"]) @aws_api_key @aws_iam
-  onUpdateLikeModel: LikeModel @aws_subscribe(mutations: ["updateLikeModel"]) @aws_api_key @aws_iam
-  onDeleteLikeModel: LikeModel @aws_subscribe(mutations: ["deleteLikeModel"]) @aws_api_key @aws_iam
-  onCreateTagModel: TagModel @aws_subscribe(mutations: ["createTagModel"]) @aws_api_key @aws_iam
-  onUpdateTagModel: TagModel @aws_subscribe(mutations: ["updateTagModel"]) @aws_api_key @aws_iam
-  onDeleteTagModel: TagModel @aws_subscribe(mutations: ["deleteTagModel"]) @aws_api_key @aws_iam
-  onCreatePhotoModel: PhotoModel @aws_subscribe(mutations: ["createPhotoModel"]) @aws_api_key @aws_iam
-  onUpdatePhotoModel: PhotoModel @aws_subscribe(mutations: ["updatePhotoModel"]) @aws_api_key @aws_iam
-  onDeletePhotoModel: PhotoModel @aws_subscribe(mutations: ["deletePhotoModel"]) @aws_api_key @aws_iam
-  onCreateUntitledModel: UntitledModel @aws_subscribe(mutations: ["createUntitledModel"]) @aws_api_key @aws_iam
-  onUpdateUntitledModel: UntitledModel @aws_subscribe(mutations: ["updateUntitledModel"]) @aws_api_key @aws_iam
-  onDeleteUntitledModel: UntitledModel @aws_subscribe(mutations: ["deleteUntitledModel"]) @aws_api_key @aws_iam
-  onCreateUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["createUntitledFkModel"]) @aws_api_key @aws_iam
-  onUpdateUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["updateUntitledFkModel"]) @aws_api_key @aws_iam
-  onDeleteUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["deleteUntitledFkModel"]) @aws_api_key @aws_iam
 }
 
 type ModelCommentModelConnection @aws_api_key @aws_iam {
@@ -314,7 +405,8 @@ type ModelCommentModelConnection @aws_api_key @aws_iam {
 input ModelCommentModelFilterInput {
   id: ModelIDInput
   content: ModelStringInput
-  like: ModelIntInput
+  user_id: ModelStringInput
+  blog_id: ModelStringInput
   and: [ModelCommentModelFilterInput]
   or: [ModelCommentModelFilterInput]
   not: ModelCommentModelFilterInput
@@ -322,7 +414,8 @@ input ModelCommentModelFilterInput {
 
 input ModelCommentModelConditionInput {
   content: ModelStringInput
-  like: ModelIntInput
+  user_id: ModelStringInput
+  blog_id: ModelStringInput
   and: [ModelCommentModelConditionInput]
   or: [ModelCommentModelConditionInput]
   not: ModelCommentModelConditionInput
@@ -331,14 +424,16 @@ input ModelCommentModelConditionInput {
 input CreateCommentModelInput {
   id: ID
   content: String
-  like: Int
+  user_id: String
+  blog_id: String
   _version: Int
 }
 
 input UpdateCommentModelInput {
   id: ID!
   content: String
-  like: Int
+  user_id: String
+  blog_id: String
   _version: Int
 }
 
@@ -357,6 +452,8 @@ input ModelReplyCommentModelFilterInput {
   id: ModelIDInput
   content: ModelStringInput
   like: ModelIntInput
+  comment_id: ModelStringInput
+  blog_id: ModelStringInput
   and: [ModelReplyCommentModelFilterInput]
   or: [ModelReplyCommentModelFilterInput]
   not: ModelReplyCommentModelFilterInput
@@ -365,6 +462,8 @@ input ModelReplyCommentModelFilterInput {
 input ModelReplyCommentModelConditionInput {
   content: ModelStringInput
   like: ModelIntInput
+  comment_id: ModelStringInput
+  blog_id: ModelStringInput
   and: [ModelReplyCommentModelConditionInput]
   or: [ModelReplyCommentModelConditionInput]
   not: ModelReplyCommentModelConditionInput
@@ -374,6 +473,8 @@ input CreateReplyCommentModelInput {
   id: ID
   content: String
   like: Int
+  comment_id: String
+  blog_id: String
   _version: Int
 }
 
@@ -381,6 +482,8 @@ input UpdateReplyCommentModelInput {
   id: ID!
   content: String
   like: Int
+  comment_id: String
+  blog_id: String
   _version: Int
 }
 
@@ -389,36 +492,44 @@ input DeleteReplyCommentModelInput {
   _version: Int
 }
 
-type ModelLikeModelConnection @aws_api_key @aws_iam {
-  items: [LikeModel]!
+type ModelLikeBlogModelConnection @aws_api_key @aws_iam {
+  items: [LikeBlogModel]!
   nextToken: String
   startedAt: AWSTimestamp
 }
 
-input ModelLikeModelFilterInput {
+input ModelLikeBlogModelFilterInput {
   id: ModelIDInput
-  and: [ModelLikeModelFilterInput]
-  or: [ModelLikeModelFilterInput]
-  not: ModelLikeModelFilterInput
+  user_id: ModelStringInput
+  blog_id: ModelStringInput
+  and: [ModelLikeBlogModelFilterInput]
+  or: [ModelLikeBlogModelFilterInput]
+  not: ModelLikeBlogModelFilterInput
 }
 
-input ModelLikeModelConditionInput {
-  and: [ModelLikeModelConditionInput]
-  or: [ModelLikeModelConditionInput]
-  not: ModelLikeModelConditionInput
+input ModelLikeBlogModelConditionInput {
+  user_id: ModelStringInput
+  blog_id: ModelStringInput
+  and: [ModelLikeBlogModelConditionInput]
+  or: [ModelLikeBlogModelConditionInput]
+  not: ModelLikeBlogModelConditionInput
 }
 
-input CreateLikeModelInput {
+input CreateLikeBlogModelInput {
   id: ID
+  user_id: String
+  blog_id: String
   _version: Int
 }
 
-input UpdateLikeModelInput {
+input UpdateLikeBlogModelInput {
   id: ID!
+  user_id: String
+  blog_id: String
   _version: Int
 }
 
-input DeleteLikeModelInput {
+input DeleteLikeBlogModelInput {
   id: ID!
   _version: Int
 }
@@ -471,9 +582,7 @@ input ModelPhotoModelFilterInput {
   id: ModelIDInput
   name: ModelStringInput
   desciption: ModelStringInput
-  tagId: ModelStringInput
-  view: ModelIntInput
-  status: ModelBooleanInput
+  blog_id: ModelStringInput
   and: [ModelPhotoModelFilterInput]
   or: [ModelPhotoModelFilterInput]
   not: ModelPhotoModelFilterInput
@@ -482,9 +591,7 @@ input ModelPhotoModelFilterInput {
 input ModelPhotoModelConditionInput {
   name: ModelStringInput
   desciption: ModelStringInput
-  tagId: ModelStringInput
-  view: ModelIntInput
-  status: ModelBooleanInput
+  blog_id: ModelStringInput
   and: [ModelPhotoModelConditionInput]
   or: [ModelPhotoModelConditionInput]
   not: ModelPhotoModelConditionInput
@@ -494,9 +601,7 @@ input CreatePhotoModelInput {
   id: ID
   name: String
   desciption: String
-  tagId: String
-  view: Int
-  status: Boolean
+  blog_id: String
   _version: Int
 }
 
@@ -504,9 +609,7 @@ input UpdatePhotoModelInput {
   id: ID!
   name: String
   desciption: String
-  tagId: String
-  view: Int
-  status: Boolean
+  blog_id: String
   _version: Int
 }
 
@@ -515,7 +618,7 @@ input DeletePhotoModelInput {
   _version: Int
 }
 
-type ModelUntitledModelConnection @aws_api_key @aws_iam {
+type ModelUntitledModelConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
   items: [UntitledModel]!
   nextToken: String
   startedAt: AWSTimestamp
@@ -566,6 +669,7 @@ type ModelUntitledFkModelConnection @aws_api_key @aws_iam {
 input ModelUntitledFkModelFilterInput {
   id: ModelIDInput
   content: ModelStringInput
+  untitle_id: ModelStringInput
   and: [ModelUntitledFkModelFilterInput]
   or: [ModelUntitledFkModelFilterInput]
   not: ModelUntitledFkModelFilterInput
@@ -573,6 +677,7 @@ input ModelUntitledFkModelFilterInput {
 
 input ModelUntitledFkModelConditionInput {
   content: ModelStringInput
+  untitle_id: ModelStringInput
   and: [ModelUntitledFkModelConditionInput]
   or: [ModelUntitledFkModelConditionInput]
   not: ModelUntitledFkModelConditionInput
@@ -581,12 +686,14 @@ input ModelUntitledFkModelConditionInput {
 input CreateUntitledFkModelInput {
   id: ID
   content: String!
+  untitle_id: String
   _version: Int
 }
 
 input UpdateUntitledFkModelInput {
   id: ID!
   content: String
+  untitle_id: String
   _version: Int
 }
 

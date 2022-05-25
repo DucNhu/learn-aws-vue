@@ -5,7 +5,7 @@ $util.qr($ctx.stash.put("hasAuth", true))
   #set( $isAuthorized = true )
 #end
 #if( $util.authType() == "IAM Authorization" )
-  #set( $adminRoles = ["ap-northeast-1_sAlw5eDLL_Full-access/CognitoIdentityCredentials","ap-northeast-1_sAlw5eDLL_Manage-only/CognitoIdentityCredentials","addUser-staging","helloworld-staging"] )
+  #set( $adminRoles = ["ap-southeast-1_vKBRrXsdr_Full-access/CognitoIdentityCredentials","ap-southeast-1_vKBRrXsdr_Manage-only/CognitoIdentityCredentials"] )
   #foreach( $adminRole in $adminRoles )
     #if( $ctx.identity.userArn.contains($adminRole) && $ctx.identity.userArn != $ctx.stash.authRole && $ctx.identity.userArn != $ctx.stash.unauthRole )
       #return($util.toJson({}))
@@ -14,7 +14,16 @@ $util.qr($ctx.stash.put("hasAuth", true))
 $util.unauthorized()
 #end
 #if( $util.authType() == "User Pool Authorization" )
-
+  #if( !$isAuthorized )
+    #set( $staticGroupRoles = [{"claim":"cognito:groups","entity":"admin"}] )
+    #foreach( $groupRole in $staticGroupRoles )
+      #set( $groupsInToken = $util.defaultIfNull($ctx.identity.claims.get($groupRole.claim), []) )
+      #if( $groupsInToken.contains($groupRole.entity) )
+        #set( $isAuthorized = true )
+        #break
+      #end
+    #end
+  #end
 #end
 #if( !$isAuthorized )
 $util.unauthorized()

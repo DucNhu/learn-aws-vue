@@ -152,15 +152,41 @@
         }
       }
     },
-    "authlearnawsvue71ada016": {
+    "apilearnawsvue": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify15d09f3333fb4-staging-14540-deployment/amplify-cfn-templates/auth/learnawsvue71ada016-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify112e307d497a4-staging-113234-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "Parameters": {
-          "identityPoolName": "learnawsvue71ada016_identitypool_71ada016",
+          "AppSyncApiName": "learnawsvue",
+          "DynamoDBBillingMode": "PAY_PER_REQUEST",
+          "DynamoDBEnableServerSideEncryption": false,
+          "AuthCognitoUserPoolId": {
+            "Fn::GetAtt": [
+              "authlearnawsvue0e2c30e2",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "S3DeploymentBucket": "amplify-amplify112e307d497a4-staging-113234-deployment",
+          "S3DeploymentRootKey": "amplify-appsync-files/afa4d6fca2451ea94e4210a3e989fda4cf0f0dee",
+          "env": "staging"
+        }
+      }
+    },
+    "authlearnawsvue0e2c30e2": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify112e307d497a4-staging-113234-deployment/amplify-cfn-templates/auth/learnawsvue0e2c30e2-cloudformation-template.json",
+        "Parameters": {
+          "identityPoolName": "learnawsvue0e2c30e2_identitypool_0e2c30e2",
           "allowUnauthenticatedIdentities": false,
-          "resourceNameTruncated": "learna71ada016",
-          "userPoolName": "learnawsvue71ada016_userpool_71ada016",
+          "resourceNameTruncated": "learna0e2c30e2",
+          "userPoolName": "learnawsvue0e2c30e2_userpool_0e2c30e2",
           "autoVerifiedAttributes": "email",
           "mfaConfiguration": "OFF",
           "mfaTypes": "SMS Text Message",
@@ -169,22 +195,22 @@
           "emailVerificationSubject": "Your verification code",
           "emailVerificationMessage": "Your verification code is {####}",
           "defaultPasswordPolicy": false,
-          "passwordPolicyMinLength": 6,
+          "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": "",
           "requiredAttributes": "email",
           "aliasAttributes": "",
           "userpoolClientGenerateSecret": false,
           "userpoolClientRefreshTokenValidity": 30,
-          "userpoolClientWriteAttributes": "",
-          "userpoolClientReadAttributes": "",
-          "userpoolClientLambdaRole": "learna71ada016_userpoolclient_lambda_role",
+          "userpoolClientWriteAttributes": "email",
+          "userpoolClientReadAttributes": "email",
+          "userpoolClientLambdaRole": "learna0e2c30e2_userpoolclient_lambda_role",
           "userpoolClientSetAttributes": false,
-          "sharedId": "71ada016",
-          "resourceName": "learnawsvue71ada016",
+          "sharedId": "0e2c30e2",
+          "resourceName": "learnawsvue0e2c30e2",
           "authSelections": "identityPoolAndUserPool",
-          "useDefault": "manual",
-          "usernameAttributes": "email",
-          "userPoolGroupList": "user",
+          "useDefault": "default",
+          "triggers": "{}",
+          "userPoolGroupList": "",
           "serviceName": "Cognito",
           "usernameCaseSensitive": false,
           "useEnabledMfas": true,
@@ -202,159 +228,6 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "userPoolGroups": false,
-          "adminQueries": false,
-          "thirdPartyAuth": false,
-          "authProviders": "",
-          "hostedUI": false,
-          "env": "staging"
-        }
-      }
-    },
-    "authuserPoolGroups": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify15d09f3333fb4-staging-14540-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
-        "Parameters": {
-          "AuthRoleArn": {
-            "Fn::GetAtt": [
-              "AuthRole",
-              "Arn"
-            ]
-          },
-          "UnauthRoleArn": {
-            "Fn::GetAtt": [
-              "UnauthRole",
-              "Arn"
-            ]
-          },
-          "authlearnawsvue71ada016UserPoolId": {
-            "Fn::GetAtt": [
-              "authlearnawsvue71ada016",
-              "Outputs.UserPoolId"
-            ]
-          },
-          "authlearnawsvue71ada016AppClientIDWeb": {
-            "Fn::GetAtt": [
-              "authlearnawsvue71ada016",
-              "Outputs.AppClientIDWeb"
-            ]
-          },
-          "authlearnawsvue71ada016AppClientID": {
-            "Fn::GetAtt": [
-              "authlearnawsvue71ada016",
-              "Outputs.AppClientID"
-            ]
-          },
-          "authlearnawsvue71ada016IdentityPoolId": {
-            "Fn::GetAtt": [
-              "authlearnawsvue71ada016",
-              "Outputs.IdentityPoolId"
-            ]
-          },
-          "env": "staging"
-        }
-      }
-    },
-    "apilearnawsvue": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify15d09f3333fb4-staging-14540-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-        "Parameters": {
-          "AppSyncApiName": "learnawsvue",
-          "DynamoDBBillingMode": "PAY_PER_REQUEST",
-          "DynamoDBEnableServerSideEncryption": false,
-          "AuthCognitoUserPoolId": {
-            "Fn::GetAtt": [
-              "authlearnawsvue71ada016",
-              "Outputs.UserPoolId"
-            ]
-          },
-          "authRoleName": {
-            "Ref": "AuthRoleName"
-          },
-          "unauthRoleName": {
-            "Ref": "UnauthRoleName"
-          },
-          "S3DeploymentBucket": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/f345d4cbed0ebce200af8caa0518ad9f7d283a15",
-          "env": "staging"
-        }
-      }
-    },
-    "functionaddUser": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify15d09f3333fb4-staging-14540-deployment/amplify-cfn-templates/function/addUser-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
-          "s3Key": "amplify-builds/addUser-4f4c344d526d6b2f5948-build.zip",
-          "apilearnawsvueGraphQLAPIIdOutput": {
-            "Fn::GetAtt": [
-              "apilearnawsvue",
-              "Outputs.GraphQLAPIIdOutput"
-            ]
-          },
-          "apilearnawsvueGraphQLAPIEndpointOutput": {
-            "Fn::GetAtt": [
-              "apilearnawsvue",
-              "Outputs.GraphQLAPIEndpointOutput"
-            ]
-          },
-          "env": "staging"
-        }
-      }
-    },
-    "functionhelloworld": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify15d09f3333fb4-staging-14540-deployment/amplify-cfn-templates/function/helloworld-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
-          "s3Key": "amplify-builds/helloworld-44387568563748746877-build.zip",
-          "authlearnawsvue71ada016UserPoolId": {
-            "Fn::GetAtt": [
-              "authlearnawsvue71ada016",
-              "Outputs.UserPoolId"
-            ]
-          },
-          "apilearnawsvueGraphQLAPIIdOutput": {
-            "Fn::GetAtt": [
-              "apilearnawsvue",
-              "Outputs.GraphQLAPIIdOutput"
-            ]
-          },
-          "apilearnawsvueGraphQLAPIEndpointOutput": {
-            "Fn::GetAtt": [
-              "apilearnawsvue",
-              "Outputs.GraphQLAPIEndpointOutput"
-            ]
-          },
-          "apilearnawsvueGraphQLAPIKeyOutput": {
-            "Fn::GetAtt": [
-              "apilearnawsvue",
-              "Outputs.GraphQLAPIKeyOutput"
-            ]
-          },
-          "functionaddUserName": {
-            "Fn::GetAtt": [
-              "functionaddUser",
-              "Outputs.Name"
-            ]
-          },
-          "env": "staging"
-        }
-      }
-    },
-    "functioncrudUnTitle": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify15d09f3333fb4-staging-14540-deployment/amplify-cfn-templates/function/crudUnTitle-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
-          "s3Key": "amplify-builds/crudUnTitle-5574526758442b556d36-build.zip",
-          "storageUntitledModel4horcremezgdjcxjdwqidclkvqstagingName": "UntitledModel-4horcremezgdjcxjdwqidclkvq-staging",
-          "storageUntitledModel4horcremezgdjcxjdwqidclkvqstagingArn": "arn:aws:dynamodb:ap-northeast-1:660962870147:table/UntitledModel-4horcremezgdjcxjdwqidclkvq-staging",
           "env": "staging"
         }
       }
@@ -363,7 +236,7 @@
       "DependsOn": [
         "AuthRole",
         "UnauthRole",
-        "authlearnawsvue71ada016"
+        "authlearnawsvue0e2c30e2"
       ],
       "Type": "AWS::Lambda::Function",
       "Properties": {
@@ -458,7 +331,7 @@
         },
         "idpId": {
           "Fn::GetAtt": [
-            "authlearnawsvue71ada016",
+            "authlearnawsvue0e2c30e2",
             "Outputs.IdentityPoolId"
           ]
         },

@@ -1,47 +1,63 @@
-type BlogModel @model @auth(rules: [{ allow: public }]) {
+type LikeCommentModel @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  user_id: String
+  comment_id: String
+  blog_id: String
+}
+
+type BlogModel @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String
   share: String
   status: Boolean
+  ratio: String
+  zoom: Int
+  user_id: String
+  tag_id: String
 }
 
-type CommentModel @model @auth(rules: [{ allow: public }]) {
+type CommentModel @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  content: String
+  user_id: String
+  blog_id: String
+}
+
+type ReplyCommentModel @model @auth(rules: [{allow: public}]) {
   id: ID!
   content: String
   like: Int
+  comment_id: String
+  blog_id: String
 }
 
-type ReplyCommentModel @model @auth(rules: [{ allow: public }]) {
+type LikeBlogModel @model @auth(rules: [{allow: public}]) {
   id: ID!
-  content: String
-  like: Int
+  user_id: String
+  blog_id: String
 }
 
-type LikeModel @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-}
-
-type TagModel @model @auth(rules: [{ allow: public }]) {
+type TagModel @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
 }
 
-type PhotoModel @model @auth(rules: [{ allow: public }]) {
+type PhotoModel @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   desciption: String
-  tagId: String
-  view: Int
-  status: Boolean
+  blog_id: String
 }
 
-type UntitledModel @model @auth(rules: [{ allow: public }]) {
+type UntitledModel @model @auth(rules: [{allow: public, operations: [create, read, update]}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}]) {
   id: ID!
   name: String
   description: String
 }
 
-type UntitledFkModel @model @auth(rules: [{ allow: public }]) {
+type UntitledFkModel @model @auth(rules: [{allow: public}]) {
   id: ID!
   content: String!
+  untitle_id: String
 }
+ 

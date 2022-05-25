@@ -13,6 +13,7 @@ import {
   applyPolyfills,
   defineCustomElements,
 } from "@aws-amplify/ui-components/loader";
+import { componentRegister } from "./plugins/component-register";
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
@@ -22,6 +23,7 @@ applyPolyfills().then(() => {
 });
 
 registerAmplify();
+componentRegister();
 Vue.config.productionTip = false;
 new Vue({
   vuetify,

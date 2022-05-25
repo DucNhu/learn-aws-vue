@@ -23,14 +23,6 @@
         "update",
         "delete"
       ]
-    },
-    "storage": {
-      "UserModel:@model(appsync)": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ]
     }
   }
 }

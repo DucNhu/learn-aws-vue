@@ -20,6 +20,24 @@
         "addUser": {
           "deploymentBucketName": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
           "s3Key": "amplify-builds/addUser-4f4c344d526d6b2f5948-build.zip"
+        },
+        "helloworld": {
+          "deploymentBucketName": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
+          "s3Key": "amplify-builds/helloworld-44387568563748746877-build.zip"
+        },
+        "crudUnTitle": {
+          "deploymentBucketName": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
+          "s3Key": "amplify-builds/crudUnTitle-5574526758442b556d36-build.zip"
+        }
+      },
+      "storage": {
+        "UntitledModel4horcremezgdjcxjdwqidclkvqstaging": {
+          "tableName": "UntitledModel-4horcremezgdjcxjdwqidclkvq-staging",
+          "region": "ap-northeast-1",
+          "arn": "arn:aws:dynamodb:ap-northeast-1:660962870147:table/UntitledModel-4horcremezgdjcxjdwqidclkvq-staging",
+          "streamArn": "arn:aws:dynamodb:ap-northeast-1:660962870147:table/UntitledModel-4horcremezgdjcxjdwqidclkvq-staging/stream/2022-05-17T13:08:38.187",
+          "partitionKeyName": "id",
+          "partitionKeyType": "S"
         }
       }
     }

@@ -138,7 +138,7 @@
           ]
         },
         "Description": "api",
-        "Expires": 1653445550
+        "Expires": 1653992914
       }
     },
     "GraphQLAPINONEDS95A13CF0": {
@@ -324,82 +324,6 @@
         ]
       }
     },
-    "UserModel": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": {
-          "Fn::Join": [
-            "",
-            [
-              "https://s3.",
-              {
-                "Ref": "AWS::Region"
-              },
-              ".",
-              {
-                "Ref": "AWS::URLSuffix"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentBucket"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentRootKey"
-              },
-              "/stacks/UserModel.json"
-            ]
-          ]
-        },
-        "Parameters": {
-          "DynamoDBModelTableReadIOPS": {
-            "Ref": "DynamoDBModelTableReadIOPS"
-          },
-          "DynamoDBModelTableWriteIOPS": {
-            "Ref": "DynamoDBModelTableWriteIOPS"
-          },
-          "DynamoDBBillingMode": {
-            "Ref": "DynamoDBBillingMode"
-          },
-          "DynamoDBEnablePointInTimeRecovery": {
-            "Ref": "DynamoDBEnablePointInTimeRecovery"
-          },
-          "DynamoDBEnableServerSideEncryption": {
-            "Ref": "DynamoDBEnableServerSideEncryption"
-          },
-          "referencetotransformerrootstackenv10C5A902Ref": {
-            "Ref": "env"
-          },
-          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
-            "Fn::GetAtt": [
-              "GraphQLAPI",
-              "ApiId"
-            ]
-          },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
-          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
-            "Ref": "S3DeploymentBucket"
-          },
-          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
-            "Ref": "S3DeploymentRootKey"
-          },
-          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
-            "Ref": "authRoleName"
-          },
-          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
-            "Ref": "unauthRoleName"
-          }
-        }
-      },
-      "DependsOn": [
-        "GraphQLAPITransformerSchema3CB2AE18"
-      ]
-    },
     "BlogModel": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -464,35 +388,11 @@
           "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
             "Ref": "S3DeploymentRootKey"
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId": {
-            "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
-            ]
-          },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
             "Ref": "authRoleName"
           },
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
-          },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId": {
-            "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId"
-            ]
-          },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId": {
-            "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId"
-            ]
-          },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId": {
-            "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
-            ]
           }
         }
       },
@@ -564,10 +464,10 @@
               "Outputs.transformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId"
             ]
           },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -576,22 +476,22 @@
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId": {
             "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId"
             ]
           },
           "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId": {
@@ -600,10 +500,10 @@
               "Outputs.transformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId"
             ]
           }
         }
@@ -676,10 +576,10 @@
               "Outputs.transformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId"
             ]
           },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -688,22 +588,22 @@
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId": {
             "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId"
             ]
           },
           "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId": {
@@ -712,10 +612,10 @@
               "Outputs.transformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId"
             ]
           }
         }
@@ -788,10 +688,10 @@
               "Outputs.transformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId"
             ]
           },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -800,22 +700,22 @@
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId": {
             "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId"
             ]
           },
           "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId": {
@@ -824,10 +724,10 @@
               "Outputs.transformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId"
             ]
           }
         }
@@ -888,22 +788,22 @@
               "ApiId"
             ]
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
           "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
             "Ref": "S3DeploymentBucket"
           },
           "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
             "Ref": "S3DeploymentRootKey"
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId": {
+            "Fn::GetAtt": [
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId"
             ]
           },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -912,22 +812,34 @@
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId": {
+            "Fn::GetAtt": [
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId": {
+            "Fn::GetAtt": [
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId"
             ]
           }
         }
@@ -1000,10 +912,10 @@
               "Outputs.transformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId"
             ]
           },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -1012,22 +924,22 @@
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId": {
             "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId"
             ]
           },
           "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId": {
@@ -1036,10 +948,10 @@
               "Outputs.transformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId"
             ]
           }
         }
@@ -1112,10 +1024,10 @@
               "Outputs.transformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId"
             ]
           },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -1124,22 +1036,22 @@
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId": {
             "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId"
             ]
           },
           "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId": {
@@ -1148,10 +1060,10 @@
               "Outputs.transformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId"
             ]
           }
         }
@@ -1224,10 +1136,10 @@
               "Outputs.transformerrootstackBlogModelQuerygetBlogModelauth0FunctionQuerygetBlogModelauth0FunctionAppSyncFunctionBD14BA73FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelQuerygetBlogModelpostAuth0FunctionQuerygetBlogModelpostAuth0FunctionAppSyncFunctionB080DCD7FunctionId"
             ]
           },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -1236,22 +1148,22 @@
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId": {
             "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelinit0FunctionMutationcreateBlogModelinit0FunctionAppSyncFunctionA97CAE95FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationcreateBlogModelauth0FunctionMutationcreateBlogModelauth0FunctionAppSyncFunctionF62C7F63FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelMutationupdateBlogModelinit0FunctionMutationupdateBlogModelinit0FunctionAppSyncFunctionD3E58605FunctionId"
             ]
           },
           "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId": {
@@ -1260,303 +1172,16 @@
               "Outputs.transformerrootstackBlogModelSubscriptiononCreateBlogModelauth0FunctionSubscriptiononCreateBlogModelauth0FunctionAppSyncFunction9FB2E1C1FunctionId"
             ]
           },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId": {
+          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId": {
             "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
+              "BlogModel",
+              "Outputs.transformerrootstackBlogModelSubscriptionOnCreateBlogModelDataResolverFnSubscriptionOnCreateBlogModelDataResolverFnAppSyncFunction5B9664B1FunctionId"
             ]
           }
         }
       },
       "DependsOn": [
         "GraphQLAPITransformerSchema3CB2AE18"
-      ]
-    },
-    "BlogModelTagModel": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": {
-          "Fn::Join": [
-            "",
-            [
-              "https://s3.",
-              {
-                "Ref": "AWS::Region"
-              },
-              ".",
-              {
-                "Ref": "AWS::URLSuffix"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentBucket"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentRootKey"
-              },
-              "/stacks/BlogModelTagModel.json"
-            ]
-          ]
-        },
-        "Parameters": {
-          "DynamoDBModelTableReadIOPS": {
-            "Ref": "DynamoDBModelTableReadIOPS"
-          },
-          "DynamoDBModelTableWriteIOPS": {
-            "Ref": "DynamoDBModelTableWriteIOPS"
-          },
-          "DynamoDBBillingMode": {
-            "Ref": "DynamoDBBillingMode"
-          },
-          "DynamoDBEnablePointInTimeRecovery": {
-            "Ref": "DynamoDBEnablePointInTimeRecovery"
-          },
-          "DynamoDBEnableServerSideEncryption": {
-            "Ref": "DynamoDBEnableServerSideEncryption"
-          },
-          "referencetotransformerrootstackenv10C5A902Ref": {
-            "Ref": "env"
-          },
-          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
-            "Fn::GetAtt": [
-              "GraphQLAPI",
-              "ApiId"
-            ]
-          },
-          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
-            "Ref": "S3DeploymentBucket"
-          },
-          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
-            "Ref": "S3DeploymentRootKey"
-          },
-          "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId": {
-            "Fn::GetAtt": [
-              "TagModel",
-              "Outputs.transformerrootstackTagModelQuerygetTagModelauth0FunctionQuerygetTagModelauth0FunctionAppSyncFunctionC5159F5DFunctionId"
-            ]
-          },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId": {
-            "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelQuerygetUserModelpostAuth0FunctionQuerygetUserModelpostAuth0FunctionAppSyncFunction27C0A56DFunctionId"
-            ]
-          },
-          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
-            "Ref": "authRoleName"
-          },
-          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
-            "Ref": "unauthRoleName"
-          },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId": {
-            "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationcreateUserModelinit0FunctionMutationcreateUserModelinit0FunctionAppSyncFunction8C1EEB35FunctionId"
-            ]
-          },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId": {
-            "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelMutationupdateUserModelinit0FunctionMutationupdateUserModelinit0FunctionAppSyncFunction4859FFC0FunctionId"
-            ]
-          },
-          "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelSubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DC94BF7FunctionId": {
-            "Fn::GetAtt": [
-              "TagModel",
-              "Outputs.transformerrootstackTagModelSubscriptiononCreateTagModelauth0FunctionSubscriptiononCreateTagModelauth0FunctionAppSyncFunction4DC94BF7FunctionId"
-            ]
-          },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId": {
-            "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelSubscriptionOnCreateUserModelDataResolverFnSubscriptionOnCreateUserModelDataResolverFnAppSyncFunctionD90CEFAEFunctionId"
-            ]
-          }
-        }
-      },
-      "DependsOn": [
-        "GraphQLAPITransformerSchema3CB2AE18"
-      ]
-    },
-    "ConnectionStack": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": {
-          "Fn::Join": [
-            "",
-            [
-              "https://s3.",
-              {
-                "Ref": "AWS::Region"
-              },
-              ".",
-              {
-                "Ref": "AWS::URLSuffix"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentBucket"
-              },
-              "/",
-              {
-                "Ref": "S3DeploymentRootKey"
-              },
-              "/stacks/ConnectionStack.json"
-            ]
-          ]
-        },
-        "Parameters": {
-          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
-            "Fn::GetAtt": [
-              "GraphQLAPI",
-              "ApiId"
-            ]
-          },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
-          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
-            "Ref": "S3DeploymentBucket"
-          },
-          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
-            "Ref": "S3DeploymentRootKey"
-          },
-          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelBlogModelDataSource6BED647BName": {
-            "Fn::GetAtt": [
-              "BlogModel",
-              "Outputs.transformerrootstackBlogModelBlogModelDataSource6BED647BName"
-            ]
-          },
-          "referencetotransformerrootstackBlogModelNestedStackBlogModelNestedStackResourceB6DD7E70OutputstransformerrootstackBlogModelBlogModelTableB7AD501BRef": {
-            "Fn::GetAtt": [
-              "BlogModel",
-              "Outputs.transformerrootstackBlogModelBlogModelTableB7AD501BRef"
-            ]
-          },
-          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
-            "Ref": "authRoleName"
-          },
-          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
-            "Ref": "unauthRoleName"
-          },
-          "referencetotransformerrootstackUntitledModelNestedStackUntitledModelNestedStackResourceC0891623OutputstransformerrootstackUntitledModelUntitledModelDataSource1D0E59A0Name": {
-            "Fn::GetAtt": [
-              "UntitledModel",
-              "Outputs.transformerrootstackUntitledModelUntitledModelDataSource1D0E59A0Name"
-            ]
-          },
-          "referencetotransformerrootstackUntitledModelNestedStackUntitledModelNestedStackResourceC0891623OutputstransformerrootstackUntitledModelUntitledModelTable9B7601EARef": {
-            "Fn::GetAtt": [
-              "UntitledModel",
-              "Outputs.transformerrootstackUntitledModelUntitledModelTable9B7601EARef"
-            ]
-          },
-          "referencetotransformerrootstackLikeModelNestedStackLikeModelNestedStackResourceB2DBCBAFOutputstransformerrootstackLikeModelLikeModelDataSourceD94ABBBBName": {
-            "Fn::GetAtt": [
-              "LikeModel",
-              "Outputs.transformerrootstackLikeModelLikeModelDataSourceD94ABBBBName"
-            ]
-          },
-          "referencetotransformerrootstackLikeModelNestedStackLikeModelNestedStackResourceB2DBCBAFOutputstransformerrootstackLikeModelLikeModelTable735C9B7ERef": {
-            "Fn::GetAtt": [
-              "LikeModel",
-              "Outputs.transformerrootstackLikeModelLikeModelTable735C9B7ERef"
-            ]
-          },
-          "referencetotransformerrootstackPhotoModelNestedStackPhotoModelNestedStackResourceA0388BC4OutputstransformerrootstackPhotoModelPhotoModelDataSourceFF1C6701Name": {
-            "Fn::GetAtt": [
-              "PhotoModel",
-              "Outputs.transformerrootstackPhotoModelPhotoModelDataSourceFF1C6701Name"
-            ]
-          },
-          "referencetotransformerrootstackPhotoModelNestedStackPhotoModelNestedStackResourceA0388BC4OutputstransformerrootstackPhotoModelPhotoModelTable3F7CC610Ref": {
-            "Fn::GetAtt": [
-              "PhotoModel",
-              "Outputs.transformerrootstackPhotoModelPhotoModelTable3F7CC610Ref"
-            ]
-          },
-          "referencetotransformerrootstackReplyCommentModelNestedStackReplyCommentModelNestedStackResourceF55FD7E1OutputstransformerrootstackReplyCommentModelReplyCommentModelDataSource4F7EF1A5Name": {
-            "Fn::GetAtt": [
-              "ReplyCommentModel",
-              "Outputs.transformerrootstackReplyCommentModelReplyCommentModelDataSource4F7EF1A5Name"
-            ]
-          },
-          "referencetotransformerrootstackReplyCommentModelNestedStackReplyCommentModelNestedStackResourceF55FD7E1OutputstransformerrootstackReplyCommentModelReplyCommentModelTable3EAD5D4ERef": {
-            "Fn::GetAtt": [
-              "ReplyCommentModel",
-              "Outputs.transformerrootstackReplyCommentModelReplyCommentModelTable3EAD5D4ERef"
-            ]
-          },
-          "referencetotransformerrootstackUntitledFkModelNestedStackUntitledFkModelNestedStackResourceCF7C8040OutputstransformerrootstackUntitledFkModelUntitledFkModelDataSourceD4E11F7DName": {
-            "Fn::GetAtt": [
-              "UntitledFkModel",
-              "Outputs.transformerrootstackUntitledFkModelUntitledFkModelDataSourceD4E11F7DName"
-            ]
-          },
-          "referencetotransformerrootstackUntitledFkModelNestedStackUntitledFkModelNestedStackResourceCF7C8040OutputstransformerrootstackUntitledFkModelUntitledFkModelTableD18C6484Ref": {
-            "Fn::GetAtt": [
-              "UntitledFkModel",
-              "Outputs.transformerrootstackUntitledFkModelUntitledFkModelTableD18C6484Ref"
-            ]
-          },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelUserModelDataSourceE4B248FFName": {
-            "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelUserModelDataSourceE4B248FFName"
-            ]
-          },
-          "referencetotransformerrootstackUserModelNestedStackUserModelNestedStackResourceD6E299C2OutputstransformerrootstackUserModelUserModelTable9102B412Ref": {
-            "Fn::GetAtt": [
-              "UserModel",
-              "Outputs.transformerrootstackUserModelUserModelTable9102B412Ref"
-            ]
-          },
-          "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelTagModelDataSource6B75935FName": {
-            "Fn::GetAtt": [
-              "TagModel",
-              "Outputs.transformerrootstackTagModelTagModelDataSource6B75935FName"
-            ]
-          },
-          "referencetotransformerrootstackTagModelNestedStackTagModelNestedStackResourceB9016C26OutputstransformerrootstackTagModelTagModelTableB90AF834Ref": {
-            "Fn::GetAtt": [
-              "TagModel",
-              "Outputs.transformerrootstackTagModelTagModelTableB90AF834Ref"
-            ]
-          },
-          "referencetotransformerrootstackBlogModelTagModelNestedStackBlogModelTagModelNestedStackResourceF88B2260OutputstransformerrootstackBlogModelTagModelBlogModelTagModelDataSourceB420BB21Name": {
-            "Fn::GetAtt": [
-              "BlogModelTagModel",
-              "Outputs.transformerrootstackBlogModelTagModelBlogModelTagModelDataSourceB420BB21Name"
-            ]
-          },
-          "referencetotransformerrootstackBlogModelTagModelNestedStackBlogModelTagModelNestedStackResourceF88B2260OutputstransformerrootstackBlogModelTagModelBlogModelTagModelTable0FA35DA5Ref": {
-            "Fn::GetAtt": [
-              "BlogModelTagModel",
-              "Outputs.transformerrootstackBlogModelTagModelBlogModelTagModelTable0FA35DA5Ref"
-            ]
-          }
-        }
-      },
-      "DependsOn": [
-        "BlogModel",
-        "BlogModelTagModel",
-        "GraphQLAPITransformerSchema3CB2AE18",
-        "LikeModel",
-        "PhotoModel",
-        "ReplyCommentModel",
-        "TagModel",
-        "UntitledFkModel",
-        "UntitledModel",
-        "UserModel"
       ]
     },
     "CustomResourcesjson": {
@@ -1602,7 +1227,6 @@
       "DependsOn": [
         "GraphQLAPI",
         "GraphQLAPITransformerSchema3CB2AE18",
-        "UserModel",
         "BlogModel",
         "CommentModel",
         "ReplyCommentModel",
@@ -1610,9 +1234,7 @@
         "TagModel",
         "PhotoModel",
         "UntitledModel",
-        "UntitledFkModel",
-        "BlogModelTagModel",
-        "ConnectionStack"
+        "UntitledFkModel"
       ]
     }
   },

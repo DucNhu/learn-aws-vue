@@ -4,17 +4,15 @@ import { schema } from './schema';
 
 
 
-const { UserModel, BlogModel, TagModel, LikeModel, PhotoModel, ReplyCommentModel, UntitledModel, UntitledFkModel, CommentModel, BlogModelTagModel } = initSchema(schema);
+const { BlogModel, CommentModel, ReplyCommentModel, LikeModel, TagModel, PhotoModel, UntitledModel, UntitledFkModel } = initSchema(schema);
 
 export {
-  UserModel,
   BlogModel,
-  TagModel,
-  LikeModel,
-  PhotoModel,
-  ReplyCommentModel,
-  UntitledModel,
-  UntitledFkModel,
   CommentModel,
-  BlogModelTagModel
+  ReplyCommentModel,
+  LikeModel,
+  TagModel,
+  PhotoModel,
+  UntitledModel,
+  UntitledFkModel
 };

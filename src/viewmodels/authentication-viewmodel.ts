@@ -1,67 +1,48 @@
-import { UserModel } from "@/aws/models";
 import router from "@/router";
-import { dataStoreService } from "@/services/datastore-service";
 import Auth from "@aws-amplify/auth";
-import { createUserModel } from "@/grapqls/creates/CreateUser";
-
-import axios from "axios";
-
-const API =
-  "https://zorq5m0qi3.execute-api.ap-northeast-1.amazonaws.com/user/user";
 export class AuthenticationViewModel {
-  constructor() {
-    //
+  confirm_account = false;
+  load = false;
+
+  async signUp(user) {
+    try {
+      this.load = true;
+      await Auth.signUp({
+        ...user,
+      }).then(() => {
+        this.confirm_account = true;
+      });
+    } catch (error) {
+      console.log("error signing up:", error);
+    } finally {
+      this.load = false;
+    }
   }
 
-  // async signUp(user) {
-  //   try {
-  //     await Auth.signUp({
-  //       ...user,
-  //     }).then((newUser) => {
-  //       this.newUser = newUser;
-  //       this.confirm_account = true;
-  //     });
-  //   } catch (error) {
-  //     console.log("error signing up:", error);
-  //   }
-  // }
-
-  // async confirmAccount() {
-  //   try {
-  //     await Auth.confirmSignUp(
-  //       user.attributes.email,
-  //       this.confirm_code
-  //     ).then(() => {
-  //       this.registerUser();
-  //       this.signIn();
-  //     });
-  //   } catch (error) {
-  //     console.log("error signing up:", error);
-  //   }
-  // }
+  async confirmAccount(user, confirm_code) {
+    try {
+      this.load = true;
+      await Auth.confirmSignUp(user.attributes.email, confirm_code).then(() => {
+        this.signIn(user);
+      });
+    } catch (error) {
+      console.log("error signing up:", error);
+    } finally {
+      this.load = false;
+    }
+  }
 
   async signIn(user) {
     try {
+      this.load = true;
       const userCurrent: any = await Auth.signIn(user.username, user.password);
 
-      axios({
-        method: "GET",
-        url: API + "?id=" + userCurrent.attributes.sub,
-        responseType: "stream",
-      })
-        .then(function (response) {
-          // handle success
-          console.log(response);
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        });
-
       if (userCurrent.signInUserSession.accessToken) {
+        this.load = false;
         router.push("/photos");
       }
     } catch (error) {
+      this.load = false;
       console.log("error signing in", error);
     }
   }
@@ -73,18 +54,5 @@ export class AuthenticationViewModel {
     } catch (error) {
       console.log("Error deleting user", error);
     }
-  }
-
-  async registerUser() {
-    await axios
-      .get(API)
-      .then(function (response) {
-        // handle success
-        console.log(response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
   }
 }

@@ -9,10 +9,10 @@ $util.qr($ctx.stash.put("hasAuth", true))
 #set( $nullAllowedFields = [] )
 #set( $deniedFields = {} )
 #if( $util.authType() == "API Key Authorization" )
-$util.unauthorized()
+  #set( $isAuthorized = true )
 #end
 #if( $util.authType() == "IAM Authorization" )
-  #set( $adminRoles = ["ap-northeast-1_sAlw5eDLL_Full-access/CognitoIdentityCredentials","ap-northeast-1_sAlw5eDLL_Manage-only/CognitoIdentityCredentials"] )
+  #set( $adminRoles = ["ap-northeast-1_sAlw5eDLL_Full-access/CognitoIdentityCredentials","ap-northeast-1_sAlw5eDLL_Manage-only/CognitoIdentityCredentials","addUser-staging","helloworld-staging"] )
   #foreach( $adminRole in $adminRoles )
     #if( $ctx.identity.userArn.contains($adminRole) && $ctx.identity.userArn != $ctx.stash.authRole && $ctx.identity.userArn != $ctx.stash.unauthRole )
       #return($util.toJson({}))
@@ -21,21 +21,7 @@ $util.unauthorized()
 $util.unauthorized()
 #end
 #if( $util.authType() == "User Pool Authorization" )
-  #if( !$isAuthorized )
-    #set( $staticGroupRoles = [{"claim":"cognito:groups","entity":"Admin","allowedFields":["id","name","blogmodels","_version","_deleted","_lastChangedAt"],"nullAllowedFields":["id","name","blogmodels"],"isAuthorizedOnAllFields":true}] )
-    #foreach( $groupRole in $staticGroupRoles )
-      #set( $groupsInToken = $util.defaultIfNull($ctx.identity.claims.get($groupRole.claim), []) )
-      #if( $groupsInToken.contains($groupRole.entity) )
-        #if( $groupRole.isAuthorizedOnAllFields )
-          #set( $isAuthorized = true )
-          #break
-        #else
-          $util.qr($allowedFields.addAll($groupRole.allowedFields))
-          $util.qr($nullAllowedFields.addAll($groupRole.nullAllowedFields))
-        #end
-      #end
-    #end
-  #end
+
 #end
 #if( !$isAuthorized && $allowedFields.isEmpty() && $nullAllowedFields.isEmpty() )
 $util.unauthorized()

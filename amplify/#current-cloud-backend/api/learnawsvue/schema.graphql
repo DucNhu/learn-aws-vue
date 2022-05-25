@@ -1,116 +1,32 @@
-type UserModel @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  full_name: String
-  avatar: String
-  age: Int
-  email: String
-  gender: String
-  birthday: String
-  phone_number: String
-  BlogModels: [BlogModel] @hasMany
-  UntitledModels: [UntitledModel] @hasMany
-}
-
-type BlogModel
-  @model
-  @auth(
-    rules: [
-      {
-        allow: groups
-        groups: ["Admin"]
-        operations: [read, create, update, delete]
-      }
-      { allow: public }
-    ]
-  ) {
+type BlogModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
   title: String
   share: String
   status: Boolean
-  TagModels: [TagModel] @manyToMany(relationName: "BlogModelTagModel")
-  LikeModels: [LikeModel] @hasMany
-  PhotoModels: [PhotoModel] @hasMany
-  ReplyCommentModels: [ReplyCommentModel] @hasMany
 }
 
-type CommentModel
-  @model
-  @auth(
-    rules: [
-      {
-        allow: groups
-        groups: ["Admin"]
-        operations: [read, create, update, delete]
-      }
-      { allow: public }
-    ]
-  ) {
+type CommentModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
   content: String
   like: Int
-  ReplyCommentModels: [ReplyCommentModel] @hasMany
-  UserModel: UserModel @hasOne
 }
 
-type ReplyCommentModel
-  @model
-  @auth(
-    rules: [
-      {
-        allow: groups
-        groups: ["Admin"]
-        operations: [read, create, update, delete]
-      }
-      { allow: public }
-    ]
-  ) {
+type ReplyCommentModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
   content: String
   like: Int
-  UserModel: UserModel @hasOne
 }
 
-type LikeModel
-  @model
-  @auth(
-    rules: [
-      { allow: groups, groups: ["Admin"], operations: [read, create, delete] }
-      { allow: public, operations: [create, read, delete] }
-    ]
-  ) {
+type LikeModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
-  UserModel: UserModel @hasOne
 }
 
-type TagModel
-  @model
-  @auth(
-    rules: [
-      {
-        allow: groups
-        groups: ["Admin"]
-        operations: [read, create, update, delete]
-      }
-      { allow: public, operations: [create] }
-    ]
-  ) {
+type TagModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String
-  blogmodels: [BlogModel] @manyToMany(relationName: "BlogModelTagModel")
 }
 
-type PhotoModel
-  @model
-  @auth(
-    rules: [
-      { allow: public }
-      {
-        allow: groups
-        groups: ["Admin"]
-        operations: [read, create, update, delete]
-      }
-    ]
-  ) {
+type PhotoModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String
   desciption: String
@@ -119,36 +35,13 @@ type PhotoModel
   status: Boolean
 }
 
-type UntitledModel
-  @model
-  @auth(
-    rules: [
-      {
-        allow: groups
-        groups: ["Admin"]
-        operations: [read, create, update, delete]
-      }
-      { allow: public, operations: [create, read, update] }
-    ]
-  ) {
+type UntitledModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String
   description: String
-  UntitledFkModels: [UntitledFkModel] @hasMany
 }
 
-type UntitledFkModel
-  @model
-  @auth(
-    rules: [
-      {
-        allow: groups
-        groups: ["Admin"]
-        operations: [read, create, update, delete]
-      }
-      { allow: public, operations: [read] }
-    ]
-  ) {
+type UntitledFkModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
   content: String!
 }

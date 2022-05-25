@@ -29,7 +29,14 @@ const awsmobile = {
     "aws_appsync_graphqlEndpoint": "https://dqhac2nosrcvvb64o6o3elkrqq.appsync-api.ap-northeast-1.amazonaws.com/graphql",
     "aws_appsync_region": "ap-northeast-1",
     "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
-    "aws_appsync_apiKey": "da2-fmjvh6mhjbhcdd6wn4q7haoebi"
+    "aws_appsync_apiKey": "da2-fmjvh6mhjbhcdd6wn4q7haoebi",
+    "aws_dynamodb_all_tables_region": "ap-northeast-1",
+    "aws_dynamodb_table_schemas": [
+        {
+            "tableName": "UntitledModel-4horcremezgdjcxjdwqidclkvq-staging",
+            "region": "ap-northeast-1"
+        }
+    ]
 };
 
 

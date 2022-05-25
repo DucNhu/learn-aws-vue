@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1 id="h1">{{ msg }}</h1>
-
+    <global-load />
     <v-data-table
       :headers="headers"
       :items="listData"
@@ -107,7 +107,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { dataStoreService } from "@/services/datastore-service";
-import { Predicates } from "aws-amplify";
+import { Auth, Predicates } from "aws-amplify";
 import { UntitledModel } from "@/aws/models";
 import { UntitledModelsQuery as UntitledModelsQuery } from "@/grapqls/UntitledModelsQuery";
 
@@ -179,7 +179,12 @@ export default class HelloWorld extends Vue {
 
   getGrapqlData: any = [];
   subscribes: any = [];
+  userId;
   mounted() {
+    Auth.currentUserInfo().then((result) => {
+      this.userId = result.attributes.sub;
+    });
+
     this.getData();
   }
 
@@ -196,33 +201,28 @@ export default class HelloWorld extends Vue {
   // }
 
   getData() {
-    this.subscribes = [
-      dataStoreService
-        .obserQuery(UntitledModel, Predicates.ALL, {
-          sort: (s: any) => s.createdAt("DESCENDING"),
-        })
-        .subscribe((result: any) => {
-          console.log(result);
-          this.listData = result.items;
-        }),
-    ];
-    dataStoreService.getGrapql(UntitledModelsQuery).then((result: any) => {
-      console.log(result);
-    });
+    dataStoreService
+      .get(UntitledModel, Predicates.ALL, {
+        sort: (s: any) => s.createdAt("DESCENDING"),
+      })
+      .then((result: any) => {
+        console.log(result);
+        this.listData = result.items;
+      });
   }
 
   save() {
-    // if (this.editedID.trim()) {
-    //   const data = new UntitledModel({
-    //     name: this.UntitledModel.name,
-    //     description: this.UntitledModel.description,
-    //   });
-    //   dataStoreService.create(data);
-    //   this.closeDialog();
-    // } else {
-    //   dataStoreService.edit(UntitledModel, this.UntitledModel);
-    //   this.closeDialog();
-    // }
+    if (this.editedID.trim()) {
+      const data = new UntitledModel({
+        name: this.UntitledModel.name,
+        description: this.UntitledModel.description,
+      });
+      dataStoreService.create(data);
+      this.closeDialog();
+    } else {
+      dataStoreService.edit(UntitledModel, this.UntitledModel);
+      this.closeDialog();
+    }
   }
 
   Table;

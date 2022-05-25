@@ -277,7 +277,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/829589cd06c049a8b00fbce85b82731446adfb03",
+          "S3DeploymentRootKey": "amplify-appsync-files/f345d4cbed0ebce200af8caa0518ad9f7d283a15",
           "env": "staging"
         }
       }
@@ -301,6 +301,60 @@
               "Outputs.GraphQLAPIEndpointOutput"
             ]
           },
+          "env": "staging"
+        }
+      }
+    },
+    "functionhelloworld": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify15d09f3333fb4-staging-14540-deployment/amplify-cfn-templates/function/helloworld-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
+          "s3Key": "amplify-builds/helloworld-44387568563748746877-build.zip",
+          "authlearnawsvue71ada016UserPoolId": {
+            "Fn::GetAtt": [
+              "authlearnawsvue71ada016",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "apilearnawsvueGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apilearnawsvue",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apilearnawsvueGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apilearnawsvue",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "apilearnawsvueGraphQLAPIKeyOutput": {
+            "Fn::GetAtt": [
+              "apilearnawsvue",
+              "Outputs.GraphQLAPIKeyOutput"
+            ]
+          },
+          "functionaddUserName": {
+            "Fn::GetAtt": [
+              "functionaddUser",
+              "Outputs.Name"
+            ]
+          },
+          "env": "staging"
+        }
+      }
+    },
+    "functioncrudUnTitle": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify15d09f3333fb4-staging-14540-deployment/amplify-cfn-templates/function/crudUnTitle-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-amplify15d09f3333fb4-staging-14540-deployment",
+          "s3Key": "amplify-builds/crudUnTitle-5574526758442b556d36-build.zip",
+          "storageUntitledModel4horcremezgdjcxjdwqidclkvqstagingName": "UntitledModel-4horcremezgdjcxjdwqidclkvq-staging",
+          "storageUntitledModel4horcremezgdjcxjdwqidclkvqstagingArn": "arn:aws:dynamodb:ap-northeast-1:660962870147:table/UntitledModel-4horcremezgdjcxjdwqidclkvq-staging",
           "env": "staging"
         }
       }

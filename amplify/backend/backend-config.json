@@ -21,7 +21,6 @@
         }
       }
     }
-<<<<<<< HEAD
   },
   "function": {
     "addUser": {
@@ -96,7 +95,5 @@
       "providerPlugin": "awscloudformation",
       "dependsOn": []
     }
-=======
->>>>>>> main
   }
 }

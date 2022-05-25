@@ -24,15 +24,11 @@ export class AuthenticationViewModel {
   async confirmAccount(user, confirm_code) {
     try {
       this.load = true;
-      await Auth.confirmSignUp(user.username, confirm_code).then((_) => {
-        console.log(_);
-
+      await Auth.confirmSignUp(user.username, confirm_code).then(() => {
         this.signIn(user);
       });
     } catch (error) {
       console.log("error signing up:", error);
-    } finally {
-      this.load = false;
     }
   }
 

@@ -1,5 +1,4 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
-
 //Header
 import {
   faHouse,
@@ -8,6 +7,10 @@ import {
   faArrowRightFromBracket,
   faUser,
   faGear,
+  faAngleRight,
+  faAngleLeft,
+  faCircleChevronRight,
+  faCircleChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -16,5 +19,9 @@ library.add(
   faMicroscope,
   faArrowRightFromBracket,
   faUser,
-  faGear
+  faGear,
+  faAngleRight,
+  faAngleLeft,
+  faCircleChevronRight,
+  faCircleChevronLeft
 );

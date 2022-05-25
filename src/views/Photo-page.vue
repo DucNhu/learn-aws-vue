@@ -1,6 +1,7 @@
 <template>
-  <div class="container-fluid tm-container-content tm-mt-60">
-    <div class="row mb-4">
+  <div class="container-fluid tm-container-content mt-3">
+    <div class="row mb-4 pt-3">
+      <slide-story />
       <h2 class="col-6 tm-text-primary">Latest Photos</h2>
       <div class="col-6 d-flex justify-content-end align-items-center">
         <form action="" class="tm-text-primary">
@@ -290,27 +291,6 @@
         </div>
       </div>
     </div>
-    <!-- row -->
-    <div class="row tm-mb-90">
-      <div
-        class="col-12 d-flex justify-content-between align-items-center tm-paging-col"
-      >
-        <a
-          href="javascript:void(0);"
-          class="btn btn-primary tm-btn-prev mb-2 disabled"
-          >Previous</a
-        >
-        <div class="tm-paging d-flex">
-          <a href="javascript:void(0);" class="active tm-paging-link">1</a>
-          <a href="javascript:void(0);" class="tm-paging-link">2</a>
-          <a href="javascript:void(0);" class="tm-paging-link">3</a>
-          <a href="javascript:void(0);" class="tm-paging-link">4</a>
-        </div>
-        <a href="javascript:void(0);" class="btn btn-primary white--text"
-          >Next Page</a
-        >
-      </div>
-    </div>
   </div>
   <!-- container-fluid, tm-container-content -->
 </template>
@@ -318,7 +298,11 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component
+@Component({
+  components: {
+    "slide-story": () => import("./slide-story.vue"),
+  },
+})
 export default class PhotoPage extends Vue {}
 </script>
 

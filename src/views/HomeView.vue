@@ -67,28 +67,25 @@
     </v-app-bar>
 
     <v-main class="grey lighten-3 pb-5">
-      <v-container>
-        <v-row>
-          <v-col cols="12" sm="2">
-            <v-sheet rounded="lg" min-height="268">
-              <!--  -->
-            </v-sheet>
-          </v-col>
-
+      <div class="container">
+        <v-row justify="center">
           <v-col cols="12" sm="8">
             <v-sheet min-height="70vh" rounded="lg">
               <global-load :load="load" />
               <router-view />
             </v-sheet>
           </v-col>
-
-          <v-col cols="12" sm="2">
+          <v-col
+            cols="12"
+            sm="4"
+            :class="$vuetify.breakpoint.width > 1000 ? 'd-block' : 'd-none'"
+          >
             <v-sheet rounded="lg" min-height="268">
               <!--  -->
             </v-sheet>
           </v-col>
         </v-row>
-      </v-container>
+      </div>
     </v-main>
 
     <v-footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
@@ -229,8 +226,4 @@ export default class HomeView extends Vue {
   }
 }
 </script>
-<style>
-.bg-navigation {
-  background: center/cover url("../assets/images/navigation-bg.jpg");
-}
-</style>
+<style></style>

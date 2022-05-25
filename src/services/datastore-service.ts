@@ -10,7 +10,7 @@ import { API, DataStore, graphqlOperation } from "aws-amplify";
 export class DataStoreService {
   async create(data: any) {
     try {
-      await DataStore.save(data);
+      return await DataStore.save(data);
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +22,7 @@ export class DataStoreService {
   ) {
     try {
       const original = await DataStore.query(modelConstructor, data.id);
-      await DataStore.save(
+      return await DataStore.save(
         modelConstructor.copyOf(original!, (object: any) => {
           for (const key in object) {
             if (Object.prototype.hasOwnProperty.call(object, key)) {
@@ -40,8 +40,12 @@ export class DataStoreService {
     modelConstructor: PersistentModelConstructor<T>,
     data: any
   ) {
-    const original = await DataStore.query(modelConstructor, data.id);
-    return await DataStore.delete(original!);
+    try {
+      const original = await DataStore.query(modelConstructor, data.id);
+      return await DataStore.delete(original!);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async get<T extends PersistentModel>(
@@ -71,7 +75,7 @@ export class DataStoreService {
     try {
       return DataStore.observeQuery(modelConstructor, criteria, sort);
     } catch (error) {
-      //
+      console.log(error);
     }
   }
 }

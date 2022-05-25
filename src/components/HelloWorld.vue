@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <h1 id="h1">{{ msg }}</h1>
-    <global-load />
     <v-data-table
       :headers="headers"
       :items="listData"
@@ -109,15 +108,16 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { dataStoreService } from "@/services/datastore-service";
 import { Auth, Predicates } from "aws-amplify";
 import { UntitledModel } from "@/aws/models";
-import { UntitledModelsQuery as UntitledModelsQuery } from "@/grapqls/UntitledModelsQuery";
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
+
   listData: UntitledModel[] = [];
   dialog = false;
   dialogDelete = false;
-  editedID: string | null | undefined = "";
+  editedID = "";
+
   headers = [
     {
       text: "id",
@@ -195,16 +195,24 @@ export default class HelloWorld extends Vue {
   // }
   getData() {
     dataStoreService
-      .get(UntitledModel, Predicates.ALL, {
-        sort: (s: any) => s.createdAt("DESCENDING"),
-      })
-      .then((result: any) => {
+      .obserQuery(
+        UntitledModel,
+        // (untitled) => {
+        //   untitled._deleted("gt", null);
+        // },
+        Predicates.ALL,
+        {
+          sort: (s: any) => s.createdAt("DESCENDING"),
+        }
+      )
+      .subscribe((result) => {
         console.log(result);
+
         this.listData = result.items;
       });
   }
   save() {
-    if (this.editedID.trim()) {
+    if (this.editedID == "") {
       const data = new UntitledModel({
         name: this.UntitledModel.name,
         description: this.UntitledModel.description,
@@ -216,33 +224,40 @@ export default class HelloWorld extends Vue {
       this.closeDialog();
     }
   }
+
   Table;
   get formTitle() {
     return this.editedID == "" ? "Create new" : "Edit '" + this.editedID + "'";
   }
+
   editItem(item: UntitledModel) {
     console.log("edit");
     this.editedID = item.name;
     this.UntitledModel = Object.assign({}, item);
     this.dialog = true;
   }
+
   deleteItem(item: UntitledModel) {
     this.editedID = item.name;
     this.UntitledModel = Object.assign({}, item);
     this.dialogDelete = true;
   }
+
   deleteItemConfirm() {
     dataStoreService.delete(UntitledModel, this.UntitledModel);
     this.closeDialog();
   }
+
   closeDialog() {
     this.dialog = false;
     this.dialogDelete = false;
   }
+
   beforeDestroy() {
     if (!this.subscribes.length)
       this.subscribes.forEach((e: any) => {
         e.unsubscribe();
+        console.log("1");
       });
   }
 }

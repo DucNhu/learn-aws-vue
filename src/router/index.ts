@@ -11,6 +11,12 @@ const routes: Array<RouteConfig> = [
     redirect: "/photos",
     component: HomeView,
     beforeEnter: async (to, _, next) => {
+      const user = await Auth.currentAuthenticatedUser();
+
+      // Returns an array of groups
+      const groups =
+        user.signInUserSession.accessToken.payload["cognito:groups"];
+
       const isAuthenticated = await Auth.currentUserInfo();
       if (!isAuthenticated) {
         next("/login");
@@ -40,6 +46,20 @@ const routes: Array<RouteConfig> = [
   {
     path: "/admin",
     component: () => import("../views/admin/dashboard-page.vue"),
+    beforeEnter: async (to, _, next) => {
+      const isAuthenticated = await Auth.currentUserInfo();
+
+      if (!isAuthenticated) {
+        next("/login");
+      } else {
+        const user = await Auth.currentAuthenticatedUser();
+        // Returns an array of groups
+        const groups =
+          user.signInUserSession.accessToken.payload["cognito:groups"];
+        if (groups == undefined || groups[0] != "admin") next("/");
+        else next();
+      }
+    },
   },
 ];
 

@@ -42,6 +42,7 @@
 </template>
 
 <script lang="ts">
+import { Auth } from "aws-amplify";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({
@@ -49,7 +50,13 @@ import { Component, Vue } from "vue-property-decorator";
     "slide-story": () => import("./slide-story.vue"),
   },
 })
-export default class PhotoPage extends Vue {}
+export default class PhotoPage extends Vue {
+  mounted() {
+    Auth.currentAuthenticatedUser().then((response) => {
+      console.log(response);
+    });
+  }
+}
 </script>
 
 <style scoped>

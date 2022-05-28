@@ -270,4 +270,8 @@ export default class extends Vue {
   transform: translateY(-50%);
   z-index: 2;
 }
+
+::v-deep .theme--light.v-icon.v-icon.v-icon--disabled {
+  display: none;
+}
 </style>

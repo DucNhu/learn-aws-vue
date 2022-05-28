@@ -8,7 +8,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class DashBoardPage extends Vue {
   mounted() {
-    this.$router.push("/");
+    // this.$router.push("/");
   }
 }
 </script>

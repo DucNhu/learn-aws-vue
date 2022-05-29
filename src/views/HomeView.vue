@@ -46,7 +46,6 @@
               alt="Avatar"
               src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
             />
-            <span class="ml-2">{{ userName }}</span>
           </v-avatar>
         </template>
         <v-list>
@@ -166,7 +165,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import HelloWorld from "@/components/test-folder/HelloWorld.vue"; // @ is an alias to /src
 import { Auth, DataStore } from "aws-amplify";
 import router from "@/router";
 
@@ -188,7 +187,7 @@ export default class HomeView extends Vue {
     },
     {
       icon: "fa-solid fa-microscope",
-      link: "/test",
+      link: "/test-storage",
     },
     {
       icon: "fa-solid fa-microscope",
@@ -212,12 +211,7 @@ export default class HomeView extends Vue {
       content: "Setting",
     },
   ];
-  userName = "";
-  mounted() {
-    Auth.currentUserPoolUser().then((info) => {
-      this.userName = info.username;
-    });
-  }
+
   async signOut() {
     try {
       this.load = true;

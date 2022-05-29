@@ -21,7 +21,7 @@ const routes: Array<RouteConfig> = [
     children: [
       {
         path: "/photos",
-        component: () => import("../views/Photo-page.vue"),
+        component: () => import("../views/photo-page.vue"),
       },
       {
         path: "/about",
@@ -29,7 +29,11 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: "/test",
-        component: () => import(".././components/HelloWorld.vue"),
+        component: () => import("../components/test-folder/HelloWorld.vue"),
+      },
+      {
+        path: "/test-storage",
+        component: () => import(".././components/test-folder/test-storage.vue"),
       },
     ],
   },

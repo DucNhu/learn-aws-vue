@@ -9,7 +9,7 @@ $util.qr($ctx.stash.put("hasAuth", true))
 #set( $nullAllowedFields = [] )
 #set( $deniedFields = {} )
 #if( $util.authType() == "API Key Authorization" )
-  #set( $isAuthorized = true )
+$util.unauthorized()
 #end
 #if( $util.authType() == "IAM Authorization" )
   #set( $adminRoles = ["ap-southeast-1_vKBRrXsdr_Full-access/CognitoIdentityCredentials","ap-southeast-1_vKBRrXsdr_Manage-only/CognitoIdentityCredentials"] )

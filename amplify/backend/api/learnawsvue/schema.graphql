@@ -1,11 +1,11 @@
-type LikeCommentModel @model @auth(rules: [{allow: public}]) {
+type LikeCommentModel @model @auth(rules: [{allow: owner}]) {
   id: ID!
   user_id: String
   comment_id: String
   blog_id: String
 }
 
-type BlogModel @model @auth(rules: [{allow: public}]) {
+type BlogModel @model @auth(rules: [{allow: owner}]) {
   id: ID!
   title: String
   share: String
@@ -16,14 +16,14 @@ type BlogModel @model @auth(rules: [{allow: public}]) {
   tag_id: String
 }
 
-type CommentModel @model @auth(rules: [{allow: public}]) {
+type CommentModel @model @auth(rules: [{allow: owner}]) {
   id: ID!
   content: String
   user_id: String
   blog_id: String
 }
 
-type ReplyCommentModel @model @auth(rules: [{allow: public}]) {
+type ReplyCommentModel @model @auth(rules: [{allow: owner}]) {
   id: ID!
   content: String
   like: Int
@@ -31,7 +31,7 @@ type ReplyCommentModel @model @auth(rules: [{allow: public}]) {
   blog_id: String
 }
 
-type LikeBlogModel @model @auth(rules: [{allow: public}]) {
+type LikeBlogModel @model @auth(rules: [{allow: owner}]) {
   id: ID!
   user_id: String
   blog_id: String
@@ -42,20 +42,20 @@ type TagModel @model @auth(rules: [{allow: public}]) {
   name: String
 }
 
-type PhotoModel @model @auth(rules: [{allow: public}]) {
+type PhotoModel @model @auth(rules: [{allow: owner}]) {
   id: ID!
   name: String
   desciption: String
   blog_id: String
 }
 
-type UntitledModel @model @auth(rules: [{allow: public, operations: [create, read, update]}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}]) {
+type UntitledModel @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: owner, operations: [create, read, update]}]) {
   id: ID!
   name: String
   description: String
 }
 
-type UntitledFkModel @model @auth(rules: [{allow: public}]) {
+type UntitledFkModel @model @auth(rules: [{allow: owner, operations: [read]}]) {
   id: ID!
   content: String!
   untitle_id: String

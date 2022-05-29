@@ -61,10 +61,10 @@
     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
       "Type": "String"
     },
-    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFun0CF3A933": {
+    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
       "Type": "String"
     },
-    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFun131A1199": {
+    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFun0CF3A933": {
       "Type": "String"
     },
     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationupdateLikeCommentModelinit0FunctionMutationupdateLikeCommentModelinit0FunctionAppSyncFunFB5ED498": {
@@ -74,6 +74,9 @@
       "Type": "String"
     },
     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelSubscriptionOnCreateLikeCommentModelDataResolverFnSubscriptionOnCreateLikeCommentModelDataResolv8E3DB20C": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId": {
       "Type": "String"
     }
   },
@@ -788,6 +791,36 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
+    "MutationcreateReplyCommentModelauth0FunctionMutationcreateReplyCommentModelauth0FunctionAppSyncFunctionF67F5A33": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "MutationcreateReplyCommentModelauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Mutation.createReplyCommentModel.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
     "MutationCreateReplyCommentModelDataResolverFnMutationCreateReplyCommentModelDataResolverFnAppSyncFunction3AB96FBD": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -858,7 +891,10 @@
               "Ref": "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFun0CF3A933"
             },
             {
-              "Ref": "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFun131A1199"
+              "Fn::GetAtt": [
+                "MutationcreateReplyCommentModelauth0FunctionMutationcreateReplyCommentModelauth0FunctionAppSyncFunctionF67F5A33",
+                "FunctionId"
+              ]
             },
             {
               "Ref": "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelQuerygetLikeCommentModelpostAuth0FunctionQuerygetLikeCommentModelpostAuth0FunctionAppSyncFunctioE87860EC"
@@ -1380,6 +1416,53 @@
             "",
             [
               "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteReplyCommentModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "ReplyCommentModelownerResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "owner",
+        "TypeName": "ReplyCommentModel",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Ref": "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId"
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"ReplyCommentModel\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"owner\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },

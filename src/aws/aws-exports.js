@@ -5,7 +5,7 @@ const awsmobile = {
     "aws_project_region": "ap-southeast-1",
     "aws_appsync_graphqlEndpoint": "https://zh6opi3tsvfudanmokdl7nkbge.appsync-api.ap-southeast-1.amazonaws.com/graphql",
     "aws_appsync_region": "ap-southeast-1",
-    "aws_appsync_authenticationType": "API_KEY",
+    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
     "aws_appsync_apiKey": "da2-ymhx72avkvfqvefwxeojxd4w7i",
     "aws_cognito_identity_pool_id": "ap-southeast-1:36c2c30c-09ca-484c-8c83-7d082af774aa",
     "aws_cognito_region": "ap-southeast-1",
@@ -27,7 +27,9 @@ const awsmobile = {
     },
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
-    ]
+    ],
+    "aws_user_files_s3_bucket": "mybucket113234-staging",
+    "aws_user_files_s3_bucket_region": "ap-southeast-1"
 };
 
 

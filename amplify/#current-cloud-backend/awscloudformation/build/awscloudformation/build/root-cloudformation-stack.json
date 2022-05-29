@@ -173,7 +173,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-amplify112e307d497a4-staging-113234-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/afa4d6fca2451ea94e4210a3e989fda4cf0f0dee",
+          "S3DeploymentRootKey": "amplify-appsync-files/ba54182d3db8f01d3c2d6279784ad1aae44a5a12",
           "env": "staging"
         }
       }
@@ -201,8 +201,8 @@
           "aliasAttributes": "",
           "userpoolClientGenerateSecret": false,
           "userpoolClientRefreshTokenValidity": 30,
-          "userpoolClientWriteAttributes": "email",
-          "userpoolClientReadAttributes": "email",
+          "userpoolClientWriteAttributes": "",
+          "userpoolClientReadAttributes": "",
           "userpoolClientLambdaRole": "learna0e2c30e2_userpoolclient_lambda_role",
           "userpoolClientSetAttributes": false,
           "sharedId": "0e2c30e2",
@@ -228,6 +228,47 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
+          "userPoolGroups": false,
+          "adminQueries": false,
+          "hostedUI": false,
+          "parentStack": {
+            "Ref": "AWS::StackId"
+          },
+          "permissions": "",
+          "authProviders": "",
+          "env": "staging"
+        }
+      }
+    },
+    "storagemyStorage": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify112e307d497a4-staging-113234-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "Parameters": {
+          "bucketName": "mybucket",
+          "selectedGuestPermissions": "s3:GetObject,s3:ListBucket",
+          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject",
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "s3PrivatePolicy": "Private_policy_6043b196",
+          "s3ProtectedPolicy": "Protected_policy_6043b196",
+          "s3PublicPolicy": "Public_policy_6043b196",
+          "s3ReadPolicy": "read_policy_6043b196",
+          "s3UploadsPolicy": "Uploads_policy_6043b196",
+          "authPolicyName": "s3_amplify_6043b196",
+          "unauthPolicyName": "s3_amplify_6043b196",
+          "AuthenticatedAllowList": "ALLOW",
+          "GuestAllowList": "ALLOW",
+          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedUploads": "s3:PutObject",
+          "s3PermissionsGuestPublic": "s3:GetObject",
+          "s3PermissionsGuestUploads": "DISALLOW",
           "env": "staging"
         }
       }

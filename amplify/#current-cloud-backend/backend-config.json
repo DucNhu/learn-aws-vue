@@ -15,10 +15,9 @@
       "output": {
         "authConfig": {
           "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
-              "description": "api key description"
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authlearnawsvue0e2c30e2"
             }
           },
           "additionalAuthenticationProviders": [
@@ -26,9 +25,10 @@
               "authenticationType": "AWS_IAM"
             },
             {
-              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-              "userPoolConfig": {
-                "userPoolId": "authlearnawsvue0e2c30e2"
+              "authenticationType": "API_KEY",
+              "apiKeyConfig": {
+                "apiKeyExpirationDays": 30,
+                "description": "api key description"
               }
             }
           ]
@@ -60,6 +60,13 @@
           "EMAIL"
         ]
       }
+    }
+  },
+  "storage": {
+    "myStorage": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
     }
   }
 }

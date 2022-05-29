@@ -68,23 +68,7 @@
 
     <v-main class="grey lighten-3 pb-5">
       <div class="container">
-        <v-row justify="center">
-          <v-col cols="12" sm="8">
-            <v-sheet class="grey lighten-3" rounded="lg">
-              <global-load :load="load" />
-              <router-view />
-            </v-sheet>
-          </v-col>
-          <v-col
-            cols="12"
-            sm="4"
-            :class="$vuetify.breakpoint.width > 1000 ? 'd-block' : 'd-none'"
-          >
-            <v-sheet rounded="lg" min-height="268">
-              <!--  -->
-            </v-sheet>
-          </v-col>
-        </v-row>
+        <router-view />
       </div>
     </v-main>
 

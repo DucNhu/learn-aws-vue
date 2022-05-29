@@ -50,12 +50,11 @@
         "GraphQLAPIEndpointOutput": "https://zh6opi3tsvfudanmokdl7nkbge.appsync-api.ap-southeast-1.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-ymhx72avkvfqvefwxeojxd4w7i"
       },
-      "lastPushTimeStamp": "2022-05-29T03:10:32.363Z",
+      "lastPushTimeStamp": "2022-05-29T06:23:22.091Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify112e307d497a4-staging-113234-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apilearnawsvue"
-      },
-      "lastPushDirHash": "vwBVoGdAhfIz3lmg349D1XfAZoc="
+      }
     }
   },
   "auth": {
@@ -71,7 +70,7 @@
           "EMAIL"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
+          "passwordPolicyMinLength": 6,
           "passwordPolicyCharacters": []
         },
         "mfaConfiguration": "OFF",
@@ -91,11 +90,12 @@
         "IdentityPoolName": "learnawsvue0e2c30e2_identitypool_0e2c30e2__staging",
         "UserPoolName": "learnawsvue0e2c30e2_userpool_0e2c30e2"
       },
-      "lastPushTimeStamp": "2022-05-29T03:10:32.370Z",
+      "lastPushTimeStamp": "2022-05-29T06:23:22.100Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify112e307d497a4-staging-113234-deployment/amplify-cfn-templates/auth/learnawsvue0e2c30e2-cloudformation-template.json",
         "logicalId": "authlearnawsvue0e2c30e2"
-      }
+      },
+      "lastPushDirHash": "TnRGrYDQDgZDDxXoZxS2PRejZms="
     }
   },
   "storage": {
@@ -107,7 +107,7 @@
         "BucketName": "mybucket113234-staging",
         "Region": "ap-southeast-1"
       },
-      "lastPushTimeStamp": "2022-05-29T03:10:41.019Z",
+      "lastPushTimeStamp": "2022-05-29T06:23:29.534Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify112e307d497a4-staging-113234-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storagemyStorage"

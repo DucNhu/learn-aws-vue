@@ -16,32 +16,7 @@ $util.unauthorized()
 $util.unauthorized()
 #end
 #if( $util.authType() == "User Pool Authorization" )
-  #if( !$isAuthorized )
-    #set( $ownerEntity0 = $util.defaultIfNull($ctx.args.input.owner, null) )
-    #set( $ownerClaim0 = $util.defaultIfNull($ctx.identity.claims.get("sub"), "___xamznone____") )
-    #set( $currentClaim1 = $util.defaultIfNull($ctx.identity.claims.get("username"), $util.defaultIfNull($ctx.identity.claims.get("cognito:username"), "___xamznone____")) )
-    #set( $ownerClaim0 = "$ownerClaim0::$currentClaim1" )
-    #set( $ownerClaimsList0 = [] )
-    $util.qr($ownerClaimsList0.add($util.defaultIfNull($ctx.identity.claims.get("sub"), "___xamznone____")))
-    $util.qr($ownerClaimsList0.add($util.defaultIfNull($ctx.identity.claims.get("username"), $util.defaultIfNull($ctx.identity.claims.get("cognito:username"), "___xamznone____"))))
-    #set( $ownerAllowedFields0 = ["id","title","share","status","ratio","zoom","user_id","tag_id","_version","_deleted","_lastChangedAt"] )
-    #set( $isAuthorizedOnAllFields0 = true )
-    #if( $ownerClaim0 == $ownerEntity0 || $ownerClaimsList0.contains($ownerEntity0) )
-      #if( $isAuthorizedOnAllFields0 )
-        #set( $isAuthorized = true )
-      #else
-        $util.qr($allowedFields.addAll($ownerAllowedFields0))
-      #end
-    #end
-    #if( $util.isNull($ownerEntity0) && !$ctx.args.input.containsKey("owner") )
-      $util.qr($ctx.args.input.put("owner", $ownerClaim0))
-      #if( $isAuthorizedOnAllFields0 )
-        #set( $isAuthorized = true )
-      #else
-        $util.qr($allowedFields.addAll($ownerAllowedFields0))
-      #end
-    #end
-  #end
+  #set( $isAuthorized = true )
 #end
 #if( !$isAuthorized && $allowedFields.isEmpty() )
 $util.unauthorized()

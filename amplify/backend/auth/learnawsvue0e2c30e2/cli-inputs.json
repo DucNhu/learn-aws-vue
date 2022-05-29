@@ -17,7 +17,7 @@
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": false,
-    "passwordPolicyMinLength": 8,
+    "passwordPolicyMinLength": 6,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
       "email"
@@ -32,7 +32,7 @@
     "sharedId": "0e2c30e2",
     "resourceName": "learnawsvue0e2c30e2",
     "authSelections": "identityPoolAndUserPool",
-    "useDefault": "default",
+    "useDefault": "manual",
     "triggers": {},
     "userPoolGroupList": [],
     "serviceName": "Cognito",
@@ -59,6 +59,7 @@
       "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "authProviders": []
+    "authProviders": [],
+    "thirdPartyAuth": false
   }
 }

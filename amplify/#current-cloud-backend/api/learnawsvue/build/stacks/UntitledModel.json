@@ -69,9 +69,6 @@
     },
     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelSubscriptionOnCreateLikeCommentModelDataResolverFnSubscriptionOnCreateLikeCommentModelDataResolv8E3DB20C": {
       "Type": "String"
-    },
-    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId": {
-      "Type": "String"
     }
   },
   "Conditions": {
@@ -1488,53 +1485,6 @@
             "",
             [
               "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteUntitledModel\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
-              {
-                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-              },
-              "\"))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":assumed-role/",
-              {
-                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
-              },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":assumed-role/",
-              {
-                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
-              },
-              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "UntitledModelownerResolver": {
-      "Type": "AWS::AppSync::Resolver",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "FieldName": "owner",
-        "TypeName": "UntitledModel",
-        "Kind": "PIPELINE",
-        "PipelineConfig": {
-          "Functions": [
-            {
-              "Ref": "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId"
-            }
-          ]
-        },
-        "RequestMappingTemplate": {
-          "Fn::Join": [
-            "",
-            [
-              "$util.qr($ctx.stash.put(\"typeName\", \"UntitledModel\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"owner\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
               {
                 "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
               },

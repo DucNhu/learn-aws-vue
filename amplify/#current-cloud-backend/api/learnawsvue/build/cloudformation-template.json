@@ -138,7 +138,7 @@
                     ]
                 },
                 "Description": "api key description",
-                "Expires": 1656384343
+                "Expires": 1656396604
             }
         },
         "GraphQLAPINONEDS95A13CF0": {
@@ -476,16 +476,16 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-                        "Fn::GetAtt": [
-                            "GraphQLAPINONEDS95A13CF0",
-                            "Name"
-                        ]
-                    },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFun0CF3A933": {
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFunctionAA3C1E75FunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFun131A1199": {
+                        "Fn::GetAtt": [
+                            "LikeCommentModel",
+                            "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFunction648EFA46FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationupdateLikeCommentModelinit0FunctionMutationupdateLikeCommentModelinit0FunctionAppSyncFunFB5ED498": {
@@ -504,12 +504,6 @@
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelSubscriptionOnCreateLikeCommentModelDataResolverFnSubscriptionOnCreateLikeCommentModelDataResolverFnAppSyncFunction7E026C6EFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId": {
-                        "Fn::GetAtt": [
-                            "LikeCommentModel",
-                            "Outputs.transformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId"
                         ]
                     }
                 }
@@ -594,16 +588,16 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-                        "Fn::GetAtt": [
-                            "GraphQLAPINONEDS95A13CF0",
-                            "Name"
-                        ]
-                    },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFun0CF3A933": {
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFunctionAA3C1E75FunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFun131A1199": {
+                        "Fn::GetAtt": [
+                            "LikeCommentModel",
+                            "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFunction648EFA46FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationupdateLikeCommentModelinit0FunctionMutationupdateLikeCommentModelinit0FunctionAppSyncFunFB5ED498": {
@@ -622,12 +616,6 @@
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelSubscriptionOnCreateLikeCommentModelDataResolverFnSubscriptionOnCreateLikeCommentModelDataResolverFnAppSyncFunction7E026C6EFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId": {
-                        "Fn::GetAtt": [
-                            "LikeCommentModel",
-                            "Outputs.transformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId"
                         ]
                     }
                 }
@@ -712,16 +700,16 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-                        "Fn::GetAtt": [
-                            "GraphQLAPINONEDS95A13CF0",
-                            "Name"
-                        ]
-                    },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFun0CF3A933": {
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFunctionAA3C1E75FunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFun131A1199": {
+                        "Fn::GetAtt": [
+                            "LikeCommentModel",
+                            "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFunction648EFA46FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationupdateLikeCommentModelinit0FunctionMutationupdateLikeCommentModelinit0FunctionAppSyncFunFB5ED498": {
@@ -740,12 +728,6 @@
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelSubscriptionOnCreateLikeCommentModelDataResolverFnSubscriptionOnCreateLikeCommentModelDataResolverFnAppSyncFunction7E026C6EFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId": {
-                        "Fn::GetAtt": [
-                            "LikeCommentModel",
-                            "Outputs.transformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId"
                         ]
                     }
                 }
@@ -830,16 +812,16 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-                        "Fn::GetAtt": [
-                            "GraphQLAPINONEDS95A13CF0",
-                            "Name"
-                        ]
-                    },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFun0CF3A933": {
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFunctionAA3C1E75FunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFun131A1199": {
+                        "Fn::GetAtt": [
+                            "LikeCommentModel",
+                            "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFunction648EFA46FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationupdateLikeCommentModelinit0FunctionMutationupdateLikeCommentModelinit0FunctionAppSyncFunFB5ED498": {
@@ -858,12 +840,6 @@
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelSubscriptionOnCreateLikeCommentModelDataResolverFnSubscriptionOnCreateLikeCommentModelDataResolverFnAppSyncFunction7E026C6EFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId": {
-                        "Fn::GetAtt": [
-                            "LikeCommentModel",
-                            "Outputs.transformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId"
                         ]
                     }
                 }
@@ -1048,16 +1024,16 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-                        "Fn::GetAtt": [
-                            "GraphQLAPINONEDS95A13CF0",
-                            "Name"
-                        ]
-                    },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFun0CF3A933": {
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFunctionAA3C1E75FunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFun131A1199": {
+                        "Fn::GetAtt": [
+                            "LikeCommentModel",
+                            "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFunction648EFA46FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationupdateLikeCommentModelinit0FunctionMutationupdateLikeCommentModelinit0FunctionAppSyncFunFB5ED498": {
@@ -1076,12 +1052,6 @@
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelSubscriptionOnCreateLikeCommentModelDataResolverFnSubscriptionOnCreateLikeCommentModelDataResolverFnAppSyncFunction7E026C6EFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId": {
-                        "Fn::GetAtt": [
-                            "LikeCommentModel",
-                            "Outputs.transformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId"
                         ]
                     }
                 }
@@ -1183,12 +1153,6 @@
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelSubscriptionOnCreateLikeCommentModelDataResolverFnSubscriptionOnCreateLikeCommentModelDataResolverFnAppSyncFunction7E026C6EFunctionId"
                         ]
-                    },
-                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId": {
-                        "Fn::GetAtt": [
-                            "LikeCommentModel",
-                            "Outputs.transformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId"
-                        ]
                     }
                 }
             },
@@ -1272,16 +1236,16 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-                        "Fn::GetAtt": [
-                            "GraphQLAPINONEDS95A13CF0",
-                            "Name"
-                        ]
-                    },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFun0CF3A933": {
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelinit0FunctionMutationcreateLikeCommentModelinit0FunctionAppSyncFunctionAA3C1E75FunctionId"
+                        ]
+                    },
+                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFun131A1199": {
+                        "Fn::GetAtt": [
+                            "LikeCommentModel",
+                            "Outputs.transformerrootstackLikeCommentModelMutationcreateLikeCommentModelauth0FunctionMutationcreateLikeCommentModelauth0FunctionAppSyncFunction648EFA46FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelMutationupdateLikeCommentModelinit0FunctionMutationupdateLikeCommentModelinit0FunctionAppSyncFunFB5ED498": {
@@ -1300,12 +1264,6 @@
                         "Fn::GetAtt": [
                             "LikeCommentModel",
                             "Outputs.transformerrootstackLikeCommentModelSubscriptionOnCreateLikeCommentModelDataResolverFnSubscriptionOnCreateLikeCommentModelDataResolverFnAppSyncFunction7E026C6EFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackLikeCommentModelNestedStackLikeCommentModelNestedStackResource57F763CFOutputstransformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId": {
-                        "Fn::GetAtt": [
-                            "LikeCommentModel",
-                            "Outputs.transformerrootstackLikeCommentModelLikeCommentModelOwnerDataResolverFnLikeCommentModelOwnerDataResolverFnAppSyncFunction1176147BFunctionId"
                         ]
                     }
                 }

@@ -35,7 +35,10 @@ export class AuthenticationViewModel {
   async signIn(user) {
     try {
       this.load = true;
-      const userCurrent = await Auth.signIn(user.username, user.password);
+      const userCurrent = await Auth.signIn(
+        user.username.trim(),
+        user.password
+      );
       if (userCurrent.signInUserSession.accessToken) {
         router.push("/photos");
       }

@@ -194,17 +194,32 @@ export default class HelloWorld extends Vue {
   //     });
   // }
   getData() {
+    //     dataStoreService
+    //       .grapql(
+    //         `query MyQuery {
+    //   listUntitledModels {
+    //     items {
+    //       id
+    //       _deleted
+    //       name
+    //       description
+    //       _version
+    //     }
+    //   }
+    // }`
+    //       )
+    //       .then((result: any) => {
+    //         this.listData = result.data.listUntitledModels.items;
+    //         // const untitledFkModels = result.data.listUntitledModels.items;
+    //         // console.log(untitledFkModels);
+
+    //         // if (!untitledFkModels.length) this.getGrapqlData = untitledFkModels;
+    //         // else this.getGrapqlData = [];
+    //       });
     dataStoreService
-      .obserQuery(
-        UntitledModel,
-        // (untitled) => {
-        //   untitled._deleted("gt", null);
-        // },
-        Predicates.ALL,
-        {
-          sort: (s: any) => s.createdAt("DESCENDING"),
-        }
-      )
+      .obserQuery(UntitledModel, Predicates.ALL, {
+        sort: (s: any) => s.createdAt("DESCENDING"),
+      })
       .subscribe((result) => {
         console.log(result);
 

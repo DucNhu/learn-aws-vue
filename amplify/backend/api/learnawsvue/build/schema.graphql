@@ -9,7 +9,6 @@ type LikeCommentModel @aws_iam @aws_cognito_user_pools {
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
 type BlogModel @aws_iam @aws_cognito_user_pools {
@@ -26,7 +25,6 @@ type BlogModel @aws_iam @aws_cognito_user_pools {
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
 type CommentModel @aws_iam @aws_cognito_user_pools {
@@ -39,7 +37,6 @@ type CommentModel @aws_iam @aws_cognito_user_pools {
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
 type ReplyCommentModel @aws_iam @aws_cognito_user_pools {
@@ -53,7 +50,6 @@ type ReplyCommentModel @aws_iam @aws_cognito_user_pools {
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
 type LikeBlogModel @aws_iam @aws_cognito_user_pools {
@@ -65,7 +61,6 @@ type LikeBlogModel @aws_iam @aws_cognito_user_pools {
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
 type TagModel @aws_api_key @aws_iam {
@@ -88,10 +83,9 @@ type PhotoModel @aws_iam @aws_cognito_user_pools {
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
-type UntitledModel @aws_iam @aws_cognito_user_pools {
+type UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools {
   id: ID!
   name: String
   description: String
@@ -100,7 +94,6 @@ type UntitledModel @aws_iam @aws_cognito_user_pools {
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
 type UntitledFkModel @aws_iam @aws_cognito_user_pools {
@@ -112,7 +105,6 @@ type UntitledFkModel @aws_iam @aws_cognito_user_pools {
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
 input ModelStringInput {
@@ -244,9 +236,9 @@ type Query {
   getPhotoModel(id: ID!): PhotoModel @aws_iam @aws_cognito_user_pools
   listPhotoModels(filter: ModelPhotoModelFilterInput, limit: Int, nextToken: String): ModelPhotoModelConnection @aws_iam @aws_cognito_user_pools
   syncPhotoModels(filter: ModelPhotoModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPhotoModelConnection @aws_iam @aws_cognito_user_pools
-  getUntitledModel(id: ID!): UntitledModel @aws_iam @aws_cognito_user_pools
-  listUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String): ModelUntitledModelConnection @aws_iam @aws_cognito_user_pools
-  syncUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUntitledModelConnection @aws_iam @aws_cognito_user_pools
+  getUntitledModel(id: ID!): UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools
+  listUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String): ModelUntitledModelConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  syncUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUntitledModelConnection @aws_api_key @aws_iam @aws_cognito_user_pools
   getUntitledFkModel(id: ID!): UntitledFkModel @aws_iam @aws_cognito_user_pools
   listUntitledFkModels(filter: ModelUntitledFkModelFilterInput, limit: Int, nextToken: String): ModelUntitledFkModelConnection @aws_iam @aws_cognito_user_pools
   syncUntitledFkModels(filter: ModelUntitledFkModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUntitledFkModelConnection @aws_iam @aws_cognito_user_pools
@@ -304,8 +296,8 @@ type Mutation {
   createPhotoModel(input: CreatePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_iam @aws_cognito_user_pools
   updatePhotoModel(input: UpdatePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_iam @aws_cognito_user_pools
   deletePhotoModel(input: DeletePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_iam @aws_cognito_user_pools
-  createUntitledModel(input: CreateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_iam @aws_cognito_user_pools
-  updateUntitledModel(input: UpdateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_iam @aws_cognito_user_pools
+  createUntitledModel(input: CreateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools
+  updateUntitledModel(input: UpdateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools
   deleteUntitledModel(input: DeleteUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_iam @aws_cognito_user_pools
   createUntitledFkModel(input: CreateUntitledFkModelInput!, condition: ModelUntitledFkModelConditionInput): UntitledFkModel @aws_iam @aws_cognito_user_pools
   updateUntitledFkModel(input: UpdateUntitledFkModelInput!, condition: ModelUntitledFkModelConditionInput): UntitledFkModel @aws_iam @aws_cognito_user_pools
@@ -313,33 +305,33 @@ type Mutation {
 }
 
 type Subscription {
-  onCreateLikeCommentModel(owner: String): LikeCommentModel @aws_subscribe(mutations: ["createLikeCommentModel"]) @aws_iam @aws_cognito_user_pools
-  onUpdateLikeCommentModel(owner: String): LikeCommentModel @aws_subscribe(mutations: ["updateLikeCommentModel"]) @aws_iam @aws_cognito_user_pools
-  onDeleteLikeCommentModel(owner: String): LikeCommentModel @aws_subscribe(mutations: ["deleteLikeCommentModel"]) @aws_iam @aws_cognito_user_pools
-  onCreateBlogModel(owner: String): BlogModel @aws_subscribe(mutations: ["createBlogModel"]) @aws_iam @aws_cognito_user_pools
-  onUpdateBlogModel(owner: String): BlogModel @aws_subscribe(mutations: ["updateBlogModel"]) @aws_iam @aws_cognito_user_pools
-  onDeleteBlogModel(owner: String): BlogModel @aws_subscribe(mutations: ["deleteBlogModel"]) @aws_iam @aws_cognito_user_pools
-  onCreateCommentModel(owner: String): CommentModel @aws_subscribe(mutations: ["createCommentModel"]) @aws_iam @aws_cognito_user_pools
-  onUpdateCommentModel(owner: String): CommentModel @aws_subscribe(mutations: ["updateCommentModel"]) @aws_iam @aws_cognito_user_pools
-  onDeleteCommentModel(owner: String): CommentModel @aws_subscribe(mutations: ["deleteCommentModel"]) @aws_iam @aws_cognito_user_pools
-  onCreateReplyCommentModel(owner: String): ReplyCommentModel @aws_subscribe(mutations: ["createReplyCommentModel"]) @aws_iam @aws_cognito_user_pools
-  onUpdateReplyCommentModel(owner: String): ReplyCommentModel @aws_subscribe(mutations: ["updateReplyCommentModel"]) @aws_iam @aws_cognito_user_pools
-  onDeleteReplyCommentModel(owner: String): ReplyCommentModel @aws_subscribe(mutations: ["deleteReplyCommentModel"]) @aws_iam @aws_cognito_user_pools
-  onCreateLikeBlogModel(owner: String): LikeBlogModel @aws_subscribe(mutations: ["createLikeBlogModel"]) @aws_iam @aws_cognito_user_pools
-  onUpdateLikeBlogModel(owner: String): LikeBlogModel @aws_subscribe(mutations: ["updateLikeBlogModel"]) @aws_iam @aws_cognito_user_pools
-  onDeleteLikeBlogModel(owner: String): LikeBlogModel @aws_subscribe(mutations: ["deleteLikeBlogModel"]) @aws_iam @aws_cognito_user_pools
+  onCreateLikeCommentModel: LikeCommentModel @aws_subscribe(mutations: ["createLikeCommentModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdateLikeCommentModel: LikeCommentModel @aws_subscribe(mutations: ["updateLikeCommentModel"]) @aws_iam @aws_cognito_user_pools
+  onDeleteLikeCommentModel: LikeCommentModel @aws_subscribe(mutations: ["deleteLikeCommentModel"]) @aws_iam @aws_cognito_user_pools
+  onCreateBlogModel: BlogModel @aws_subscribe(mutations: ["createBlogModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdateBlogModel: BlogModel @aws_subscribe(mutations: ["updateBlogModel"]) @aws_iam @aws_cognito_user_pools
+  onDeleteBlogModel: BlogModel @aws_subscribe(mutations: ["deleteBlogModel"]) @aws_iam @aws_cognito_user_pools
+  onCreateCommentModel: CommentModel @aws_subscribe(mutations: ["createCommentModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdateCommentModel: CommentModel @aws_subscribe(mutations: ["updateCommentModel"]) @aws_iam @aws_cognito_user_pools
+  onDeleteCommentModel: CommentModel @aws_subscribe(mutations: ["deleteCommentModel"]) @aws_iam @aws_cognito_user_pools
+  onCreateReplyCommentModel: ReplyCommentModel @aws_subscribe(mutations: ["createReplyCommentModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdateReplyCommentModel: ReplyCommentModel @aws_subscribe(mutations: ["updateReplyCommentModel"]) @aws_iam @aws_cognito_user_pools
+  onDeleteReplyCommentModel: ReplyCommentModel @aws_subscribe(mutations: ["deleteReplyCommentModel"]) @aws_iam @aws_cognito_user_pools
+  onCreateLikeBlogModel: LikeBlogModel @aws_subscribe(mutations: ["createLikeBlogModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdateLikeBlogModel: LikeBlogModel @aws_subscribe(mutations: ["updateLikeBlogModel"]) @aws_iam @aws_cognito_user_pools
+  onDeleteLikeBlogModel: LikeBlogModel @aws_subscribe(mutations: ["deleteLikeBlogModel"]) @aws_iam @aws_cognito_user_pools
   onCreateTagModel: TagModel @aws_subscribe(mutations: ["createTagModel"]) @aws_api_key @aws_iam
   onUpdateTagModel: TagModel @aws_subscribe(mutations: ["updateTagModel"]) @aws_api_key @aws_iam
   onDeleteTagModel: TagModel @aws_subscribe(mutations: ["deleteTagModel"]) @aws_api_key @aws_iam
-  onCreatePhotoModel(owner: String): PhotoModel @aws_subscribe(mutations: ["createPhotoModel"]) @aws_iam @aws_cognito_user_pools
-  onUpdatePhotoModel(owner: String): PhotoModel @aws_subscribe(mutations: ["updatePhotoModel"]) @aws_iam @aws_cognito_user_pools
-  onDeletePhotoModel(owner: String): PhotoModel @aws_subscribe(mutations: ["deletePhotoModel"]) @aws_iam @aws_cognito_user_pools
-  onCreateUntitledModel(owner: String): UntitledModel @aws_subscribe(mutations: ["createUntitledModel"]) @aws_iam @aws_cognito_user_pools
-  onUpdateUntitledModel(owner: String): UntitledModel @aws_subscribe(mutations: ["updateUntitledModel"]) @aws_iam @aws_cognito_user_pools
-  onDeleteUntitledModel(owner: String): UntitledModel @aws_subscribe(mutations: ["deleteUntitledModel"]) @aws_iam @aws_cognito_user_pools
-  onCreateUntitledFkModel(owner: String): UntitledFkModel @aws_subscribe(mutations: ["createUntitledFkModel"]) @aws_iam @aws_cognito_user_pools
-  onUpdateUntitledFkModel(owner: String): UntitledFkModel @aws_subscribe(mutations: ["updateUntitledFkModel"]) @aws_iam @aws_cognito_user_pools
-  onDeleteUntitledFkModel(owner: String): UntitledFkModel @aws_subscribe(mutations: ["deleteUntitledFkModel"]) @aws_iam @aws_cognito_user_pools
+  onCreatePhotoModel: PhotoModel @aws_subscribe(mutations: ["createPhotoModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdatePhotoModel: PhotoModel @aws_subscribe(mutations: ["updatePhotoModel"]) @aws_iam @aws_cognito_user_pools
+  onDeletePhotoModel: PhotoModel @aws_subscribe(mutations: ["deletePhotoModel"]) @aws_iam @aws_cognito_user_pools
+  onCreateUntitledModel: UntitledModel @aws_subscribe(mutations: ["createUntitledModel"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdateUntitledModel: UntitledModel @aws_subscribe(mutations: ["updateUntitledModel"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeleteUntitledModel: UntitledModel @aws_subscribe(mutations: ["deleteUntitledModel"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreateUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["createUntitledFkModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdateUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["updateUntitledFkModel"]) @aws_iam @aws_cognito_user_pools
+  onDeleteUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["deleteUntitledFkModel"]) @aws_iam @aws_cognito_user_pools
 }
 
 type ModelBlogModelConnection @aws_iam @aws_cognito_user_pools {
@@ -626,7 +618,7 @@ input DeletePhotoModelInput {
   _version: Int
 }
 
-type ModelUntitledModelConnection @aws_iam @aws_cognito_user_pools {
+type ModelUntitledModelConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
   items: [UntitledModel]!
   nextToken: String
   startedAt: AWSTimestamp

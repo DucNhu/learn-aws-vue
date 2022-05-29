@@ -11,12 +11,6 @@ const routes: Array<RouteConfig> = [
     redirect: "/photos",
     component: HomeView,
     beforeEnter: async (to, _, next) => {
-      const user = await Auth.currentAuthenticatedUser();
-
-      // Returns an array of groups
-      const groups =
-        user.signInUserSession.accessToken.payload["cognito:groups"];
-
       const isAuthenticated = await Auth.currentUserInfo();
       if (!isAuthenticated) {
         next("/login");

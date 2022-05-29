@@ -46,6 +46,7 @@
               alt="Avatar"
               src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
             />
+            <span class="ml-2">{{ userName }}</span>
           </v-avatar>
         </template>
         <v-list>
@@ -211,7 +212,12 @@ export default class HomeView extends Vue {
       content: "Setting",
     },
   ];
-
+  userName = "";
+  mounted() {
+    Auth.currentUserPoolUser().then((info) => {
+      this.userName = info.username;
+    });
+  }
   async signOut() {
     try {
       this.load = true;

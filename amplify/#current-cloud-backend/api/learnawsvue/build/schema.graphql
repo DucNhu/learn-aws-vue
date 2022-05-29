@@ -85,7 +85,7 @@ type PhotoModel @aws_iam @aws_cognito_user_pools {
   _lastChangedAt: AWSTimestamp!
 }
 
-type UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools {
+type UntitledModel @aws_iam @aws_cognito_user_pools {
   id: ID!
   name: String
   description: String
@@ -236,9 +236,9 @@ type Query {
   getPhotoModel(id: ID!): PhotoModel @aws_iam @aws_cognito_user_pools
   listPhotoModels(filter: ModelPhotoModelFilterInput, limit: Int, nextToken: String): ModelPhotoModelConnection @aws_iam @aws_cognito_user_pools
   syncPhotoModels(filter: ModelPhotoModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPhotoModelConnection @aws_iam @aws_cognito_user_pools
-  getUntitledModel(id: ID!): UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools
-  listUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String): ModelUntitledModelConnection @aws_api_key @aws_iam @aws_cognito_user_pools
-  syncUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUntitledModelConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getUntitledModel(id: ID!): UntitledModel @aws_iam @aws_cognito_user_pools
+  listUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String): ModelUntitledModelConnection @aws_iam @aws_cognito_user_pools
+  syncUntitledModels(filter: ModelUntitledModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUntitledModelConnection @aws_iam @aws_cognito_user_pools
   getUntitledFkModel(id: ID!): UntitledFkModel @aws_iam @aws_cognito_user_pools
   listUntitledFkModels(filter: ModelUntitledFkModelFilterInput, limit: Int, nextToken: String): ModelUntitledFkModelConnection @aws_iam @aws_cognito_user_pools
   syncUntitledFkModels(filter: ModelUntitledFkModelFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUntitledFkModelConnection @aws_iam @aws_cognito_user_pools
@@ -296,8 +296,8 @@ type Mutation {
   createPhotoModel(input: CreatePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_iam @aws_cognito_user_pools
   updatePhotoModel(input: UpdatePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_iam @aws_cognito_user_pools
   deletePhotoModel(input: DeletePhotoModelInput!, condition: ModelPhotoModelConditionInput): PhotoModel @aws_iam @aws_cognito_user_pools
-  createUntitledModel(input: CreateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools
-  updateUntitledModel(input: UpdateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_api_key @aws_iam @aws_cognito_user_pools
+  createUntitledModel(input: CreateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_iam @aws_cognito_user_pools
+  updateUntitledModel(input: UpdateUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_iam @aws_cognito_user_pools
   deleteUntitledModel(input: DeleteUntitledModelInput!, condition: ModelUntitledModelConditionInput): UntitledModel @aws_iam @aws_cognito_user_pools
   createUntitledFkModel(input: CreateUntitledFkModelInput!, condition: ModelUntitledFkModelConditionInput): UntitledFkModel @aws_iam @aws_cognito_user_pools
   updateUntitledFkModel(input: UpdateUntitledFkModelInput!, condition: ModelUntitledFkModelConditionInput): UntitledFkModel @aws_iam @aws_cognito_user_pools
@@ -326,9 +326,9 @@ type Subscription {
   onCreatePhotoModel: PhotoModel @aws_subscribe(mutations: ["createPhotoModel"]) @aws_iam @aws_cognito_user_pools
   onUpdatePhotoModel: PhotoModel @aws_subscribe(mutations: ["updatePhotoModel"]) @aws_iam @aws_cognito_user_pools
   onDeletePhotoModel: PhotoModel @aws_subscribe(mutations: ["deletePhotoModel"]) @aws_iam @aws_cognito_user_pools
-  onCreateUntitledModel: UntitledModel @aws_subscribe(mutations: ["createUntitledModel"]) @aws_api_key @aws_iam @aws_cognito_user_pools
-  onUpdateUntitledModel: UntitledModel @aws_subscribe(mutations: ["updateUntitledModel"]) @aws_api_key @aws_iam @aws_cognito_user_pools
-  onDeleteUntitledModel: UntitledModel @aws_subscribe(mutations: ["deleteUntitledModel"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreateUntitledModel: UntitledModel @aws_subscribe(mutations: ["createUntitledModel"]) @aws_iam @aws_cognito_user_pools
+  onUpdateUntitledModel: UntitledModel @aws_subscribe(mutations: ["updateUntitledModel"]) @aws_iam @aws_cognito_user_pools
+  onDeleteUntitledModel: UntitledModel @aws_subscribe(mutations: ["deleteUntitledModel"]) @aws_iam @aws_cognito_user_pools
   onCreateUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["createUntitledFkModel"]) @aws_iam @aws_cognito_user_pools
   onUpdateUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["updateUntitledFkModel"]) @aws_iam @aws_cognito_user_pools
   onDeleteUntitledFkModel: UntitledFkModel @aws_subscribe(mutations: ["deleteUntitledFkModel"]) @aws_iam @aws_cognito_user_pools
@@ -618,7 +618,7 @@ input DeletePhotoModelInput {
   _version: Int
 }
 
-type ModelUntitledModelConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+type ModelUntitledModelConnection @aws_iam @aws_cognito_user_pools {
   items: [UntitledModel]!
   nextToken: String
   startedAt: AWSTimestamp

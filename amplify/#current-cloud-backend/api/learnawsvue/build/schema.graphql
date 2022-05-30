@@ -32,6 +32,7 @@ type CommentModel @aws_iam @aws_cognito_user_pools {
   content: String
   user_id: String
   blog_id: String
+  url_media: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -45,6 +46,7 @@ type ReplyCommentModel @aws_iam @aws_cognito_user_pools {
   like: Int
   comment_id: String
   blog_id: String
+  url_media: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -78,6 +80,7 @@ type PhotoModel @aws_iam @aws_cognito_user_pools {
   name: String
   desciption: String
   blog_id: String
+  url_media: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -407,6 +410,7 @@ input ModelCommentModelFilterInput {
   content: ModelStringInput
   user_id: ModelStringInput
   blog_id: ModelStringInput
+  url_media: ModelStringInput
   and: [ModelCommentModelFilterInput]
   or: [ModelCommentModelFilterInput]
   not: ModelCommentModelFilterInput
@@ -416,6 +420,7 @@ input ModelCommentModelConditionInput {
   content: ModelStringInput
   user_id: ModelStringInput
   blog_id: ModelStringInput
+  url_media: ModelStringInput
   and: [ModelCommentModelConditionInput]
   or: [ModelCommentModelConditionInput]
   not: ModelCommentModelConditionInput
@@ -426,6 +431,7 @@ input CreateCommentModelInput {
   content: String
   user_id: String
   blog_id: String
+  url_media: String
   _version: Int
 }
 
@@ -434,6 +440,7 @@ input UpdateCommentModelInput {
   content: String
   user_id: String
   blog_id: String
+  url_media: String
   _version: Int
 }
 
@@ -454,6 +461,7 @@ input ModelReplyCommentModelFilterInput {
   like: ModelIntInput
   comment_id: ModelStringInput
   blog_id: ModelStringInput
+  url_media: ModelStringInput
   and: [ModelReplyCommentModelFilterInput]
   or: [ModelReplyCommentModelFilterInput]
   not: ModelReplyCommentModelFilterInput
@@ -464,6 +472,7 @@ input ModelReplyCommentModelConditionInput {
   like: ModelIntInput
   comment_id: ModelStringInput
   blog_id: ModelStringInput
+  url_media: ModelStringInput
   and: [ModelReplyCommentModelConditionInput]
   or: [ModelReplyCommentModelConditionInput]
   not: ModelReplyCommentModelConditionInput
@@ -475,6 +484,7 @@ input CreateReplyCommentModelInput {
   like: Int
   comment_id: String
   blog_id: String
+  url_media: String
   _version: Int
 }
 
@@ -484,6 +494,7 @@ input UpdateReplyCommentModelInput {
   like: Int
   comment_id: String
   blog_id: String
+  url_media: String
   _version: Int
 }
 
@@ -583,6 +594,7 @@ input ModelPhotoModelFilterInput {
   name: ModelStringInput
   desciption: ModelStringInput
   blog_id: ModelStringInput
+  url_media: ModelStringInput
   and: [ModelPhotoModelFilterInput]
   or: [ModelPhotoModelFilterInput]
   not: ModelPhotoModelFilterInput
@@ -592,6 +604,7 @@ input ModelPhotoModelConditionInput {
   name: ModelStringInput
   desciption: ModelStringInput
   blog_id: ModelStringInput
+  url_media: ModelStringInput
   and: [ModelPhotoModelConditionInput]
   or: [ModelPhotoModelConditionInput]
   not: ModelPhotoModelConditionInput
@@ -602,6 +615,7 @@ input CreatePhotoModelInput {
   name: String
   desciption: String
   blog_id: String
+  url_media: String
   _version: Int
 }
 
@@ -610,6 +624,7 @@ input UpdatePhotoModelInput {
   name: String
   desciption: String
   blog_id: String
+  url_media: String
   _version: Int
 }
 

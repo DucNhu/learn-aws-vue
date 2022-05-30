@@ -66,8 +66,8 @@
       </v-menu>
     </v-app-bar>
 
-    <v-main class="grey lighten-3 pb-5">
-      <div class="container">
+    <v-main class="grey lighten-5 pb-5">
+      <div class="container pt-4 pt-sm-8">
         <router-view />
       </div>
     </v-main>
@@ -186,12 +186,12 @@ export default class HomeView extends Vue {
   dropdown_list = [
     {
       icon: "fa-solid fa-user",
-      link: "/profile",
+      link: "/profile/213",
       content: "Profile",
     },
     {
       icon: "fa-solid fa-gear",
-      link: "/profile",
+      link: "/profile/213",
       content: "Setting",
     },
   ];

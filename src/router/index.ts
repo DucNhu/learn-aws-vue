@@ -21,11 +21,21 @@ const routes: Array<RouteConfig> = [
     children: [
       {
         path: "/photos",
-        component: () => import("../views/photo-page.vue"),
+        component: () => import("../views/photos-page.vue"),
       },
       {
-        path: "profile/:id",
-        component: () => import("../views/profile.vue"),
+        path: "/profile/:id",
+        component: () => import("../views/profile/profile.vue"),
+      },
+      {
+        path: "/account",
+        component: () => import("../views/profile/edit-view.vue"),
+        children: [
+          {
+            path: "edit",
+            component: () => import("../views/profile/edit-info.vue"),
+          },
+        ],
       },
       {
         path: "/about",
@@ -62,6 +72,10 @@ const routes: Array<RouteConfig> = [
         else next();
       }
     },
+  },
+  {
+    path: "**",
+    redirect: "/",
   },
 ];
 

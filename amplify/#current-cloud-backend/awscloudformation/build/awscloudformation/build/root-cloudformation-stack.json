@@ -173,7 +173,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-amplify112e307d497a4-staging-113234-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/7a8222c97ed06cbbea74acea07d91c6b8e1a958f",
+          "S3DeploymentRootKey": "amplify-appsync-files/5f0fc311eae1d017c0ad1bbdbd0d24cdd5a77c2c",
           "env": "staging"
         }
       }

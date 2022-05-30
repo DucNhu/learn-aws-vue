@@ -81,6 +81,7 @@ type PhotoModel @aws_iam @aws_cognito_user_pools {
   desciption: String
   blog_id: String
   url_media: String
+  user_id: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -595,6 +596,7 @@ input ModelPhotoModelFilterInput {
   desciption: ModelStringInput
   blog_id: ModelStringInput
   url_media: ModelStringInput
+  user_id: ModelStringInput
   and: [ModelPhotoModelFilterInput]
   or: [ModelPhotoModelFilterInput]
   not: ModelPhotoModelFilterInput
@@ -605,6 +607,7 @@ input ModelPhotoModelConditionInput {
   desciption: ModelStringInput
   blog_id: ModelStringInput
   url_media: ModelStringInput
+  user_id: ModelStringInput
   and: [ModelPhotoModelConditionInput]
   or: [ModelPhotoModelConditionInput]
   not: ModelPhotoModelConditionInput
@@ -616,6 +619,7 @@ input CreatePhotoModelInput {
   desciption: String
   blog_id: String
   url_media: String
+  user_id: String
   _version: Int
 }
 
@@ -625,6 +629,7 @@ input UpdatePhotoModelInput {
   desciption: String
   blog_id: String
   url_media: String
+  user_id: String
   _version: Int
 }
 

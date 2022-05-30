@@ -50,6 +50,7 @@ type PhotoModel @model @auth(rules: [{allow: private}]) {
   desciption: String
   blog_id: String
   url_media: String
+  user_id: String
 }
 
 type UntitledModel @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: private, operations: [create, read, update]}]) {

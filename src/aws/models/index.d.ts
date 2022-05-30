@@ -116,6 +116,7 @@ export declare class PhotoModel {
   readonly desciption?: string | null;
   readonly blog_id?: string | null;
   readonly url_media?: string | null;
+  readonly user_id?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<PhotoModel, PhotoModelMetaData>);

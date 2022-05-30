@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "learnawsvue",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-96ca2f80-21bb-4b66-8857-24cbb40f1ebe/amplify/backend/api/learnawsvue/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-f9eedf39-f1fc-4030-bc21-55fcdc8ac4f2/amplify/backend/api/learnawsvue/schema.graphql",
     "defaultAuthType": {
       "mode": "AMAZON_COGNITO_USER_POOLS",
       "cognitoUserPoolId": "authlearnawsvue0e2c30e2"

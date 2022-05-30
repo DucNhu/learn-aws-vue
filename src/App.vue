@@ -8,7 +8,7 @@
 @import "./assets/styles/home.css";
 @import "./assets/styles/bootstrap.min.css";
 
-@media (min-width: 1904px) {
+@media (min-width: 1204px) {
   .container {
     max-width: 900px !important;
   }

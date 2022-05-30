@@ -1,5 +1,5 @@
 <template>
-  <div>profile</div>
+  <div>Change avatar</div>
 </template>
 
 <script lang="ts">

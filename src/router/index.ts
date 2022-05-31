@@ -29,8 +29,21 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: "/account",
+        redirect: "/account/edit",
         component: () => import("../views/profile/edit-view.vue"),
         children: [
+          {
+            path: "edit",
+            component: () => import("../views/profile/edit-info.vue"),
+          },
+          {
+            path: "password/change",
+            component: () => import("../views/profile/edit-info.vue"),
+          },
+          {
+            path: "help",
+            component: () => import("../views/profile/edit-info.vue"),
+          },
           {
             path: "edit",
             component: () => import("../views/profile/edit-info.vue"),

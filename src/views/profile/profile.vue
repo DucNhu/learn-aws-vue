@@ -11,13 +11,15 @@
         <div
           class="mx-0 mx-sm-4 py-2 pa-sm-0 order-3 order-sm-0 col-12 col-sm-auto"
         >
-          <v-btn
-            class="text-black font-weight-bold caption border-gray"
-            outlined
-            color="gray"
-          >
-            Chỉnh sửa trang cá nhân
-          </v-btn>
+          <router-link to="/account" class="outline-none">
+            <v-btn
+              class="text-black font-weight-bold caption border-gray"
+              outlined
+              color="gray"
+            >
+              Chỉnh sửa trang cá nhân
+            </v-btn>
+          </router-link>
         </div>
         <div class="">
           <v-btn class="text-black-50 text-h6" icon>

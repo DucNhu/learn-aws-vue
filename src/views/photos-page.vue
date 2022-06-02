@@ -1,16 +1,22 @@
 <template>
   <v-row justify="center">
     <v-col cols="12" sm="8">
-      <v-sheet class="grey lighten-3" rounded="lg">
+      <v-sheet class="grey lighten-5" rounded="lg">
         <global-load :load="load" />
         <div class="container-fluid tm-container-content">
           <v-sheet light class="mx-auto mb-4" rounded="lg">
             <slide-story />
           </v-sheet>
 
-          <v-sheet light class="blog-box" rounded="lg" v-for="n in 25" :key="n">
-            <div class="col-12 mb-5 pt-0">
-              <v-list-item two-line class="pa-0">
+          <v-sheet
+            light
+            class="blog-box border rounded-lg"
+            rounded="lg"
+            v-for="n in 25"
+            :key="n"
+          >
+            <div class="col-12 mb-5 pa-0">
+              <v-list-item two-line class="pl-4">
                 <v-list-item-avatar size="45" class="my-0">
                   <img
                     src="https://scontent.fhan2-2.fna.fbcdn.net/v/t39.30808-6/274992361_1575731389451190_7616248300771954862_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=ptWdPrCqcKgAX_bJqmG&_nc_ht=scontent.fhan2-2.fna&oh=00_AT_SAtfS91pXOZmVA2OGMESx0vwdazTTGBoJYYd0jXuIFw&oe=629308C3"
@@ -37,7 +43,7 @@
                   <a href="">View more</a>
                 </figcaption>
               </figure>
-              <div class="d-flex justify-content-between tm-text-gray">
+              <div class="d-flex justify-content-between tm-text-gray px-4">
                 <span class="tm-text-gray-light">18 Oct 2020</span>
                 <span>9,906 views</span>
               </div>

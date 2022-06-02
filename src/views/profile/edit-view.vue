@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="row pa-2">
+  <v-sheet class="row pa-2 pb-8">
     <div class="d-none d-sm-block col-4 border-right">
       <v-list nav dense>
         <v-list-item-group color="primary">
@@ -16,7 +16,7 @@
         </v-list-item-group>
       </v-list>
     </div>
-    <div class="col-8">
+    <div class="col-sm-8 pa-2">
       <router-view />
     </div>
   </v-sheet>

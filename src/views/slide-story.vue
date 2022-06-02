@@ -3,6 +3,7 @@
     multiple
     show-arrows
     justify="center"
+    class="pa-2 border rounded-lg"
     next-icon="mdi-chevron-right"
     prev-icon="mdi-chevron-left"
   >

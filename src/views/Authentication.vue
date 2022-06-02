@@ -159,9 +159,6 @@ export default class Authentication extends Vue {
     password: "",
     attributes: {
       email: "",
-      gender: "12",
-      picture: "12123",
-      birthdate: "12/10/2022",
     },
   };
 

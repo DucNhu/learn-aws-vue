@@ -71,6 +71,7 @@ export declare class CommentModel {
   readonly content?: string | null;
   readonly user_id?: string | null;
   readonly blog_id?: string | null;
+  readonly url_media?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<CommentModel, CommentModelMetaData>);
@@ -83,6 +84,7 @@ export declare class ReplyCommentModel {
   readonly like?: number | null;
   readonly comment_id?: string | null;
   readonly blog_id?: string | null;
+  readonly url_media?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<ReplyCommentModel, ReplyCommentModelMetaData>);
@@ -113,6 +115,8 @@ export declare class PhotoModel {
   readonly name?: string | null;
   readonly desciption?: string | null;
   readonly blog_id?: string | null;
+  readonly url_media?: string | null;
+  readonly user_id?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<PhotoModel, PhotoModelMetaData>);

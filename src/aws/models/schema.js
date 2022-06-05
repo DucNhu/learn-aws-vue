@@ -205,6 +205,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "url_media": {
+                    "name": "url_media",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -280,6 +287,13 @@ export const schema = {
                 },
                 "blog_id": {
                     "name": "blog_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "url_media": {
+                    "name": "url_media",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -483,6 +497,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "url_media": {
+                    "name": "url_media",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -673,5 +701,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "a5d8cfe85e607deb54445e188ca105cf"
+    "version": "54d65f0e62e9ce3c4f0a753c9912f50d"
 };

@@ -28,7 +28,6 @@
                 <v-col cols="12">
                   <v-text-field
                     v-model="user.username"
-                    :rules="emailRules"
                     label="User Name"
                     maxlength="20"
                     required
@@ -78,7 +77,7 @@
                 <v-col cols="12">
                   <v-text-field
                     v-model="user.username"
-                    :rules="emailRules"
+                    :rules="rules"
                     label="User Name"
                     maxlength="20"
                     required

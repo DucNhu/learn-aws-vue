@@ -67,7 +67,7 @@
         "GraphQLAPI": {
             "Type": "AWS::AppSync::GraphQLApi",
             "Properties": {
-                "AuthenticationType": "AMAZON_COGNITO_USER_POOLS",
+                "AuthenticationType": "API_KEY",
                 "Name": {
                     "Fn::Join": [
                         "",
@@ -87,18 +87,17 @@
                         "AuthenticationType": "AWS_IAM"
                     },
                     {
-                        "AuthenticationType": "API_KEY"
+                        "AuthenticationType": "AMAZON_COGNITO_USER_POOLS",
+                        "UserPoolConfig": {
+                            "AwsRegion": {
+                                "Ref": "AWS::Region"
+                            },
+                            "UserPoolId": {
+                                "Ref": "AuthCognitoUserPoolId"
+                            }
+                        }
                     }
-                ],
-                "UserPoolConfig": {
-                    "AwsRegion": {
-                        "Ref": "AWS::Region"
-                    },
-                    "DefaultAction": "ALLOW",
-                    "UserPoolId": {
-                        "Ref": "AuthCognitoUserPoolId"
-                    }
-                }
+                ]
             }
         },
         "GraphQLAPITransformerSchema3CB2AE18": {
@@ -138,7 +137,7 @@
                     ]
                 },
                 "Description": "api key description",
-                "Expires": 1656512370
+                "Expires": 1657065047
             }
         },
         "GraphQLAPINONEDS95A13CF0": {

@@ -3,11 +3,7 @@
   "serviceConfiguration": {
     "apiName": "learnawsvue",
     "serviceName": "AppSync",
-<<<<<<< HEAD
-    "gqlSchemaPath": "/tmp/amplify-f9eedf39-f1fc-4030-bc21-55fcdc8ac4f2/amplify/backend/api/learnawsvue/schema.graphql",
-=======
     "gqlSchemaPath": "C:\\Users\\Pc\\Documents\\GitHub\\learn-aws-vue\\amplify\\backend\\api\\learnawsvue\\schema.graphql",
->>>>>>> main
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",

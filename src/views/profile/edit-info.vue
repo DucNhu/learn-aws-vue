@@ -138,11 +138,12 @@ import { EditInforViewmodel } from "./../../viewmodels/profile/edit-info";
 @Component
 export default class extends Vue {
   @Provide() vm = new EditInforViewmodel();
-  user: any;
+  user = {};
 
   mounted() {
-    this.vm.userInfor.then((infor) => {
-      this.user = infor;
+    this.vm.userInfor.then((info) => {
+      this.user = info;
+      console.log(info);
     });
   }
 

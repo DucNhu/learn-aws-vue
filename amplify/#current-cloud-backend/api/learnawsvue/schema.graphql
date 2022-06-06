@@ -1,11 +1,11 @@
-type LikeCommentModel @model @auth(rules: [{allow: private}]) {
+type LikeCommentModel @model @auth(rules: [{ allow: private }]) {
   id: ID!
   user_id: String
   comment_id: String
   blog_id: String
 }
 
-type BlogModel @model @auth(rules: [{allow: private}]) {
+type BlogModel @model @auth(rules: [{ allow: private }]) {
   id: ID!
   title: String
   share: String
@@ -16,7 +16,7 @@ type BlogModel @model @auth(rules: [{allow: private}]) {
   tag_id: String
 }
 
-type CommentModel @model @auth(rules: [{allow: private}]) {
+type CommentModel @model @auth(rules: [{ allow: private }]) {
   id: ID!
   content: String
   user_id: String
@@ -24,7 +24,7 @@ type CommentModel @model @auth(rules: [{allow: private}]) {
   url_media: String
 }
 
-type ReplyCommentModel @model @auth(rules: [{allow: private}]) {
+type ReplyCommentModel @model @auth(rules: [{ allow: private }]) {
   id: ID!
   content: String
   like: Int
@@ -33,18 +33,18 @@ type ReplyCommentModel @model @auth(rules: [{allow: private}]) {
   url_media: String
 }
 
-type LikeBlogModel @model @auth(rules: [{allow: private}]) {
+type LikeBlogModel @model @auth(rules: [{ allow: private }]) {
   id: ID!
   user_id: String
   blog_id: String
 }
 
-type TagModel @model @auth(rules: [{allow: public}]) {
+type TagModel @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String
 }
 
-type PhotoModel @model @auth(rules: [{allow: private}]) {
+type PhotoModel @model @auth(rules: [{ allow: private }]) {
   id: ID!
   name: String
   desciption: String
@@ -53,15 +53,25 @@ type PhotoModel @model @auth(rules: [{allow: private}]) {
   user_id: String
 }
 
-type UntitledModel @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: private, operations: [create, read, update]}]) {
+type UntitledModel
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: private, operations: [create, read, update] }
+    ]
+  ) {
   id: ID!
   name: String
   description: String
 }
 
-type UntitledFkModel @model @auth(rules: [{allow: private}]) {
+type UntitledFkModel @model @auth(rules: [{ allow: private }]) {
   id: ID!
   content: String!
   untitle_id: String
 }
- 

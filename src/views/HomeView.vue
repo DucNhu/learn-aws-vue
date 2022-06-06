@@ -148,11 +148,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Provide, Vue } from "vue-property-decorator";
 import HelloWorld from "@/components/test-folder/HelloWorld.vue"; // @ is an alias to /src
 import { Auth, DataStore } from "aws-amplify";
 import router from "@/router";
 
+import { ProfileHelper } from "@/helpers/profile.helper";
 @Component({
   components: {
     HelloWorld,
@@ -160,6 +161,7 @@ import router from "@/router";
 })
 export default class HomeView extends Vue {
   load = false;
+
   navigations = [
     {
       icon: "fa-solid fa-house",
@@ -186,15 +188,22 @@ export default class HomeView extends Vue {
   dropdown_list = [
     {
       icon: "fa-solid fa-user",
-      link: "/profile/213",
+      link: "/profile",
       content: "Profile",
     },
     {
       icon: "fa-solid fa-gear",
-      link: "/profile/213",
+      link: "/profile",
       content: "Setting",
     },
   ];
+
+  mounted() {
+    const userName = new ProfileHelper();
+    userName.userInfor.then((info) => {
+      this.dropdown_list[0].link = `/profile/${info.username!}`;
+    });
+  }
 
   async signOut() {
     try {

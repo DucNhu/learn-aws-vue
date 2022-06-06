@@ -18,7 +18,7 @@
           height="30px"
           accept="image/"
           label="File input"
-          shaped="single-line"
+          shaped
           hide-details
           prepend-icon
         >
@@ -35,13 +35,13 @@
         >Tên
       </label>
       <div class="col-12 col-sm-8 pt-1">
-        <input
+        <v-text-field
           id="username"
           v-model="user.username"
           placeholder="Username"
-          class="form-control here"
-          required="required"
-          type="text"
+          disabled
+          dense
+          solo
         />
       </div>
     </div>
@@ -88,11 +88,50 @@
         <input
           id="lastname"
           v-model="user.attributes.phone_number"
-          placeholder="Last Name"
+          placeholder="999-999-999"
           class="form-control here"
           type="text"
         />
       </div>
+    </div>
+
+    <div class="form-group row">
+      <label
+        for="lastname"
+        class="col-12 col-sm-4 py-0 col-form-label text-left text-sm-right"
+        >Giới tính
+      </label>
+      <div class="col-12 col-sm-8 pt-1">
+        <input
+          id="lastname"
+          v-model="user.attributes.gender"
+          placeholder="999-999-999"
+          class="form-control here"
+          type="button"
+          @click="genderDialog = true"
+        />
+      </div>
+      <v-dialog v-model="genderDialog" width="500">
+        <v-card>
+          <v-card-title>Tonight's availability</v-card-title>
+          <v-card-text>
+            <v-radio-group v-model="user.attributes.gender">
+              <v-radio
+                v-for="n in listGender"
+                :key="n"
+                :label="n"
+                :value="n"
+              ></v-radio>
+              <v-text-field
+                v-model="genderCustom"
+                v-if="user.attributes.gender == listGender[2]"
+                dense
+              ></v-text-field>
+            </v-radio-group>
+            <v-btn color="primary" @click="genderDialog = false"> Xong </v-btn>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
     </div>
     <div class="form-group row">
       <label
@@ -133,12 +172,19 @@
 </template>
 
 <script lang="ts">
+import Auth from "@aws-amplify/auth";
 import { Component, Provide, Vue } from "vue-property-decorator";
-import { EditInforViewmodel } from "./../../viewmodels/profile/edit-info";
+import { ProfileHelper } from "./../../helpers/profile.helper";
+import { user } from "./../../viewmodels/profile/userModel";
+
 @Component
 export default class extends Vue {
-  @Provide() vm = new EditInforViewmodel();
-  user = {};
+  @Provide() vm = new ProfileHelper();
+  user: user = null;
+  genderDialog = false;
+
+  listGender = ["Nữ", "Nam", "Tùy chỉnh", "Ẩn"];
+  genderCustom = "";
 
   mounted() {
     this.vm.userInfor.then((info) => {
@@ -147,8 +193,19 @@ export default class extends Vue {
     });
   }
 
-  updateProfile() {
+  async updateProfile() {
+    const user = await Auth.currentAuthenticatedUser();
+
     console.log(this.user);
+    // await Auth.updateUserAttributes(user, {
+    //   ...this.user.attributes,
+    // })
+    //   .then((result) => {
+    //     alert("Success");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }
 }
 </script>

@@ -45,7 +45,7 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "learnawsvue"
       },
-      "lastPushTimeStamp": "2022-06-05T23:50:42.997Z",
+      "lastPushTimeStamp": "2022-06-06T02:02:08.198Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify5d866debdbac4-staging-125828-deployment/amplify-cfn-templates/auth/learnawsvue-cloudformation-template.json",
         "logicalId": "authlearnawsvue"
@@ -94,7 +94,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify5d866debdbac4-staging-125828-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apilearnawsvue"
       },
-      "lastPushTimeStamp": "2022-06-05T23:50:43.024Z",
+      "lastPushTimeStamp": "2022-06-06T02:02:08.203Z",
       "lastPushDirHash": "wqn4HOtVy4fqA70jFxOPUna81+I="
     }
   }

@@ -3,10 +3,10 @@ $util.qr($ctx.stash.put("hasAuth", true))
 #set( $isAuthorized = false )
 #set( $primaryFieldMap = {} )
 #if( $util.authType() == "API Key Authorization" )
-  #set( $isAuthorized = true )
+
 #end
 #if( $util.authType() == "IAM Authorization" )
-  #set( $adminRoles = ["ap-southeast-1_vKBRrXsdr_Full-access/CognitoIdentityCredentials","ap-southeast-1_vKBRrXsdr_Manage-only/CognitoIdentityCredentials"] )
+  #set( $adminRoles = ["ap-southeast-1_nlyJCkoxr_Full-access/CognitoIdentityCredentials","ap-southeast-1_nlyJCkoxr_Manage-only/CognitoIdentityCredentials"] )
   #foreach( $adminRole in $adminRoles )
     #if( $ctx.identity.userArn.contains($adminRole) && $ctx.identity.userArn != $ctx.stash.authRole && $ctx.identity.userArn != $ctx.stash.unauthRole )
       #return($util.toJson({}))
@@ -15,7 +15,7 @@ $util.qr($ctx.stash.put("hasAuth", true))
 $util.unauthorized()
 #end
 #if( $util.authType() == "User Pool Authorization" )
-
+  #set( $isAuthorized = true )
 #end
 #if( !$isAuthorized && $util.isNull($ctx.stash.authFilter) )
 $util.unauthorized()

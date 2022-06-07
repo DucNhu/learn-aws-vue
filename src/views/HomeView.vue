@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <global-load :load="load" />
     <v-app-bar app color="white" flat>
       <router-link
         to="/photos"
@@ -148,7 +149,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Provide, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import HelloWorld from "@/components/test-folder/HelloWorld.vue"; // @ is an alias to /src
 import { Auth, DataStore } from "aws-amplify";
 import router from "@/router";
@@ -209,10 +210,20 @@ export default class HomeView extends Vue {
     try {
       this.load = true;
 
-      await Auth.signOut();
-      await DataStore.clear().then(() => {
-        router.push("/login");
-      });
+      await Auth.signOut()
+        .then(() => {
+          router.push("/login");
+        })
+        .catch((error) => {
+          console.log("error signing out: ", error);
+        });
+      // await DataStore.clear()
+      //   .then(() => {
+      //     router.push("/login");
+      //   })
+      //   .catch((error) => {
+      //     console.log("error signing out: ", error);
+      //   });
     } catch (error) {
       console.log("error signing out: ", error);
     }

@@ -19,21 +19,6 @@
         </button>
       </v-card-actions>
     </v-slide-item>
-    <!-- <template v-slot:next>
-        <div
-          class="position-absolute"
-          v-if="showNextButton"
-          @click="increaseSlideCount()"
-        >
-          <v-btn fab x-small style="background: transparent" elevation="10">
-            <font-awesome-icon
-              class="slide-icon"
-              icon="fa-solid fa-circle-chevron-right"
-              font-size="36px"
-            />
-          </v-btn>
-        </div>
-      </template> -->
   </v-slide-group>
 </template>
 
@@ -42,8 +27,6 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 
 @Component
 export default class extends Vue {
-  model = null;
-
   data = [
     {
       name: "DucNhu",
@@ -231,22 +214,6 @@ export default class extends Vue {
         "https://scontent.fhan2-2.fna.fbcdn.net/v/t39.30808-6/274992361_1575731389451190_7616248300771954862_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=ptWdPrCqcKgAX_bJqmG&_nc_ht=scontent.fhan2-2.fna&oh=00_AT_SAtfS91pXOZmVA2OGMESx0vwdazTTGBoJYYd0jXuIFw&oe=629308C3",
     },
   ];
-
-  showNextButton = true;
-  showprevButton = false;
-  slideCount = 0;
-
-  increaseSlideCount() {
-    this.slideCount++;
-  }
-  decreaseSlideCount() {
-    this.slideCount--;
-  }
-
-  @Watch("slideCount", { immediate: true })
-  toggleIconSlide() {
-    this.showprevButton = this.slideCount > 0 ? true : false;
-  }
 }
 </script>
 

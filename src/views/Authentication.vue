@@ -37,7 +37,7 @@
                   <v-text-field
                     v-model="user.password"
                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[rules.required, rules.min]"
+                    :rules="rules"
                     :type="show1 ? 'text' : 'password'"
                     name="input-10-1"
                     label="Password"
@@ -96,7 +96,7 @@
                   <v-text-field
                     v-model="user.password"
                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[rules.required, rules.min]"
+                    :rules="rules"
                     :type="show1 ? 'text' : 'password'"
                     name="input-10-1"
                     label="Password"
@@ -183,10 +183,10 @@ export default class Authentication extends Vue {
   ];
 
   show1 = false;
-  rules = {
-    required: (value: any) => !!value || "Required.",
-    min: (v: any) => (v && v.length >= 6) || "Min 6 characters",
-  };
+  rules = [
+    (v: any) => !!v || "Required",
+    (v: any) => (v && v.length >= 6) || "Min 6 characters",
+  ];
   // Computed
   passwordMatch() {
     return () => this.user.password === this.verify || "Password must match";

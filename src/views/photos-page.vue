@@ -75,6 +75,7 @@ import { Component, Vue } from "vue-property-decorator";
   },
 })
 export default class PhotoPage extends Vue {
+  load = false;
   mounted() {
     Auth.currentAuthenticatedUser().then((response) => {
       console.log(response);

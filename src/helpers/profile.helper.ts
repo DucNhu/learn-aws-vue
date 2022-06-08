@@ -1,16 +1,16 @@
+import { user } from "@/models/userModel";
 import { Auth } from "aws-amplify";
-import { computed } from "mobx";
+import { action, observable } from "mobx";
 
 export class ProfileHelper {
+  @observable profile: user = null;
   constructor() {
     //
   }
 
-  get userInfor() {
-    const user = Auth.currentUserInfo().then((info) => {
-      return info;
-    });
-
-    return user;
-  }
+  // @action async userInfor() {
+  //   await Auth.currentUserInfo().then((info) => {
+  //     this.profile = info;
+  //   });
+  // }
 }

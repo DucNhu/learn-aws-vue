@@ -149,12 +149,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Provide, Vue } from "vue-property-decorator";
 import HelloWorld from "@/components/test-folder/HelloWorld.vue"; // @ is an alias to /src
-import { Auth, DataStore } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import router from "@/router";
 
 import { ProfileHelper } from "@/helpers/profile.helper";
+import { autorun } from "mobx";
+import { Observer } from "mobx-vue";
+
+@Observer
 @Component({
   components: {
     HelloWorld,
@@ -198,11 +202,9 @@ export default class HomeView extends Vue {
       content: "Setting",
     },
   ];
-
   mounted() {
-    const userName = new ProfileHelper();
-    userName.userInfor.then((info) => {
-      this.dropdown_list[0].link = `/profile/${info.username!}`;
+    Auth.currentUserInfo().then((info) => {
+      this.dropdown_list[0].link = `/profile/${info.username}`;
     });
   }
 

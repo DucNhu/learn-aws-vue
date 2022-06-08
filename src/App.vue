@@ -8,6 +8,9 @@
 @import "./assets/styles/home.css";
 @import "./assets/styles/bootstrap.min.css";
 
+.v-input__slot {
+  min-height: auto !important;
+}
 @media (min-width: 1204px) {
   .container {
     max-width: 900px !important;

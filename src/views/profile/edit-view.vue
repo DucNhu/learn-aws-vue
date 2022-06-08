@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Provide, Vue } from "vue-property-decorator";
 
 @Component
 export default class EditView extends Vue {

@@ -1,9 +1,9 @@
 <template>
-  <form>
+  <form v-if="user !== null">
     <div class="form-group row pa-0">
       <label
-        for="username"
-        class="col-2 col-sm-4 col-form-label mt-4 text-right"
+        for="avatar"
+        class="col-2 col-sm-4 col-form-label mt-4 text-right cursor-pointer"
       >
         <v-avatar height="35px" width="35px">
           <img
@@ -15,10 +15,10 @@
       </label>
       <div class="col-5 col-sm-8">
         <v-file-input
+          id="avatar"
           height="30px"
           accept="image/"
           label="File input"
-          shaped
           hide-details
           prepend-icon
         >
@@ -40,8 +40,9 @@
           v-model="user.username"
           placeholder="Username"
           disabled
-          dense
-          solo
+          hide-details="true"
+          outlined
+          height="auto"
         />
       </div>
     </div>
@@ -56,7 +57,7 @@
           id="name"
           v-model="user.attributes.name"
           placeholder="First Name"
-          class="form-control here"
+          class="form-control"
           type="text"
         />
       </div>
@@ -72,7 +73,7 @@
           id="email"
           v-model="user.attributes.email"
           placeholder="Email"
-          class="form-control here"
+          class="form-control"
           required="required"
           type="text"
         />
@@ -89,7 +90,7 @@
           id="lastname"
           v-model="user.attributes.phone_number"
           placeholder="999-999-999"
-          class="form-control here"
+          class="form-control"
           type="text"
         />
       </div>
@@ -106,29 +107,32 @@
           id="lastname"
           v-model="user.attributes.gender"
           placeholder="999-999-999"
-          class="form-control here"
+          class="form-control text-left"
           type="button"
           @click="genderDialog = true"
         />
       </div>
       <v-dialog v-model="genderDialog" width="500">
         <v-card>
-          <v-card-title>Tonight's availability</v-card-title>
+          <v-card-title>Chọn giới tính</v-card-title>
           <v-card-text>
             <v-radio-group v-model="user.attributes.gender">
               <v-radio
                 v-for="n in listGender"
-                :key="n"
-                :label="n"
-                :value="n"
+                :key="n.key"
+                :label="n.key"
+                :value="n.value"
               ></v-radio>
               <v-text-field
+                :rules="rules"
+                counter="10"
+                maxlength="10"
                 v-model="genderCustom"
-                v-if="user.attributes.gender == listGender[2]"
+                v-if="user.attributes.gender == listGender[2].value"
                 dense
               ></v-text-field>
             </v-radio-group>
-            <v-btn color="primary" @click="genderDialog = false"> Xong </v-btn>
+            <v-btn color="primary" @click="confirmGender()"> Xong </v-btn>
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -144,7 +148,7 @@
           id="website"
           v-model="user.attributes.website"
           placeholder="website"
-          class="form-control here"
+          class="form-control"
           type="text"
         />
       </div>
@@ -175,7 +179,7 @@
 import Auth from "@aws-amplify/auth";
 import { Component, Provide, Vue } from "vue-property-decorator";
 import { ProfileHelper } from "./../../helpers/profile.helper";
-import { user } from "./../../viewmodels/profile/userModel";
+import { user } from "../../models/userModel";
 
 @Component
 export default class extends Vue {
@@ -183,20 +187,49 @@ export default class extends Vue {
   user: user = null;
   genderDialog = false;
 
-  listGender = ["Nữ", "Nam", "Tùy chỉnh", "Ẩn"];
+  listGender = [
+    {
+      key: "Nữ",
+      value: "Nữ",
+    },
+    {
+      key: "Nam",
+      value: "Nam",
+    },
+    {
+      key: "Tùy chỉnh",
+      value: "",
+    },
+    {
+      key: "Ẩn",
+      value: "Ẩn",
+    },
+  ];
   genderCustom = "";
-
+  rules = [(v: any) => !!v || "Required"];
   mounted() {
-    this.vm.userInfor.then((info) => {
+    this.initForm();
+  }
+  async initForm() {
+    await Auth.currentUserInfo().then((info) => {
       this.user = info;
-      console.log(info);
     });
   }
-
   async updateProfile() {
     const user = await Auth.currentAuthenticatedUser();
 
-    console.log(this.user);
+    console.log({
+      ...this.user,
+
+      attributes: {
+        ...this.user.attributes,
+
+        gender:
+          this.genderCustom == ""
+            ? this.user.attributes.gender
+            : this.genderCustom,
+      },
+    });
     // await Auth.updateUserAttributes(user, {
     //   ...this.user.attributes,
     // })
@@ -206,6 +239,28 @@ export default class extends Vue {
     //   .catch((err) => {
     //     console.log(err);
     //   });
+  }
+
+  confirmGender() {
+    switch (this.user.attributes.gender) {
+      case this.listGender[0].key:
+        break;
+      case this.listGender[1].key:
+        break;
+      case this.listGender[3].key:
+        break;
+
+      default:
+        this.user.attributes.gender = this.genderCustom.trim();
+        this.listGender[2].value = this.genderCustom.trim();
+        break;
+    }
+    // if (this.genderCustom != "")
+    //   this.user.attributes.gender = this.genderCustom;
+    // // else this.genderCustom = "";
+    // this.listGender[2].value = this.genderCustom;
+    // this.genderCustom = "";
+    this.genderDialog = false;
   }
 }
 </script>

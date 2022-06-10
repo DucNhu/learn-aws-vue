@@ -1,5 +1,5 @@
 <template>
-  <form v-if="user !== null">
+  <v-form v-if="user !== null" ref="form">
     <div class="form-group row pa-0">
       <label
         for="avatar"
@@ -36,13 +36,13 @@
       </label>
       <div class="col-12 col-sm-8 pt-1">
         <v-text-field
-          id="username"
-          v-model="user.username"
-          placeholder="Username"
           disabled
           hide-details="true"
           outlined
-          height="auto"
+          id="username"
+          v-model.trim="user.username"
+          :rules="requied"
+          placeholder="Username"
         />
       </div>
     </div>
@@ -53,12 +53,15 @@
         >Tên người dùng
       </label>
       <div class="col-12 col-sm-8 pt-1">
-        <input
+        <v-text-field
+          hide-details="true"
+          outlined
           id="name"
-          v-model="user.attributes.name"
+          v-model.trim="user.attributes.name"
           placeholder="First Name"
-          class="form-control"
-          type="text"
+          :rules="required"
+          counter="30"
+          maxlength="30"
         />
       </div>
     </div>
@@ -69,54 +72,54 @@
         >Email</label
       >
       <div class="col-12 col-sm-8 pt-1">
-        <input
+        <v-text-field
+          hide-details="true"
+          outlined
           id="email"
-          v-model="user.attributes.email"
+          v-model.trim="user.attributes.email"
           placeholder="Email"
-          class="form-control"
-          required="required"
-          type="text"
-        />
+          :rules="email"
+        ></v-text-field>
       </div>
     </div>
     <div class="form-group row">
       <label
-        for="lastname"
+        for="phone"
         class="col-12 col-sm-4 py-0 col-form-label text-left text-sm-right"
         >Số điện thoại
       </label>
       <div class="col-12 col-sm-8 pt-1">
-        <input
-          id="lastname"
-          v-model="user.attributes.phone_number"
+        <v-text-field
+          outlined
+          hide-details="true"
+          id="phone"
+          v-model.trim="user.attributes.phone_number"
           placeholder="999-999-999"
-          class="form-control"
-          type="text"
         />
       </div>
     </div>
 
     <div class="form-group row">
       <label
-        for="lastname"
+        for="gender"
         class="col-12 col-sm-4 py-0 col-form-label text-left text-sm-right"
         >Giới tính
       </label>
       <div class="col-12 col-sm-8 pt-1">
         <input
-          id="lastname"
-          v-model="user.attributes.gender"
+          id="gender"
+          v-model.trim="user.attributes.gender"
           placeholder="999-999-999"
-          class="form-control text-left"
+          class="form-control text-left text-dark"
           type="button"
           @click="genderDialog = true"
         />
       </div>
-      <v-dialog v-model="genderDialog" width="500">
+      <v-dialog v-model.trim="genderDialog" width="500">
         <v-card>
           <v-card-title>Chọn giới tính</v-card-title>
           <v-card-text>
-            <v-radio-group v-model="user.attributes.gender">
+            <v-radio-group v-model.trim="user.attributes.gender">
               <v-radio
                 v-for="n in listGender"
                 :key="n.key"
@@ -124,10 +127,10 @@
                 :value="n.value"
               ></v-radio>
               <v-text-field
-                :rules="rules"
+                :rules="requied"
                 counter="10"
                 maxlength="10"
-                v-model="genderCustom"
+                v-model.trim="genderCustom"
                 v-if="user.attributes.gender == listGender[2].value"
                 dense
               ></v-text-field>
@@ -144,12 +147,12 @@
         >Website</label
       >
       <div class="col-12 col-sm-8 pt-1">
-        <input
+        <v-text-field
+          outlined
+          hide-details="true"
           id="website"
-          v-model="user.attributes.website"
+          v-model.trim="user.attributes.website"
           placeholder="website"
-          class="form-control"
-          type="text"
         />
       </div>
     </div>
@@ -160,30 +163,37 @@
         >Tiểu sử</label
       >
       <div class="col-12 col-sm-8 pt-1">
-        <textarea
-          id="publicinfo"
+        <v-textarea
+          outlined
           v-model="user.attributes.profile"
-          cols="40"
-          rows="4"
-          class="form-control"
-        ></textarea>
+          rows="9"
+        ></v-textarea>
       </div>
     </div>
     <div class="form-group row justify-content-sm-center pl-3 p-sm-0">
-      <v-btn color="primary" width="auto" @click="updateProfile()"> Gửi </v-btn>
+      <v-btn
+        color="primary"
+        width="auto"
+        @click="updateProfile()"
+        :disabled="!isValidate"
+      >
+        Gửi
+      </v-btn>
     </div>
-  </form>
+  </v-form>
 </template>
 
 <script lang="ts">
 import Auth from "@aws-amplify/auth";
-import { Component, Provide, Vue } from "vue-property-decorator";
+import { Component, Provide, Ref, Vue, Watch } from "vue-property-decorator";
 import { ProfileHelper } from "./../../helpers/profile.helper";
 import { user } from "../../models/userModel";
 
 @Component
 export default class extends Vue {
   @Provide() vm = new ProfileHelper();
+  @Ref("form") form;
+
   user: user = null;
   genderDialog = false;
 
@@ -206,39 +216,69 @@ export default class extends Vue {
     },
   ];
   genderCustom = "";
-  rules = [(v: any) => !!v || "Required"];
+  requied = [(v: any) => !!v || "Required"];
+  formInfo = true;
+  email = [
+    (v) => !!v || "E-mail is required",
+    (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+  ];
+  required = [(v) => !!v || "Name is required"];
+  isValidate = false;
+
   mounted() {
     this.initForm();
   }
+
+  updated() {
+    if (this.form.validate()) this.isValidate = true;
+    else this.isValidate = false;
+  }
+
   async initForm() {
     await Auth.currentUserInfo().then((info) => {
       this.user = info;
+      switch (info.attributes.gender) {
+        case this.listGender[0].key:
+          break;
+        case this.listGender[1].key:
+          break;
+        case this.listGender[3].key:
+          break;
+
+        default:
+          this.genderCustom = info.attributes.gender;
+          this.listGender[2].value = info.attributes.gender;
+          break;
+      }
     });
   }
   async updateProfile() {
-    const user = await Auth.currentAuthenticatedUser();
+    if (this.form.validate()) {
+      const user = await Auth.currentAuthenticatedUser();
 
-    console.log({
-      ...this.user,
+      console.log({
+        ...this.user,
 
-      attributes: {
-        ...this.user.attributes,
+        attributes: {
+          ...this.user.attributes,
 
-        gender:
-          this.genderCustom == ""
-            ? this.user.attributes.gender
-            : this.genderCustom,
-      },
-    });
-    // await Auth.updateUserAttributes(user, {
-    //   ...this.user.attributes,
-    // })
-    //   .then((result) => {
-    //     alert("Success");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+          gender: this.user.attributes.gender,
+          phone_number: this.user.attributes.phone_number,
+          picture: this.user.attributes.picture,
+          website: this.user.attributes.website,
+          profile: this.user.attributes.profile,
+        },
+      });
+      // await Auth.updateUserAttributes(user, {
+      //   ...this.user.attributes,
+      // })
+      //   .then((result) => {
+      //     alert("Success");
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+    }
   }
 
   confirmGender() {
@@ -251,8 +291,8 @@ export default class extends Vue {
         break;
 
       default:
-        this.user.attributes.gender = this.genderCustom.trim();
-        this.listGender[2].value = this.genderCustom.trim();
+        this.user.attributes.gender = this.genderCustom;
+        this.listGender[2].value = this.genderCustom;
         break;
     }
     // if (this.genderCustom != "")

@@ -8,5 +8,8 @@ export interface user {
     gender: string;
     email: string;
     picture: string;
+    phone_number: string;
+    website: string;
+    profile: string;
   };
 }

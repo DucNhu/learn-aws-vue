@@ -21,6 +21,7 @@
           label="File input"
           hide-details
           prepend-icon
+          @change="(e) => (avatar = e)"
         >
           <template v-slot:label>
             <div class="font-weight-thin">Chọn avatar</div>
@@ -187,7 +188,8 @@
 import Auth from "@aws-amplify/auth";
 import { Component, Provide, Ref, Vue, Watch } from "vue-property-decorator";
 import { ProfileHelper } from "./../../helpers/profile.helper";
-import { user } from "../../models/userModel";
+import { listGender, user } from "../../models/userModel";
+import { storageService } from "@/services/storage-service";
 
 @Component
 export default class extends Vue {
@@ -195,26 +197,10 @@ export default class extends Vue {
   @Ref("form") form;
 
   user: user = null;
+  avatar = "";
   genderDialog = false;
 
-  listGender = [
-    {
-      key: "Nữ",
-      value: "Nữ",
-    },
-    {
-      key: "Nam",
-      value: "Nam",
-    },
-    {
-      key: "Tùy chỉnh",
-      value: "",
-    },
-    {
-      key: "Ẩn",
-      value: "Ẩn",
-    },
-  ];
+  listGender = listGender;
   genderCustom = "";
   requied = [(v: any) => !!v || "Required"];
   formInfo = true;
@@ -237,6 +223,14 @@ export default class extends Vue {
   async initForm() {
     await Auth.currentUserInfo().then((info) => {
       this.user = info;
+      const url = storageService
+        .getFile("public/avatars/default.jpg", {
+          level: "public",
+        })
+        .then((result) => {
+          storageService.getFile(result).then((x) => console.log(x));
+        });
+
       switch (info.attributes.gender) {
         case this.listGender[0].key:
           break;
@@ -244,7 +238,6 @@ export default class extends Vue {
           break;
         case this.listGender[3].key:
           break;
-
         default:
           this.genderCustom = info.attributes.gender;
           this.listGender[2].value = info.attributes.gender;
@@ -254,26 +247,34 @@ export default class extends Vue {
   }
   async updateProfile() {
     if (this.form.validate()) {
+      const year = new Date().getFullYear();
+      const month = new Date().getMonth() + 1;
+      const day = new Date().getDay();
+      console.log(`${year}/${month}/${day}`);
+
       const user = await Auth.currentAuthenticatedUser();
 
-      console.log({
-        ...this.user,
+      const profileNew = {
+        ...this.user.attributes,
 
-        attributes: {
-          ...this.user.attributes,
+        gender: this.user.attributes.gender,
+        phone_number: "+84" + this.user.attributes.phone_number,
+        picture: this.user.attributes.picture,
+        website: this.user.attributes.website,
+        profile: this.user.attributes.profile,
+      };
 
-          gender: this.user.attributes.gender,
-          phone_number: this.user.attributes.phone_number,
-          picture: this.user.attributes.picture,
-          website: this.user.attributes.website,
-          profile: this.user.attributes.profile,
-        },
-      });
       // await Auth.updateUserAttributes(user, {
-      //   ...this.user.attributes,
+      //   // ...this.user.attributes,
+
+      //   gender: this.user.attributes.gender,
+      //   phone_number: "+84" + this.user.attributes.phone_number,
+      //   picture: "this.user.attributes.picture",
+      //   website: this.user.attributes.website,
+      //   profile: this.user.attributes.profile,
       // })
       //   .then((result) => {
-      //     alert("Success");
+      //     console.log("Success ", result);
       //   })
       //   .catch((err) => {
       //     console.log(err);

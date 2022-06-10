@@ -86,7 +86,7 @@
 
                 <v-col cols="12">
                   <v-text-field
-                    v-model="user.attributes.email"
+                    v-model="user.email"
                     :rules="emailRules"
                     label="E-mail"
                     required
@@ -118,7 +118,7 @@
                 </v-col>
               </v-row>
             </v-form>
-            <v-from v-else>
+            <v-form v-else>
               <v-col class="d-flex ml-auto" cols="12">
                 <v-text-field
                   v-model="confirm_code"
@@ -138,7 +138,7 @@
                   Register
                 </v-btn>
               </v-col>
-            </v-from>
+            </v-form>
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -156,9 +156,7 @@ export default class Authentication extends Vue {
   user = {
     username: "",
     password: "",
-    attributes: {
-      email: "",
-    },
+    email: "",
   };
 
   confirm_code = "";
@@ -192,7 +190,6 @@ export default class Authentication extends Vue {
     return () => this.user.password === this.verify || "Password must match";
   }
 
-  newUser: any;
   // @Ref("registerForm") $refForm: any;
 
   // validate() {
@@ -206,10 +203,6 @@ export default class Authentication extends Vue {
   // resetValidation() {
   //   this.$refs.form.resetValidation();
   // }
-
-  mounted() {
-    //
-  }
 }
 </script>
 

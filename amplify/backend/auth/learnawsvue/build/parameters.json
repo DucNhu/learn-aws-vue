@@ -1,6 +1,6 @@
 {
   "identityPoolName": "testAuthIdentityPool",
-  "allowUnauthenticatedIdentities": false,
+  "allowUnauthenticatedIdentities": true,
   "resourceNameTruncated": "learnad3f2aa80",
   "userPoolName": "learnawsvue",
   "autoVerifiedAttributes": [

@@ -1,12 +1,25 @@
+import { listGender } from "@/models/userModel";
 import router from "@/router";
 import Auth from "@aws-amplify/auth";
 export class AuthenticationViewModel {
   confirm_account = false;
   load = false;
 
-  async signUp(user) {
+  async signUp(value) {
     try {
+      const user = {
+        ...value,
+        attributes: {
+          ...value.attributes,
+          name: value.username,
+          gender: listGender[3].value,
+          email: value.email,
+          picture: "default.jpg",
+        },
+      };
       this.load = true;
+      console.log(user);
+
       await Auth.signUp({
         ...user,
       }).then(() => {

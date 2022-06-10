@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3learnawsvuestorage",
+  "bucketName": "learn-aws-vue-storage",
+  "policyUUID": "aec46aed",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

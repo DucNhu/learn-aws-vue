@@ -390,7 +390,7 @@ button:not(:disabled) {
 }
 
 textarea {
-    resize: vertical
+    resize: vertical;
 }
 
 fieldset {
@@ -2198,7 +2198,8 @@ progress {
     padding-bottom: calc(.375rem + 1px);
     margin-bottom: 0;
     font-size: inherit;
-    line-height: 1.5
+    line-height: 1.5;
+    cursor: pointer;
 }
 
 .col-form-label-lg {

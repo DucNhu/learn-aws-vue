@@ -2,7 +2,7 @@ import { StoragePutConfig } from "@aws-amplify/storage";
 import { Storage } from "aws-amplify";
 
 export class StorageService {
-  async putFile(nameFile: string, objFile: any, config?: any) {
+  async putFile(nameFile: string, objFile: object, config?: any) {
     try {
       return await Storage.put(nameFile, objFile, config);
     } catch (error) {

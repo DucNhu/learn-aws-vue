@@ -11,7 +11,7 @@
 /* Vuetify */
 .v-input__slot {
   min-height: auto !important;
-  height: 38.38px;
+  height: auto;
   display: flex !important;
   align-items: center !important;
 }
@@ -19,10 +19,12 @@
 .v-textarea .v-input__slot {
   min-height: 56px !important;
 }
+
 .v-application .error--text {
   color: rgba(0, 0, 0, 0.38) !important;
   caret-color: rgba(0, 0, 0, 0.87) !important;
 }
+
 .v-application .error--text fieldset {
   border: 1px solid rgba(0, 0, 0, 0.38) !important;
 }

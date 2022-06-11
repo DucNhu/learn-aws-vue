@@ -237,6 +237,10 @@ a:hover {
     margin-bottom: 25px;
 }
 
+textarea::-webkit-scrollbar {
+    display: none;
+}
+
 .tm-btn-big {
     padding: 12px 90px 14px;
 }

@@ -2,6 +2,7 @@ import { listGender } from "@/models/userModel";
 import router from "@/router";
 import Auth from "@aws-amplify/auth";
 import { globalLoad } from "@/components/global-load/global-load-viewmodel";
+import { globalAlert } from "@/components/global-alert/global-alert-viewmodel";
 
 export class AuthenticationViewModel {
   confirm_account = false;
@@ -20,8 +21,6 @@ export class AuthenticationViewModel {
         },
       };
       globalLoad.onLoad();
-      console.log(user);
-
       await Auth.signUp({
         ...user,
       }).then(() => {
@@ -30,9 +29,8 @@ export class AuthenticationViewModel {
         this.confirm_account = true;
       });
     } catch (error) {
-      console.log("error signing up:", error);
       globalLoad.offLoad();
-      console.log("end sigup");
+      globalAlert.onAlert(error.message);
     }
   }
 
@@ -43,7 +41,8 @@ export class AuthenticationViewModel {
         this.signIn(user);
       });
     } catch (error) {
-      console.log("error signing up:", error);
+      globalLoad.offLoad();
+      globalAlert.onAlert(error.message);
     }
   }
 
@@ -59,16 +58,7 @@ export class AuthenticationViewModel {
       }
     } catch (error) {
       globalLoad.offLoad();
-      console.log("error signing in", error);
-    }
-  }
-
-  async deleteUser() {
-    try {
-      const result = await Auth.deleteUser();
-      console.log(result);
-    } catch (error) {
-      console.log("Error deleting user", error);
+      globalAlert.onAlert(error.message);
     }
   }
 }

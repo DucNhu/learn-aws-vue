@@ -49,13 +49,7 @@
                 <v-col class="d-flex" cols="12" sm="6" xsm="12"> </v-col>
                 <v-spacer></v-spacer>
                 <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                  <v-btn
-                    x-large
-                    block
-                    :disabled="!valid"
-                    color="success"
-                    @click="vm.signIn(user)"
-                  >
+                  <v-btn x-large block color="success" @click="vm.signIn(user)">
                     Login
                   </v-btn>
                 </v-col>
@@ -70,7 +64,6 @@
             <v-form
               ref="registerForm"
               v-model="valid"
-              lazy-validation
               v-if="!vm.confirm_account"
             >
               <v-row>
@@ -147,12 +140,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Provide, Vue } from "vue-property-decorator";
+import { Component, Provide, Ref, Vue } from "vue-property-decorator";
 import { AuthenticationViewModel } from "./../viewmodels/authentication-viewmodel";
 
 @Component
 export default class Authentication extends Vue {
   @Provide() vm = new AuthenticationViewModel();
+  disableButton = false;
+  @Ref("loginForm") form;
   user = {
     username: "",
     password: "",
@@ -189,8 +184,6 @@ export default class Authentication extends Vue {
   passwordMatch() {
     return () => this.user.password === this.verify || "Password must match";
   }
-
-  // @Ref("registerForm") $refForm: any;
 
   // validate() {
   //   if (this.$refForm.validate()) {

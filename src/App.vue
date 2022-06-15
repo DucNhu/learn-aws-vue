@@ -2,25 +2,19 @@
   <v-app id="app">
     <router-view />
     <global-load />
+    <global-alert />
   </v-app>
 </template>
 <script lang="ts">
-import { Auth } from "aws-amplify";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({
   components: {
-    "slide-story": () => import("./components/global-load/global-load.vue"),
+    "global-load": () => import("./components/global-load/global-load.vue"),
+    "global-alert": () => import("@/components/global-alert/global-alert.vue"),
   },
 })
-export default class extends Vue {
-  load = false;
-  mounted() {
-    Auth.currentAuthenticatedUser().then((response) => {
-      console.log(response);
-    });
-  }
-}
+export default class App extends Vue {}
 </script>
 <style>
 @import "./assets/styles/home.css";
@@ -29,7 +23,7 @@ export default class extends Vue {
 /* Vuetify */
 .v-input__slot {
   min-height: auto !important;
-  height: auto;
+  height: 38.38px;
   display: flex !important;
   align-items: center !important;
 }
@@ -49,7 +43,7 @@ export default class extends Vue {
 /* End vuetify */
 
 /* Css */
-/* Input */
+/* Form */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -62,7 +56,11 @@ input:-webkit-autofill:active {
   font-weight: 100;
 }
 
-/* End Input */
+textarea {
+  margin: 0px !important;
+}
+
+/* End Form */
 
 @media (min-width: 1204px) {
   .container {

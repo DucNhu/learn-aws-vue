@@ -18,7 +18,6 @@
 
       <router-link to="/photos" custom v-if="$vuetify.breakpoint.smAndDown">
         <v-avatar height="30px" width="35px">
-          <avatar-circle :src="avatar" :alt="avatar" />
           <img alt="Logo" src="../assets/images/logo.png" width="100" />
         </v-avatar>
       </router-link>
@@ -43,11 +42,8 @@
 
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-avatar class="col-1 ma-0 pa-0" size="32" v-bind="attrs" v-on="on">
-            <img
-              alt="Avatar"
-              src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
-            />
+          <v-avatar class="col-1 ma-0 pa-0" v-bind="attrs" v-on="on">
+            <avatar-circle :src="avatar" :alt="'avatar'" />
           </v-avatar>
         </template>
         <v-list>
@@ -150,14 +146,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Provide, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { Auth } from "aws-amplify";
 import router from "@/router";
 
-import { ProfileHelper } from "@/helpers/profile.helper";
-import { userInfo } from "@/stores/user-info-store";
 import { globalLoad } from "@/components/global-load/global-load-viewmodel";
-
+import { userInforStore } from "@/stores/user-info-store";
+import { user } from "@/models/userModel";
 @Component({
   components: {
     "avatar-circle": () => import("@/components/profile/avatar-circle.vue"),
@@ -165,7 +160,8 @@ import { globalLoad } from "@/components/global-load/global-load-viewmodel";
 })
 export default class HomeView extends Vue {
   load = false;
-
+  username: user;
+  avatar = "";
   navigations = [
     {
       icon: "fa-solid fa-house",
@@ -201,15 +197,11 @@ export default class HomeView extends Vue {
       content: "Setting",
     },
   ];
-  mounted() {
+  created() {
     globalLoad.offLoad();
-
-    // Auth.currentUserInfo().then((info) => {
-    //   this.dropdown_list[0].link = `/profile/${info.username}`;
-    // });
-    console.log(userInfo);
-
-    this.dropdown_list[0].link = `/profile/${userInfo.userInfo.username}`;
+    this.username = userInforStore.getUser();
+    this.avatar = userInforStore.avatar;
+    this.dropdown_list[0].link = `/profile/${this.username.username}`;
   }
 
   async signOut() {

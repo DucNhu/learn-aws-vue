@@ -1,18 +1,31 @@
 import { user } from "@/models/userModel";
+import { storageService } from "@/services/storage-service";
 import { Auth } from "aws-amplify";
-import { action, observable } from "mobx";
 export class UserInforStore {
-  @observable userInfo: user;
-
+  userInfo: user;
+  avatar = "";
   constructor() {
     this.getUser();
   }
 
-  @action getUser() {
-    Auth.currentUserInfo().then((info) => {
-      this.userInfo = info;
-    });
+  getUser() {
+    Auth.currentUserInfo()
+      .then((info) => {
+        this.userInfo = info;
+        if (this.userInfo.attributes.picture)
+          storageService
+            .getFile(this.userInfo.attributes.picture, {
+              level: "public",
+            })
+            .then((result) => {
+              this.avatar = result;
+            });
+      })
+      .catch(() => {
+        //
+      });
+    return this.userInfo;
   }
 }
 
-export const userInfo = new UserInforStore();
+export const userInforStore = new UserInforStore();

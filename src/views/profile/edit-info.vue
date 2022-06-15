@@ -189,10 +189,10 @@
 <script lang="ts">
 import Auth from "@aws-amplify/auth";
 import { Component, Provide, Ref, Vue } from "vue-property-decorator";
-import { ProfileHelper } from "./../../helpers/profile.helper";
 import { listGender, user } from "../../models/userModel";
 import { storageService } from "@/services/storage-service";
 import { globalLoad } from "@/components/global-load/global-load-viewmodel";
+import { globalAlert } from "@/components/global-alert/global-alert-viewmodel";
 
 @Component({
   components: {
@@ -200,8 +200,6 @@ import { globalLoad } from "@/components/global-load/global-load-viewmodel";
   },
 })
 export default class extends Vue {
-  @Provide() vm = new ProfileHelper();
-
   @Ref("form") form;
 
   user: user = null;
@@ -234,7 +232,6 @@ export default class extends Vue {
   async initForm() {
     await Auth.currentUserInfo().then((info) => {
       this.user = info;
-      console.log(info);
 
       storageService
         .getFile(this.user.attributes.picture, {
@@ -243,7 +240,6 @@ export default class extends Vue {
         })
         .then((result) => {
           this.avatar = result;
-          console.log(this.avatar);
         });
 
       switch (info.attributes.gender) {
@@ -289,13 +285,12 @@ export default class extends Vue {
         website: this.user.attributes.website ?? "",
         profile: this.user.attributes.profile ?? "",
       };
-      console.log(profileNew);
 
       await Auth.updateUserAttributes(user, {
         ...profileNew,
       })
         .then(() => {
-          // globalLoad.offLoad();
+          globalAlert.onAlert("Cập nhật thành công");
         })
         .catch((err) => {
           console.log(err);
@@ -307,9 +302,9 @@ export default class extends Vue {
       if (this.isUpdateAvatar) {
         await storageService
           .putFile(this.user.attributes.picture, this.newAvatar)
-          .then((result) => {
+          .then(() => {
             this.isUpdateAvatar = false;
-            console.log("Success avatar", result);
+            globalAlert.onAlert("Cập nhật thành công");
           })
           .finally(() => {
             globalLoad.offLoad();

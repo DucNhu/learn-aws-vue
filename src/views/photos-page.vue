@@ -132,14 +132,7 @@ import { Component, Vue } from "vue-property-decorator";
     "slide-story": () => import("./slide-story.vue"),
   },
 })
-export default class PhotoPage extends Vue {
-  load = false;
-  mounted() {
-    Auth.currentAuthenticatedUser().then((response) => {
-      console.log(response);
-    });
-  }
-}
+export default class PhotoPage extends Vue {}
 </script>
 
 <style scoped>

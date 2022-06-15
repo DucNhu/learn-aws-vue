@@ -1,5 +1,5 @@
 <template>
-  <v-overlay :value="load" z-index="6">
+  <v-overlay :value="vm.load" z-index="6">
     <v-progress-circular
       :size="50"
       color="primary"
@@ -9,10 +9,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
+import { globalLoad } from "./global-load-viewmodel";
 @Component
 export default class extends Vue {
-  @Prop({ default: false }) load;
+  vm = globalLoad;
 }
 </script>
 

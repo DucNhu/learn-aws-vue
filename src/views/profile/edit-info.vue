@@ -177,7 +177,7 @@
           width="auto"
           @click="updateProfile()"
           :disabled="!isValidate"
-          :loading="loading"
+          :btnloading="btnloading"
         >
           Gửi
         </v-btn>
@@ -188,10 +188,11 @@
 
 <script lang="ts">
 import Auth from "@aws-amplify/auth";
-import { Component, Provide, Ref, Vue, Watch } from "vue-property-decorator";
+import { Component, Provide, Ref, Vue } from "vue-property-decorator";
 import { ProfileHelper } from "./../../helpers/profile.helper";
 import { listGender, user } from "../../models/userModel";
 import { storageService } from "@/services/storage-service";
+import { globalLoad } from "@/components/global-load/global-load-viewmodel";
 
 @Component({
   components: {
@@ -200,6 +201,7 @@ import { storageService } from "@/services/storage-service";
 })
 export default class extends Vue {
   @Provide() vm = new ProfileHelper();
+
   @Ref("form") form;
 
   user: user = null;
@@ -219,7 +221,7 @@ export default class extends Vue {
 
   isValidate = false;
   isUpdateAvatar = false;
-  loading = false;
+  btnloading = false;
   created() {
     this.initForm();
   }
@@ -260,7 +262,8 @@ export default class extends Vue {
   }
 
   async updateProfile() {
-    this.loading = true;
+    globalLoad.onLoad();
+
     // const defaultInfo = Object.assign(this.user);
     // console.log("defaultInfo: ", defaultInfo);
     // console.log("user: ", this.user);
@@ -291,14 +294,15 @@ export default class extends Vue {
       await Auth.updateUserAttributes(user, {
         ...profileNew,
       })
-        .then((result) => {
-          // console.log("Success info", result);
+        .then(() => {
+          // globalLoad.offLoad();
         })
         .catch((err) => {
           console.log(err);
         })
         .finally(() => {
-          this.loading = false;
+          globalLoad.offLoad();
+          this.btnloading = false;
         });
       if (this.isUpdateAvatar) {
         await storageService
@@ -308,7 +312,8 @@ export default class extends Vue {
             console.log("Success avatar", result);
           })
           .finally(() => {
-            this.loading = false;
+            globalLoad.offLoad();
+            this.btnloading = false;
           });
       }
     }

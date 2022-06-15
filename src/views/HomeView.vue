@@ -18,6 +18,7 @@
 
       <router-link to="/photos" custom v-if="$vuetify.breakpoint.smAndDown">
         <v-avatar height="30px" width="35px">
+          <avatar-circle :src="avatar" :alt="avatar" />
           <img alt="Logo" src="../assets/images/logo.png" width="100" />
         </v-avatar>
       </router-link>
@@ -150,18 +151,16 @@
 
 <script lang="ts">
 import { Component, Provide, Vue } from "vue-property-decorator";
-import HelloWorld from "@/components/test-folder/HelloWorld.vue"; // @ is an alias to /src
 import { Auth } from "aws-amplify";
 import router from "@/router";
 
 import { ProfileHelper } from "@/helpers/profile.helper";
-import { autorun } from "mobx";
-import { Observer } from "mobx-vue";
+import { userInfo } from "@/stores/user-info-store";
+import { globalLoad } from "@/components/global-load/global-load-viewmodel";
 
-@Observer
 @Component({
   components: {
-    HelloWorld,
+    "avatar-circle": () => import("@/components/profile/avatar-circle.vue"),
   },
 })
 export default class HomeView extends Vue {
@@ -203,9 +202,14 @@ export default class HomeView extends Vue {
     },
   ];
   mounted() {
-    Auth.currentUserInfo().then((info) => {
-      this.dropdown_list[0].link = `/profile/${info.username}`;
-    });
+    globalLoad.offLoad();
+
+    // Auth.currentUserInfo().then((info) => {
+    //   this.dropdown_list[0].link = `/profile/${info.username}`;
+    // });
+    console.log(userInfo);
+
+    this.dropdown_list[0].link = `/profile/${userInfo.userInfo.username}`;
   }
 
   async signOut() {

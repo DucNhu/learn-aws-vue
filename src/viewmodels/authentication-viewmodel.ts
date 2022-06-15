@@ -1,6 +1,8 @@
 import { listGender } from "@/models/userModel";
 import router from "@/router";
 import Auth from "@aws-amplify/auth";
+import { globalLoad } from "@/components/global-load/global-load-viewmodel";
+
 export class AuthenticationViewModel {
   confirm_account = false;
   load = false;
@@ -17,26 +19,26 @@ export class AuthenticationViewModel {
           picture: "default.jpg",
         },
       };
-      this.load = true;
+      globalLoad.onLoad();
       console.log(user);
 
       await Auth.signUp({
         ...user,
       }).then(() => {
-        this.load = false;
+        globalLoad.offLoad();
 
         this.confirm_account = true;
       });
     } catch (error) {
       console.log("error signing up:", error);
-      this.load = false;
+      globalLoad.offLoad();
       console.log("end sigup");
     }
   }
 
   async confirmAccount(user, confirm_code) {
     try {
-      this.load = true;
+      globalLoad.onLoad();
       await Auth.confirmSignUp(user.username, confirm_code).then(() => {
         this.signIn(user);
       });
@@ -47,7 +49,7 @@ export class AuthenticationViewModel {
 
   async signIn(user) {
     try {
-      this.load = true;
+      globalLoad.onLoad();
       const userCurrent = await Auth.signIn(
         user.username.trim(),
         user.password
@@ -56,7 +58,7 @@ export class AuthenticationViewModel {
         router.push("/photos");
       }
     } catch (error) {
-      this.load = false;
+      globalLoad.offLoad();
       console.log("error signing in", error);
     }
   }

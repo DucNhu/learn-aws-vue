@@ -1,9 +1,27 @@
 <template>
   <v-app id="app">
     <router-view />
+    <global-load />
   </v-app>
 </template>
+<script lang="ts">
+import { Auth } from "aws-amplify";
+import { Component, Vue } from "vue-property-decorator";
 
+@Component({
+  components: {
+    "slide-story": () => import("./components/global-load/global-load.vue"),
+  },
+})
+export default class extends Vue {
+  load = false;
+  mounted() {
+    Auth.currentAuthenticatedUser().then((response) => {
+      console.log(response);
+    });
+  }
+}
+</script>
 <style>
 @import "./assets/styles/home.css";
 @import "./assets/styles/bootstrap.min.css";

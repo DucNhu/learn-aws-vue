@@ -23,7 +23,7 @@
       <v-tab-item>
         <v-card class="px-4">
           <v-card-text>
-            <form ref="loginForm" :v-model="valid" autocomplete="true">
+            <form autocomplete="true">
               <v-row>
                 <v-col cols="12">
                   <v-text-field
@@ -36,20 +36,22 @@
                 <v-col cols="12">
                   <v-text-field
                     v-model="user.password"
-                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="rules"
-                    :type="show1 ? 'text' : 'password'"
-                    name="input-10-1"
+                    :type="openPass ? 'text' : 'password'"
+                    :append-icon="openPass ? 'mdi-eye' : 'mdi-eye-off'"
                     label="Password"
-                    hint="At least 8 characters"
-                    counter
-                    @click:append="show1 = !show1"
+                    @click:append="openPass = !openPass"
                   ></v-text-field>
                 </v-col>
                 <v-col class="d-flex" cols="12" sm="6" xsm="12"> </v-col>
                 <v-spacer></v-spacer>
                 <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                  <v-btn x-large block color="success" @click="vm.signIn(user)">
+                  <v-btn
+                    x-large
+                    block
+                    color="success"
+                    :disabled="user.username == '' || user.password == ''"
+                    @click="vm.signIn(user)"
+                  >
                     Login
                   </v-btn>
                 </v-col>
@@ -88,14 +90,14 @@
                 <v-col cols="12">
                   <v-text-field
                     v-model="user.password"
-                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :append-icon="openPass ? 'mdi-eye' : 'mdi-eye-off'"
                     :rules="rules"
-                    :type="show1 ? 'text' : 'password'"
+                    :type="openPass ? 'text' : 'password'"
                     name="input-10-1"
                     label="Password"
                     hint="At least 8 characters"
                     counter
-                    @click:append="show1 = !show1"
+                    @click:append="openPass = !openPass"
                   ></v-text-field>
                 </v-col>
                 <v-spacer></v-spacer>
@@ -142,12 +144,15 @@
 <script lang="ts">
 import { Component, Provide, Ref, Vue } from "vue-property-decorator";
 import { AuthenticationViewModel } from "./../viewmodels/authentication-viewmodel";
-
+import { rulesHelper } from "@/helpers/validator-form";
 @Component
 export default class Authentication extends Vue {
-  @Provide() vm = new AuthenticationViewModel();
+  vm = new AuthenticationViewModel();
+  rulesHelper = rulesHelper;
   disableButton = false;
-  @Ref("loginForm") form;
+
+  @Ref("loginForm") loginForm;
+
   user = {
     username: "",
     password: "",
@@ -175,7 +180,7 @@ export default class Authentication extends Vue {
     (v: any) => /.+@+/.test(v) || "E-mail must be valid",
   ];
 
-  show1 = false;
+  openPass = false;
   rules = [
     (v: any) => !!v || "Required",
     (v: any) => (v && v.length >= 6) || "Min 6 characters",

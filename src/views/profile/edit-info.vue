@@ -39,7 +39,7 @@
             outlined
             id="username"
             v-model.trim="user.username"
-            :rules="requied"
+            :rules="[rules.required]"
             placeholder="Username"
           />
         </div>
@@ -57,7 +57,7 @@
             id="name"
             v-model.trim="user.attributes.name"
             placeholder="First Name"
-            :rules="required"
+            :rules="[rules.required]"
             counter="30"
             maxlength="30"
           />
@@ -76,7 +76,7 @@
             id="email"
             v-model.trim="user.attributes.email"
             placeholder="Email"
-            :rules="email"
+            :rules="[rules.required, rules.email]"
           ></v-text-field>
         </div>
       </div>
@@ -125,7 +125,7 @@
                   :value="n.value"
                 ></v-radio>
                 <v-text-field
-                  :rules="requied"
+                  :rules="[rules.required]"
                   counter="10"
                   maxlength="10"
                   v-model.trim="genderCustom"
@@ -188,11 +188,13 @@
 
 <script lang="ts">
 import Auth from "@aws-amplify/auth";
-import { Component, Provide, Ref, Vue } from "vue-property-decorator";
+import { Component, Ref, Vue } from "vue-property-decorator";
 import { listGender, user } from "../../models/userModel";
-import { storageService } from "@/services/storage-service";
 import { globalLoad } from "@/components/global-load/global-load-viewmodel";
 import { globalAlert } from "@/components/global-alert/global-alert-viewmodel";
+import { rulesHelper } from "@/helpers/validator-form";
+import { storageService } from "@/services/storage-service";
+import { userInforStore } from "@/stores/user-info-store";
 
 @Component({
   components: {
@@ -201,25 +203,20 @@ import { globalAlert } from "@/components/global-alert/global-alert-viewmodel";
 })
 export default class extends Vue {
   @Ref("form") form;
-
-  user: user = null;
-  avatar = "";
-  genderDialog = false;
+  rules = rulesHelper;
 
   listGender = listGender;
   genderCustom = "";
-  requied = [(v: any) => !!v || "Required"];
-  formInfo = true;
-  email = [
-    (v) => !!v || "E-mail is required",
-    (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-  ];
-  required = [(v) => !!v || "Name is required"];
-  newAvatar = null;
+  avatar = "";
 
+  newAvatar = null;
+  user: user = null;
+
+  genderDialog = false;
   isValidate = false;
   isUpdateAvatar = false;
   btnloading = false;
+
   created() {
     this.initForm();
   }
@@ -230,31 +227,22 @@ export default class extends Vue {
   }
 
   async initForm() {
-    await Auth.currentUserInfo().then((info) => {
-      this.user = info;
+    await userInforStore.getUser();
+    this.user = userInforStore.userInfo;
+    this.avatar = userInforStore.avatar;
 
-      storageService
-        .getFile(this.user.attributes.picture, {
-          level: "public",
-          // expires: 604_800,
-        })
-        .then((result) => {
-          this.avatar = result;
-        });
-
-      switch (info.attributes.gender) {
-        case this.listGender[0].key:
-          break;
-        case this.listGender[1].key:
-          break;
-        case this.listGender[3].key:
-          break;
-        default:
-          this.genderCustom = info.attributes.gender;
-          this.listGender[2].value = info.attributes.gender;
-          break;
-      }
-    });
+    switch (userInforStore.userInfo.attributes.gender) {
+      case this.listGender[0].key:
+        break;
+      case this.listGender[1].key:
+        break;
+      case this.listGender[3].key:
+        break;
+      default:
+        this.genderCustom = userInforStore.userInfo.attributes.gender;
+        this.listGender[2].value = userInforStore.userInfo.attributes.gender;
+        break;
+    }
   }
 
   async updateProfile() {
@@ -292,8 +280,8 @@ export default class extends Vue {
         .then(() => {
           globalAlert.onAlert("Cập nhật thành công");
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          globalAlert.onAlert(error.message);
         })
         .finally(() => {
           globalLoad.offLoad();

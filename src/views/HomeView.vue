@@ -197,9 +197,16 @@ export default class HomeView extends Vue {
       content: "Setting",
     },
   ];
-  created() {
+
+  mounted() {
     globalLoad.offLoad();
-    this.username = userInforStore.getUser();
+    this.getInfo();
+  }
+
+  async getInfo() {
+    await userInforStore.getUser();
+
+    this.username = userInforStore.userInfo;
     this.avatar = userInforStore.avatar;
     this.dropdown_list[0].link = `/profile/${this.username.username}`;
   }

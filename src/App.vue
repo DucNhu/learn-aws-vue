@@ -61,7 +61,12 @@ textarea {
 }
 
 /* End Form */
-
+@media (min-width: 576px) {
+  .container,
+  .container-sm {
+    max-width: 100%;
+  }
+}
 @media (min-width: 1204px) {
   .container {
     max-width: 900px !important;

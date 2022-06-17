@@ -23,11 +23,13 @@
       <v-tab-item>
         <v-card class="px-4">
           <v-card-text>
-            <form autocomplete="true">
+            <v-form ref="loginForm">
               <v-row>
                 <v-col cols="12">
                   <v-text-field
-                    v-model="user.username"
+                    v-model="userLogin.username"
+                    placeholder=" "
+                    persistent-placeholder
                     label="User Name"
                     maxlength="20"
                     required
@@ -35,7 +37,9 @@
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
-                    v-model="user.password"
+                    v-model="userLogin.password"
+                    placeholder=" "
+                    persistent-placeholder
                     :type="openPass ? 'text' : 'password'"
                     :append-icon="openPass ? 'mdi-eye' : 'mdi-eye-off'"
                     label="Password"
@@ -49,14 +53,17 @@
                     x-large
                     block
                     color="success"
-                    :disabled="user.username == '' || user.password == ''"
-                    @click="vm.signIn(user)"
+                    :disabled="
+                      userLogin.username.trim() == '' ||
+                      userLogin.password == ''
+                    "
+                    @click="vm.signIn(userLogin)"
                   >
                     Login
                   </v-btn>
                 </v-col>
               </v-row>
-            </form>
+            </v-form>
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -71,32 +78,34 @@
               <v-row>
                 <v-col cols="12">
                   <v-text-field
-                    v-model="user.username"
-                    :rules="rules"
+                    v-model="userRegister.username"
+                    placeholder=" "
+                    persistent-placeholder
+                    :rules="[rulesHelper.min(userRegister.username, 6)]"
                     label="User Name"
-                    maxlength="20"
+                    maxlength="30"
                     required
                   ></v-text-field>
                 </v-col>
-
                 <v-col cols="12">
                   <v-text-field
-                    v-model="user.email"
-                    :rules="emailRules"
+                    v-model="userRegister.email"
+                    placeholder="abc@gmail.com"
+                    persistent-placeholder
+                    :rules="[rulesHelper.required, rulesHelper.email]"
                     label="E-mail"
                     required
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
-                    v-model="user.password"
+                    v-model="userRegister.password"
                     :append-icon="openPass ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="rules"
+                    :rules="[rulesHelper.min(userRegister.password, 6)]"
                     :type="openPass ? 'text' : 'password'"
-                    name="input-10-1"
+                    placeholder=" "
+                    persistent-placeholder
                     label="Password"
-                    hint="At least 8 characters"
-                    counter
                     @click:append="openPass = !openPass"
                   ></v-text-field>
                 </v-col>
@@ -105,9 +114,9 @@
                   <v-btn
                     x-large
                     block
-                    :disabled="!valid"
+                    :disabled="disableButton"
                     color="success"
-                    @click="vm.signUp(user)"
+                    @click="vm.signUp(userRegister)"
                     >Register</v-btn
                   >
                 </v-col>
@@ -142,23 +151,29 @@
 </template>
 
 <script lang="ts">
-import { Component, Provide, Ref, Vue } from "vue-property-decorator";
+import { Component, Ref, Vue } from "vue-property-decorator";
 import { AuthenticationViewModel } from "./../viewmodels/authentication-viewmodel";
 import { rulesHelper } from "@/helpers/validator-form";
+
 @Component
 export default class Authentication extends Vue {
   vm = new AuthenticationViewModel();
   rulesHelper = rulesHelper;
-  disableButton = false;
+  disableButton = true;
 
   @Ref("loginForm") loginForm;
+  @Ref("registerForm") registerForm;
 
-  user = {
+  userLogin = {
     username: "",
     password: "",
     email: "",
   };
-
+  userRegister = {
+    username: "",
+    password: "",
+    email: "",
+  };
   confirm_code = "";
   dialog = true;
   tab = 0;
@@ -168,39 +183,30 @@ export default class Authentication extends Vue {
   ];
   valid = true;
 
-  verify = "";
   loginPassword = "";
   loginEmail = "";
-  loginEmailRules = [
-    (v: any) => !!v || "Required",
-    (v: any) => /.+@+/.test(v) || "E-mail must be valid",
-  ];
-  emailRules = [
-    (v: any) => !!v || "Required",
-    (v: any) => /.+@+/.test(v) || "E-mail must be valid",
-  ];
 
   openPass = false;
-  rules = [
-    (v: any) => !!v || "Required",
-    (v: any) => (v && v.length >= 6) || "Min 6 characters",
-  ];
-  // Computed
-  passwordMatch() {
-    return () => this.user.password === this.verify || "Password must match";
+
+  updated() {
+    if (
+      Object.values(this.userRegister).every(({ length }) => {
+        return length;
+      })
+    )
+      this.validate();
   }
 
-  // validate() {
-  //   if (this.$refForm.validate()) {
-  //     // submit form to server/API here...
-  //   }
-  // }
-  // reset() {
-  //   this.$refs.form.reset();
-  // }
-  // resetValidation() {
-  //   this.$refs.form.resetValidation();
-  // }
+  validate() {
+    if (!this.registerForm.validate()) this.disableButton = true;
+    else this.disableButton = false;
+  }
+
+  reset() {
+    this.loginForm.reset();
+    this.registerForm.reset();
+    this.registerForm.resetValidation();
+  }
 }
 </script>
 

@@ -3,6 +3,7 @@ import router from "@/router";
 import Auth from "@aws-amplify/auth";
 import { globalLoad } from "@/components/global-load/global-load-viewmodel";
 import { globalAlert } from "@/components/global-alert/global-alert-viewmodel";
+import { userInforStore } from "@/stores/user-info-store";
 
 export class AuthenticationViewModel {
   confirm_account = false;
@@ -54,6 +55,8 @@ export class AuthenticationViewModel {
         user.password
       );
       if (userCurrent.signInUserSession.accessToken) {
+        userInforStore.getUser();
+
         router.push("/photos");
       }
     } catch (error) {

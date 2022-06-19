@@ -10,14 +10,11 @@
     <v-slide-item v-for="(user, index) in data" :key="index">
       <v-card-actions>
         <button>
-          <!-- <v-avatar size="65">
-            <img alt="Avatar" :src="user.avatar" />
-          </v-avatar> -->
           <avatar-circle
             :src="user.avatar"
-            :alt="'avatar'"
-            :width="65"
-            :height="65"
+            alt="avatar"
+            width="65"
+            height="65"
           />
           <div class="mt-2">
             {{ user.name }}

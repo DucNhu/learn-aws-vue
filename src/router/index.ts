@@ -1,7 +1,7 @@
 import { Auth } from "aws-amplify";
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import HomeView from "../views/home-view.vue";
 
 Vue.use(VueRouter);
 
@@ -53,7 +53,7 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: "/about",
-        component: () => import("../views/AboutView.vue"),
+        component: () => import("../views/about-view.vue"),
       },
       {
         path: "/test",
@@ -67,7 +67,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "/login",
-    component: () => import("../views/Authentication.vue"),
+    component: () => import("../views/authentication.vue"),
   },
   {
     path: "/admin",

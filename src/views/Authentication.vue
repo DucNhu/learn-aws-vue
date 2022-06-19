@@ -152,7 +152,7 @@
 
 <script lang="ts">
 import { Component, Ref, Vue } from "vue-property-decorator";
-import { AuthenticationViewModel } from "./../viewmodels/authentication-viewmodel";
+import { AuthenticationViewModel } from "../viewmodels/authentication-viewmodel";
 import { rulesHelper } from "@/helpers/validator-form";
 
 @Component

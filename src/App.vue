@@ -21,6 +21,9 @@ export default class App extends Vue {}
 @import "./assets/styles/bootstrap.min.css";
 
 /* Vuetify */
+.v-dialog {
+  box-shadow: none !important;
+}
 .v-input__slot {
   min-height: auto !important;
   height: 38.38px;

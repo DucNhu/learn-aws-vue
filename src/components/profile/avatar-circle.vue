@@ -25,8 +25,10 @@ export default class Avatar_circle extends Vue {
     this.getInfo();
   }
   async getInfo() {
-    await userInforStore.getUser();
-    this.src = await userInforStore.avatar;
+    if (this.src == "") {
+      await userInforStore.getUser();
+      this.src = await userInforStore.avatar;
+    }
   }
 }
 </script>

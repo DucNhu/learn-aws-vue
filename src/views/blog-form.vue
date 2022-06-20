@@ -1,12 +1,25 @@
 <template>
   <v-card class="rounded-lg">
-    <v-card-title class="justify-center lighten-2 border-bottom card-subtitle">
-      {{ step }}
+    <v-card-title
+      class="justify-space-between lighten-2 border-bottom card-subtitle py-2 px-2"
+    >
+      <v-btn icon>
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <span>{{ step }}</span>
+      <v-btn
+        color="blue"
+        text
+        class="white--text text-capitalize"
+        @click="toStep()"
+      >
+        Tiếp
+      </v-btn>
     </v-card-title>
 
     <v-card-text class="min-height-40vh position-relative pa-0">
       <!-- Step 1 -->
-      <div class="choose-img" v-if="step == 'Tạo bài viết mới'">
+      <div class="choose-img" v-if="step == stepByStep[0]">
         <svg
           aria-label="Biểu tượng thể hiện file phương tiện, chẳng hạn như hình ảnh hoặc video"
           color="#262626"
@@ -49,7 +62,7 @@
         </v-file-input>
       </div>
       <!-- Step 2 -->
-      <div v-if="step == 'Cắt'">
+      <div v-if="step == stepByStep[1]">
         <!--  -->
         <v-window show-arrows>
           <template v-slot:prev="{ on, attrs }">
@@ -63,7 +76,17 @@
             </v-btn>
           </template>
           <v-window-item v-for="(item, index) in newFiles" :key="index">
-            <img :src="item" :alt="item" class="img-fluid" />
+            <img
+              :src="item.url"
+              :alt="item.url"
+              class="img-fluid"
+              v-if="item.type.includes('image')"
+            />
+            <video
+              :src="item.url"
+              v-if="item.type.includes('video')"
+              autoplay
+            ></video>
           </v-window-item>
           <v-item-group v-model="onboarding" class="text-center" mandatory>
             <v-item
@@ -91,19 +114,117 @@
           :open-on-hover="hover"
         >
           <template v-slot:activator>
-            <v-btn v-model="fab" icon small>
+            <v-btn v-model="fab" icon small class="grey darken-3">
               <v-icon v-if="fab" color="#000"> mdi-arrow-expand </v-icon>
               <v-icon v-else color="#fff"> mdi-arrow-expand </v-icon>
             </v-btn>
           </template>
-          <v-btn fab dark small color="green">
-            <v-icon>mdi-pencil</v-icon>
+
+          <v-btn
+            dark
+            large
+            min-height="100%"
+            class="ma-0 pa-0 rounded-0"
+            @click="changeRatio(16 / 9)"
+          >
+            16/9
+            <svg
+              aria-label="Crop landscape icon"
+              color="#8e8e8e"
+              fill="#8e8e8e"
+              height="24"
+              role="img"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path
+                d="M19 20H5a4.004 4.004 0 01-4-4V8a4.004 4.004 0 014-4h14a4.004 4.004 0 014 4v8a4.004 4.004 0 01-4 4zM5 6a2.002 2.002 0 00-2 2v8a2.002 2.002 0 002 2h14a2.002 2.002 0 002-2V8a2.002 2.002 0 00-2-2z"
+              ></path>
+            </svg>
           </v-btn>
-          <v-btn fab dark small color="indigo">
-            <v-icon>mdi-plus</v-icon>
+          <v-btn
+            dark
+            large
+            min-height="100%"
+            class="ma-0 pa-0 rounded-0"
+            @click="changeRatio(4 / 3)"
+          >
+            4/3
+            <svg
+              aria-label="Crop portrait icon"
+              color="#8e8e8e"
+              fill="#8e8e8e"
+              height="24"
+              role="img"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path
+                d="M16 23H8a4.004 4.004 0 01-4-4V5a4.004 4.004 0 014-4h8a4.004 4.004 0 014 4v14a4.004 4.004 0 01-4 4zM8 3a2.002 2.002 0 00-2 2v14a2.002 2.002 0 002 2h8a2.002 2.002 0 002-2V5a2.002 2.002 0 00-2-2z"
+              ></path>
+            </svg>
           </v-btn>
-          <v-btn fab dark small color="red">
-            <v-icon>mdi-delete</v-icon>
+
+          <v-btn
+            dark
+            large
+            min-height="100%"
+            class="ma-0 pa-0 rounded-0"
+            @click="ratio = 1"
+          >
+            1/1
+            <svg
+              aria-label="Crop square icon"
+              color="#ffffff"
+              fill="#ffffff"
+              height="24"
+              role="img"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path
+                d="M19 23H5a4.004 4.004 0 01-4-4V5a4.004 4.004 0 014-4h14a4.004 4.004 0 014 4v14a4.004 4.004 0 01-4 4zM5 3a2.002 2.002 0 00-2 2v14a2.002 2.002 0 002 2h14a2.002 2.002 0 002-2V5a2.002 2.002 0 00-2-2z"
+              ></path>
+            </svg>
+          </v-btn>
+          <v-btn
+            dark
+            large
+            min-height="100%"
+            class="ma-0 pa-0 rounded-0 text-capitalize"
+            @click="changeRatio('original')"
+          >
+            Nguyên mẫu
+            <svg
+              aria-label="Photo outline icon"
+              class="_ab6-"
+              color="#8e8e8e"
+              fill="#8e8e8e"
+              height="24"
+              role="img"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path
+                d="M6.549 5.013A1.557 1.557 0 108.106 6.57a1.557 1.557 0 00-1.557-1.557z"
+                fill-rule="evenodd"
+              ></path>
+              <path
+                d="M2 18.605l3.901-3.9a.908.908 0 011.284 0l2.807 2.806a.908.908 0 001.283 0l5.534-5.534a.908.908 0 011.283 0l3.905 3.905"
+                fill="none"
+                stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+              <path
+                d="M18.44 2.004A3.56 3.56 0 0122 5.564h0v12.873a3.56 3.56 0 01-3.56 3.56H5.568a3.56 3.56 0 01-3.56-3.56V5.563a3.56 3.56 0 013.56-3.56z"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></path>
+            </svg>
           </v-btn>
         </v-speed-dial>
       </div>
@@ -112,17 +233,22 @@
 </template>
 
 <script lang="ts">
+import { BlogModel } from "@/aws/models";
 import { Component, Vue } from "vue-property-decorator";
 
-const stepByStep = ["Tạo bài viết mới", "Cắt", "Chỉnh sửa", "Đăng bài viết"];
 @Component
 export default class extends Vue {
-  step = stepByStep[0];
+  stepByStep = ["Tạo bài viết mới", "Cắt", "Chỉnh sửa", "Đăng bài viết"];
+  ratio = "original";
+
+  step = this.stepByStep[0];
   newFiles: any[];
   onboarding = 0;
   fab = false;
   hover = false;
   transition = "slide-y-reverse-transition";
+
+  newBlog: BlogModel = null;
   mounted() {
     // const canvas: any = document.getElementById("output");
     // const img: any = document.getElementById("scream");
@@ -135,10 +261,23 @@ export default class extends Vue {
 
   // Step 1
   chooseImage(event) {
-    this.newFiles = event.map((item) => URL.createObjectURL(item));
-    this.step = stepByStep[1];
+    this.newFiles = event.map((item) => {
+      return {
+        type: item.type,
+        url: URL.createObjectURL(item),
+      };
+    });
+    this.step = this.stepByStep[1];
   }
 
+  // Step 2
+  changeRatio(value) {
+    this.ratio = value;
+  }
+  toStep() {
+    console.log(this.ratio);
+  }
+  //
   next() {
     this.onboarding =
       this.onboarding + 1 === this.newFiles.length ? 0 : this.onboarding + 1;
@@ -163,5 +302,13 @@ export default class extends Vue {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+::v-deep.v-speed-dial__list {
+  align-items: left;
+}
+
+::v-deeep .v-btn__content {
+  font-size: 0.5rem !important;
 }
 </style>
